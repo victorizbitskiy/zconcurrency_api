@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_MESSAGE_HANDLER</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>ZCL_MESSAGE_HANDLER</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MESSAGE_HANDLER</CLSNAME>
+     <CMPNAME>HAS_MESSAGES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>HAS_MESSAGES</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_MESSAGE_HANDLER</CLSNAME>
+     <CMPNAME>MT_MESSAGE_LIST</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>MT_MESSAGE_LIST</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>
