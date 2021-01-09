@@ -1,2 +1,2 @@
-# ZCONCURRENCY_API
+# zconcurrency_api
 ABAP Сoncurrency API 
