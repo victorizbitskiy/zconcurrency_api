@@ -1,5 +1,5 @@
 # zconcurrency_api
-Simple ABAP Сoncurrency API 
+Simple ABAP Сoncurrency API based on SPTA Framework
 
 ABAP Version: 701 or higher
 
