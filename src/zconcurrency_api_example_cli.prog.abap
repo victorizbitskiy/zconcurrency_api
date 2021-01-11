@@ -3,14 +3,14 @@
 *&---------------------------------------------------------------------*
 CLASS lcl_app IMPLEMENTATION.
   METHOD main.
-    DATA: lo_tasks            TYPE REF TO zcl_collection,
+    DATA: lo_tasks            TYPE REF TO zcl_capi_collection,
           lo_task             TYPE REF TO lcl_task,
           lo_context          TYPE REF TO lcl_context,
           ls_params           TYPE lcl_context=>mty_params,
-          lo_executor         TYPE REF TO zcl_executor_service,
-          lo_message_handler  TYPE REF TO zcl_message_handler,
-          lo_results          TYPE REF TO zif_collection,
-          lo_results_iterator TYPE REF TO zif_iterator,
+          lo_executor         TYPE REF TO zcl_capi_executor_service,
+          lo_message_handler  TYPE REF TO zcl_capi_message_handler,
+          lo_results          TYPE REF TO zif_capi_collection,
+          lo_results_iterator TYPE REF TO zif_capi_iterator,
           lo_result           TYPE REF TO lcl_result,
           lv_result           TYPE char20.
 
@@ -29,7 +29,7 @@ CLASS lcl_app IMPLEMENTATION.
         EXPORTING
           io_context = lo_context.
 
-      lo_tasks->zif_collection~add( lo_task ).
+      lo_tasks->zif_capi_collection~add( lo_task ).
     ENDDO.
 
     CREATE OBJECT lo_message_handler.
@@ -39,10 +39,10 @@ CLASS lcl_app IMPLEMENTATION.
         iv_server_group             = 'parallel_generators'
         iv_max_no_of_tasks          = 2
         iv_no_resubmission_on_error = abap_false
-        io_message_handler          = lo_message_handler.
+        io_capi_message_handler     = lo_message_handler.
 
 *   Main method
-    lo_results = lo_executor->zif_executor_service~invoke_all( lo_tasks ).
+    lo_results = lo_executor->zif_capi_executor_service~invoke_all( lo_tasks ).
 
     lo_results_iterator = lo_results->get_iterator( ).
 
@@ -80,7 +80,7 @@ CLASS lcl_task IMPLEMENTATION.
     mo_context = io_context.
   ENDMETHOD.                    "constructor
 
-  METHOD zif_callable~call.
+  METHOD zif_capi_callable~call.
 
 *    Uncomment this if you want to test the automatic restart of the task after a dump {
 
@@ -95,7 +95,7 @@ CLASS lcl_task IMPLEMENTATION.
     mv_res = mo_context->ms_params-param ** 2.
 
 *   Testing the progress bar
-    WAIT UP TO 2 SECONDS.
+*    WAIT UP TO 2 SECONDS.
 
     CREATE OBJECT ro_result
       TYPE

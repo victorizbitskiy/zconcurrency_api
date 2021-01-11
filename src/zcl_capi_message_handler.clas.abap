@@ -1,10 +1,10 @@
-CLASS zcl_message_handler DEFINITION
+CLASS zcl_capi_message_handler DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES zif_message_handler .
+    INTERFACES zif_capi_message_handler .
 
     METHODS has_messages
       RETURNING
@@ -12,12 +12,12 @@ CLASS zcl_message_handler DEFINITION
   PROTECTED SECTION.
   PRIVATE SECTION.
 
-    DATA mt_message_list TYPE zif_message_handler~mtt_message_list .
+    DATA mt_message_list TYPE zif_capi_message_handler~mtt_message_list .
 ENDCLASS.
 
 
 
-CLASS ZCL_MESSAGE_HANDLER IMPLEMENTATION.
+CLASS ZCL_CAPI_MESSAGE_HANDLER IMPLEMENTATION.
 
 
   METHOD has_messages.
@@ -31,8 +31,7 @@ CLASS ZCL_MESSAGE_HANDLER IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD zif_message_handler~add_message.
-
+  METHOD zif_capi_message_handler~add_message.
     DATA: ls_message_list LIKE LINE OF mt_message_list.
 
     ls_message_list-task_id   = iv_task_id.
@@ -42,12 +41,10 @@ CLASS ZCL_MESSAGE_HANDLER IMPLEMENTATION.
 
     APPEND ls_message_list TO mt_message_list.
 
-  ENDMETHOD.
+  ENDMETHOD.                    "add_message
 
 
-  METHOD zif_message_handler~get_message_list.
-
+  METHOD zif_capi_message_handler~get_message_list.
     rt_message_list = mt_message_list.
-
-  ENDMETHOD.
+  ENDMETHOD.                    "get_message_list
 ENDCLASS.

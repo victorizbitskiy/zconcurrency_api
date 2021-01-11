@@ -1,0 +1,10 @@
+INTERFACE zif_capi_executor_service
+  PUBLIC .
+
+
+  METHODS invoke_all
+    IMPORTING
+      !io_tasks         TYPE REF TO zcl_capi_collection
+    RETURNING
+      VALUE(ro_results) TYPE REF TO zif_capi_collection .
+ENDINTERFACE.

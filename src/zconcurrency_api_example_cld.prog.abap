@@ -2,7 +2,7 @@
 *& Include          ZCONCURRENCY_API_EXAMPLE_CLD
 *&---------------------------------------------------------------------*
 
-CLASS lcl_app DEFINITION.
+CLASS lcl_app DEFINITION FINAL.
   PUBLIC SECTION.
 
     CLASS-METHODS: main.
@@ -14,7 +14,7 @@ ENDCLASS.
 *----------------------------------------------------------------------*
 *
 *----------------------------------------------------------------------*
-CLASS lcl_context DEFINITION.
+CLASS lcl_context DEFINITION  FINAL.
   PUBLIC SECTION.
     INTERFACES: if_serializable_object.
 
@@ -33,7 +33,7 @@ ENDCLASS.                    "lcl_context DEFINITION
 *----------------------------------------------------------------------*
 *
 *----------------------------------------------------------------------*
-CLASS lcl_task DEFINITION INHERITING FROM zcl_abstract_task.
+CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_abstract_task  FINAL.
   PUBLIC SECTION.
 
     DATA: mo_context TYPE REF TO lcl_context,
@@ -41,7 +41,7 @@ CLASS lcl_task DEFINITION INHERITING FROM zcl_abstract_task.
 
     METHODS: constructor IMPORTING io_context TYPE REF TO lcl_context,
 
-      zif_callable~call REDEFINITION.
+      zif_capi_callable~call REDEFINITION.
 
 ENDCLASS.                    "lcl_task DEFINITION
 *----------------------------------------------------------------------*
@@ -49,7 +49,7 @@ ENDCLASS.                    "lcl_task DEFINITION
 *----------------------------------------------------------------------*
 *
 *----------------------------------------------------------------------*
-CLASS lcl_result DEFINITION.
+CLASS lcl_result DEFINITION FINAL.
   PUBLIC SECTION.
     INTERFACES: if_serializable_object.
 
