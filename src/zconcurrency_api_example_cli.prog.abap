@@ -6,7 +6,7 @@ CLASS lcl_app IMPLEMENTATION.
     DATA: lo_tasks            TYPE REF TO zcl_capi_collection,
           lo_task             TYPE REF TO lcl_task,
           lo_context          TYPE REF TO lcl_context,
-          ls_params           TYPE lcl_context=>mty_params,
+          ls_params           TYPE lcl_context=>ty_params,
           lo_executor         TYPE REF TO zcl_capi_executor_service,
           lo_message_handler  TYPE REF TO zcl_capi_message_handler,
           lo_results          TYPE REF TO zif_capi_collection,
@@ -62,12 +62,12 @@ ENDCLASS.
 CLASS lcl_context IMPLEMENTATION.
   METHOD constructor.
     ms_params = is_params.
-  ENDMETHOD.                    "constructor
+  ENDMETHOD.
 
   METHOD get.
     rs_params = ms_params.
-  ENDMETHOD.                    "lif_context~get
-ENDCLASS.                    "lcl_context IMPLEMENTATION
+  ENDMETHOD.
+ENDCLASS.
 
 *----------------------------------------------------------------------*
 *       CLASS lcl_task DEFINITION
@@ -78,19 +78,9 @@ CLASS lcl_task IMPLEMENTATION.
   METHOD constructor.
     super->constructor( ).
     mo_context = io_context.
-  ENDMETHOD.                    "constructor
+  ENDMETHOD.
 
   METHOD zif_capi_callable~call.
-
-*    Uncomment this if you want to test the automatic restart of the task after a dump {
-
-*    DATA: lv_dump_test TYPE boole_d
-*    FIELD-SYMBOLS: <lfs_any> TYPE ANY.
-
-*    IF lv_dump_test = abap_true.
-*      <lfs_any> = 1.
-*    ENDIF.
-*    }
 
     mv_res = mo_context->ms_params-param ** 2.
 
@@ -101,8 +91,8 @@ CLASS lcl_task IMPLEMENTATION.
         iv_param  = mo_context->ms_params-param
         iv_result = mv_res.
 
-  ENDMETHOD.                    "get
-ENDCLASS.                    "lcl_task DEFINITION
+  ENDMETHOD.
+ENDCLASS.
 
 *----------------------------------------------------------------------*
 *       CLASS lcl_result IMPLEMENTATION
@@ -113,7 +103,7 @@ CLASS lcl_result IMPLEMENTATION.
   METHOD constructor.
     mv_param = iv_param.
     mv_result = iv_result.
-  ENDMETHOD.                    "constructor
+  ENDMETHOD.
 
   METHOD get.
     DATA: lv_param  TYPE char10,
@@ -125,6 +115,6 @@ CLASS lcl_result IMPLEMENTATION.
     CONDENSE: lv_param, lv_result.
     CONCATENATE lv_param ` -> ` lv_result INTO rv_result.
 
-  ENDMETHOD.                    "constructor
+  ENDMETHOD.
 
-ENDCLASS.                    "lcl_result IMPLEMENTATION
+ENDCLASS.

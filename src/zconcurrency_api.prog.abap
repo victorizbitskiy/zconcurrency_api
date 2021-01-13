@@ -8,8 +8,6 @@ REPORT zconcurrency_api.
 *&---------------------------------------------------------------------*
 *&      Form  before_rfc
 *&---------------------------------------------------------------------*
-*       text
-*----------------------------------------------------------------------*
 FORM before_rfc USING is_before_rfc_imp TYPE spta_t_before_rfc_imp
              CHANGING cs_before_rfc_exp TYPE spta_t_before_rfc_exp
                       ct_rfcdata TYPE spta_t_indxtab
@@ -54,13 +52,11 @@ FORM before_rfc USING is_before_rfc_imp TYPE spta_t_before_rfc_imp
     cs_before_rfc_exp-start_rfc = space.
   ENDIF.
 
-ENDFORM.                    "before_rfc
+ENDFORM.
 
 *&---------------------------------------------------------------------*
 *&      Form  in_rfc
 *&---------------------------------------------------------------------*
-*       text
-*----------------------------------------------------------------------*
 FORM in_rfc USING is_in_rfc_imp TYPE spta_t_in_rfc_imp
          CHANGING cs_in_rfc_exp TYPE spta_t_in_rfc_exp
                   ct_rfcdata TYPE spta_t_indxtab.
@@ -86,13 +82,11 @@ FORM in_rfc USING is_in_rfc_imp TYPE spta_t_in_rfc_imp
     IMPORTING
       indxtab = ct_rfcdata.
 
-ENDFORM.                    "in_rfc
+ENDFORM.
 
 *&---------------------------------------------------------------------*
 *&      Form  after_rfc
 *&---------------------------------------------------------------------*
-*       text
-*----------------------------------------------------------------------*
 FORM after_rfc USING it_rfcdata TYPE spta_t_indxtab
                      iv_rfcsubrc TYPE sy-subrc
                      iv_rfcmsg TYPE spta_t_rfcmsg
@@ -125,8 +119,12 @@ FORM after_rfc USING it_rfcdata TYPE spta_t_indxtab
 
     lv_tc_size = co_capi_spta_gateway->mo_tasks->size( ).
     lv_rc_size = co_capi_spta_gateway->mo_results->size( ).
-    zcl_capi_spta_wrapper=>progress_indicator( iv_completed = lv_rc_size
-                                               iv_total = lv_tc_size ).
+
+    cl_progress_indicator=>progress_indicate( i_text = '&1% (&2 of &3) of the tasks processed'(001)
+                                              i_processed = lv_rc_size
+                                              i_total = lv_tc_size
+                                              i_output_immediately = abap_true ).
+
   ELSE.
 
     READ TABLE it_objects_in_process INTO ls_objects_in_process INDEX 1.
@@ -149,18 +147,11 @@ FORM after_rfc USING it_rfcdata TYPE spta_t_indxtab
 
   ENDIF.
 
-ENDFORM.                    "after_rfc
+ENDFORM.
 
 *&---------------------------------------------------------------------*
 *&      Form  process_failed_objects
 *&---------------------------------------------------------------------*
-*       text
-*----------------------------------------------------------------------*
-*      <--CT_RFCDATA             text
-*      <--CT_FAILED_OBJECTS      text
-*      <--CT_OBJECTS_IN_PROCESS  text
-*      <--CO_SPTA_GATEWAY        text
-*----------------------------------------------------------------------*
 FORM process_failed_objects CHANGING cs_before_rfc_exp TYPE spta_t_before_rfc_exp
                                      ct_rfcdata TYPE spta_t_indxtab
                                      ct_failed_objects TYPE spta_t_failed_objects
@@ -172,17 +163,17 @@ FORM process_failed_objects CHANGING cs_before_rfc_exp TYPE spta_t_before_rfc_ex
         lv_task               TYPE xstring,
         ls_objects_in_process LIKE LINE OF ct_objects_in_process.
 
-  FIELD-SYMBOLS: <lfs_failed_objects> LIKE LINE OF ct_failed_objects.
+  FIELD-SYMBOLS: <ls_failed_objects> LIKE LINE OF ct_failed_objects.
 
-  READ TABLE ct_failed_objects ASSIGNING <lfs_failed_objects> INDEX 1.
-  IF <lfs_failed_objects> IS ASSIGNED.
+  READ TABLE ct_failed_objects ASSIGNING <ls_failed_objects> INDEX 1.
+  IF <ls_failed_objects> IS ASSIGNED.
 
     lo_tasks_iterator = co_capi_spta_gateway->mo_tasks->get_iterator( ).
 
     WHILE lo_tasks_iterator->has_next( ) = abap_true.
       lo_task ?= lo_tasks_iterator->next( ).
 
-      IF lo_task->zif_capi_task~get_id( ) = <lfs_failed_objects>-obj_id.
+      IF lo_task->zif_capi_task~get_id( ) = <ls_failed_objects>-obj_id.
 
         lv_task = zcl_capi_spta_wrapper=>serialize_task( lo_task ).
 
@@ -192,9 +183,9 @@ FORM process_failed_objects CHANGING cs_before_rfc_exp TYPE spta_t_before_rfc_ex
           IMPORTING
             indxtab = ct_rfcdata.
 
-        ls_objects_in_process-obj_id = <lfs_failed_objects>-obj_id.
-        ls_objects_in_process-fail_count = <lfs_failed_objects>-fail_count + 1.
-        ls_objects_in_process-last_error = <lfs_failed_objects>-last_error.
+        ls_objects_in_process-obj_id = <ls_failed_objects>-obj_id.
+        ls_objects_in_process-fail_count = <ls_failed_objects>-fail_count + 1.
+        ls_objects_in_process-last_error = <ls_failed_objects>-last_error.
 
         APPEND ls_objects_in_process TO ct_objects_in_process[].
 
@@ -207,4 +198,4 @@ FORM process_failed_objects CHANGING cs_before_rfc_exp TYPE spta_t_before_rfc_ex
 
   ENDIF.
 
-ENDFORM.                    "process_failed_objects
+ENDFORM.

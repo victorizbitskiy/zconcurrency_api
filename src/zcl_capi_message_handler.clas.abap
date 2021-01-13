@@ -12,7 +12,7 @@ CLASS zcl_capi_message_handler DEFINITION
   PROTECTED SECTION.
   PRIVATE SECTION.
 
-    DATA mt_message_list TYPE zif_capi_message_handler~mtt_message_list .
+    DATA mt_message_list TYPE zif_capi_message_handler~ty_message_list_tab .
 ENDCLASS.
 
 
@@ -41,10 +41,10 @@ CLASS ZCL_CAPI_MESSAGE_HANDLER IMPLEMENTATION.
 
     APPEND ls_message_list TO mt_message_list.
 
-  ENDMETHOD.                    "add_message
+  ENDMETHOD.
 
 
   METHOD zif_capi_message_handler~get_message_list.
     rt_message_list = mt_message_list.
-  ENDMETHOD.                    "get_message_list
+  ENDMETHOD.
 ENDCLASS.

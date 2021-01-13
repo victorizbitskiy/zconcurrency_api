@@ -11,6 +11,12 @@
    </PROGDIR>
    <TPOOL>
     <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>&amp;1% (&amp;2 of &amp;3) of the tasks processed</ENTRY>
+     <LENGTH>74</LENGTH>
+    </item>
+    <item>
      <ID>R</ID>
      <ENTRY>ZCONCURRENCY_API</ENTRY>
      <LENGTH>16</LENGTH>

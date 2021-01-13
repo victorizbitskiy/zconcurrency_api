@@ -46,7 +46,7 @@ CLASS ZCL_CAPI_COLLECTION IMPLEMENTATION.
       EXPORTING
         ir_collection = me.
 
-    rif_iterator = lo_iterator.
+    ro_iterator = lo_iterator.
 
   ENDMETHOD.
 

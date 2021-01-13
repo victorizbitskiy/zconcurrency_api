@@ -12,15 +12,15 @@ CLASS zcl_capi_abstract_task DEFINITION
     METHODS constructor
       IMPORTING
         !iv_name TYPE char30 OPTIONAL .
-protected section.
+  PROTECTED SECTION.
 
-  class-data MV_TASK_COUNTER type NUMC10 .
-  data MV_ID type GUID_32 .
-  data MV_NAME type CHAR30 .
+    CLASS-DATA gv_task_counter TYPE numc10 .
+    DATA mv_id TYPE guid_32 .
+    DATA mv_name TYPE char30 .
 
-  methods CREATE_TASK_NAME .
-  methods CREATE_TASK_ID .
-private section.
+    METHODS create_task_name .
+    METHODS create_task_id .
+  PRIVATE SECTION.
 ENDCLASS.
 
 
@@ -52,8 +52,8 @@ CLASS ZCL_CAPI_ABSTRACT_TASK IMPLEMENTATION.
 
   METHOD create_task_name.
 
-    mv_task_counter = mv_task_counter + 1.
-    CONCATENATE 'task_' mv_task_counter INTO mv_name.
+    gv_task_counter = gv_task_counter + 1.
+    CONCATENATE 'task_' gv_task_counter INTO mv_name.
 
   ENDMETHOD.
 

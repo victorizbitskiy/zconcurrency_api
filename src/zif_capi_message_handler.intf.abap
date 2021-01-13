@@ -3,14 +3,14 @@ INTERFACE zif_capi_message_handler
 
 
   TYPES:
-    BEGIN OF mty_message_list,
+    BEGIN OF ty_message_list,
       task_id   TYPE guid_32,
       task_name TYPE char30,
       rfcsubrc  TYPE sy-subrc,
       rfcmsg    TYPE spta_t_rfcmsg,
-    END OF mty_message_list .
+    END OF ty_message_list .
   TYPES:
-    mtt_message_list TYPE STANDARD TABLE OF mty_message_list WITH KEY task_id .
+    ty_message_list_tab TYPE STANDARD TABLE OF ty_message_list WITH KEY task_id .
 
   METHODS add_message
     IMPORTING
@@ -20,5 +20,5 @@ INTERFACE zif_capi_message_handler
       !iv_rfcmsg    TYPE spta_t_rfcmsg .
   METHODS get_message_list
     RETURNING
-      VALUE(rt_message_list) TYPE mtt_message_list .
+      VALUE(rt_message_list) TYPE ty_message_list_tab.
 ENDINTERFACE.
