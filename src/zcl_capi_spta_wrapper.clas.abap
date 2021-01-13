@@ -1,35 +1,45 @@
-CLASS zcl_capi_spta_wrapper DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
+class ZCL_CAPI_SPTA_WRAPPER definition
+  public
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    CLASS-METHODS serialize
-      IMPORTING
-        !io_task       TYPE REF TO zcl_capi_abstract_task
-      RETURNING
-        VALUE(rv_task) TYPE xstring .
-    CLASS-METHODS deserialize
-      IMPORTING
-        !iv_task       TYPE xstring
-      RETURNING
-        VALUE(ro_task) TYPE REF TO zcl_capi_abstract_task .
-    CLASS-METHODS progress_indicator
-      IMPORTING
-        !iv_completed TYPE i OPTIONAL
-        !iv_total     TYPE i OPTIONAL
-        !iv_text      TYPE string OPTIONAL .
-    METHODS constructor
-      IMPORTING
-        !iv_server_group             TYPE rfcgr DEFAULT space
-        !iv_max_no_of_tasks          TYPE i DEFAULT 10
-        !iv_no_resubmission_on_error TYPE boole_d DEFAULT space
-        !io_capi_message_handler     TYPE REF TO zif_capi_message_handler .
-    METHODS start
-      IMPORTING
-        !io_tasks         TYPE REF TO zif_capi_collection
-      RETURNING
-        VALUE(ro_results) TYPE REF TO zif_capi_collection .
+  class-methods SERIALIZE_RESULT
+    importing
+      !IO_RESULT type ref to IF_SERIALIZABLE_OBJECT
+    returning
+      value(RV_RESULT) type XSTRING .
+  class-methods SERIALIZE_TASK
+    importing
+      !IO_TASK type ref to ZIF_CAPI_TASK
+    returning
+      value(RV_TASK) type XSTRING .
+  class-methods DESERIALIZE_RESULT
+    importing
+      !IV_RESULT type XSTRING
+    returning
+      value(RO_RESULT) type ref to IF_SERIALIZABLE_OBJECT .
+  class-methods DESERIALIZE_TASK
+    importing
+      !IV_TASK type XSTRING
+    returning
+      value(RO_TASK) type ref to ZIF_CAPI_TASK .
+  class-methods PROGRESS_INDICATOR
+    importing
+      !IV_COMPLETED type I optional
+      !IV_TOTAL type I optional
+      !IV_TEXT type STRING optional .
+  methods CONSTRUCTOR
+    importing
+      !IV_SERVER_GROUP type RFCGR default SPACE
+      !IV_MAX_NO_OF_TASKS type I default 10
+      !IV_NO_RESUBMISSION_ON_ERROR type BOOLE_D default SPACE
+      !IO_CAPI_MESSAGE_HANDLER type ref to ZIF_CAPI_MESSAGE_HANDLER .
+  methods START
+    importing
+      !IO_TASKS type ref to ZIF_CAPI_COLLECTION
+    returning
+      value(RO_RESULTS) type ref to ZIF_CAPI_COLLECTION .
   PROTECTED SECTION.
   PRIVATE SECTION.
 
@@ -54,7 +64,16 @@ CLASS ZCL_CAPI_SPTA_WRAPPER IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD deserialize.
+  METHOD DESERIALIZE_RESULT.
+
+    CALL TRANSFORMATION id_indent
+      SOURCE XML iv_result
+      RESULT obj = ro_result.
+
+  ENDMETHOD.
+
+
+  METHOD DESERIALIZE_TASK.
 
     CALL TRANSFORMATION id_indent
       SOURCE XML iv_task
@@ -95,7 +114,16 @@ CLASS ZCL_CAPI_SPTA_WRAPPER IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD serialize.
+  METHOD SERIALIZE_RESULT.
+
+    CALL TRANSFORMATION id_indent
+      SOURCE obj = io_result
+      RESULT XML rv_result.
+
+  ENDMETHOD.
+
+
+  METHOD SERIALIZE_TASK.
 
     CALL TRANSFORMATION id_indent
       SOURCE obj = io_task

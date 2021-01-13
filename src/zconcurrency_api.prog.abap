@@ -38,7 +38,7 @@ FORM before_rfc USING is_before_rfc_imp TYPE spta_t_before_rfc_imp
   IF lo_tasks_iterator->has_next( ) = abap_true.
 
     lo_task ?= lo_tasks_iterator->next( ).
-    lv_task = zcl_capi_spta_wrapper=>serialize( lo_task ).
+    lv_task = zcl_capi_spta_wrapper=>serialize_task( lo_task ).
 
     CALL FUNCTION 'SPTA_INDX_PACKAGE_ENCODE'
       EXPORTING
@@ -66,7 +66,7 @@ FORM in_rfc USING is_in_rfc_imp TYPE spta_t_in_rfc_imp
                   ct_rfcdata TYPE spta_t_indxtab.
 
   DATA: lv_task   TYPE xstring,
-        lo_task   TYPE REF TO zcl_capi_abstract_task,
+        lo_task   TYPE REF TO zif_capi_task,
         lo_result TYPE REF TO if_serializable_object,
         lv_result TYPE xstring.
 
@@ -76,12 +76,9 @@ FORM in_rfc USING is_in_rfc_imp TYPE spta_t_in_rfc_imp
     IMPORTING
       data    = lv_task.
 
-  lo_task = zcl_capi_spta_wrapper=>deserialize( lv_task ).
+  lo_task = zcl_capi_spta_wrapper=>deserialize_task( lv_task ).
   lo_result = lo_task->zif_capi_callable~call( ).
-
-  CALL TRANSFORMATION id_indent
-  SOURCE obj = lo_result
-  RESULT XML lv_result.
+  lv_result = zcl_capi_spta_wrapper=>serialize_result( lo_result ).
 
   CALL FUNCTION 'SPTA_INDX_PACKAGE_ENCODE'
     EXPORTING
@@ -122,9 +119,7 @@ FORM after_rfc USING it_rfcdata TYPE spta_t_indxtab
       IMPORTING
         data    = lv_result.
 
-    CALL TRANSFORMATION id_indent
-    SOURCE XML lv_result
-    RESULT obj = lo_result.
+    lo_result = zcl_capi_spta_wrapper=>deserialize_result( lv_result ).
 
     co_capi_spta_gateway->mo_results->add( lo_result ).
 
@@ -189,7 +184,7 @@ FORM process_failed_objects CHANGING cs_before_rfc_exp TYPE spta_t_before_rfc_ex
 
       IF lo_task->zif_capi_task~get_id( ) = <lfs_failed_objects>-obj_id.
 
-        lv_task = zcl_capi_spta_wrapper=>serialize( lo_task ).
+        lv_task = zcl_capi_spta_wrapper=>serialize_task( lo_task ).
 
         CALL FUNCTION 'SPTA_INDX_PACKAGE_ENCODE'
           EXPORTING

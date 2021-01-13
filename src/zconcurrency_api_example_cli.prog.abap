@@ -37,7 +37,7 @@ CLASS lcl_app IMPLEMENTATION.
     CREATE OBJECT lo_executor
       EXPORTING
         iv_server_group             = 'parallel_generators'
-        iv_max_no_of_tasks          = 2
+        iv_max_no_of_tasks          = 5
         iv_no_resubmission_on_error = abap_false
         io_capi_message_handler     = lo_message_handler.
 
@@ -93,9 +93,6 @@ CLASS lcl_task IMPLEMENTATION.
 *    }
 
     mv_res = mo_context->ms_params-param ** 2.
-
-*   Testing the progress bar
-*    WAIT UP TO 2 SECONDS.
 
     CREATE OBJECT ro_result
       TYPE
