@@ -1,45 +1,40 @@
-CLASS zcl_capi_spta_wrapper DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
+class ZCL_CAPI_SPTA_WRAPPER definition
+  public
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    CLASS-METHODS serialize_result
-      IMPORTING
-        !io_result       TYPE REF TO if_serializable_object
-      RETURNING
-        VALUE(rv_result) TYPE xstring .
-    CLASS-METHODS serialize_task
-      IMPORTING
-        !io_task       TYPE REF TO zif_capi_task
-      RETURNING
-        VALUE(rv_task) TYPE xstring .
-    CLASS-METHODS deserialize_result
-      IMPORTING
-        !iv_result       TYPE xstring
-      RETURNING
-        VALUE(ro_result) TYPE REF TO if_serializable_object .
-    CLASS-METHODS deserialize_task
-      IMPORTING
-        !iv_task       TYPE xstring
-      RETURNING
-        VALUE(ro_task) TYPE REF TO zif_capi_task .
-    CLASS-METHODS progress_indicator
-      IMPORTING
-        !iv_completed TYPE i OPTIONAL
-        !iv_total     TYPE i OPTIONAL
-        !iv_text      TYPE string OPTIONAL .
-    METHODS constructor
-      IMPORTING
-        !iv_server_group             TYPE rfcgr DEFAULT space
-        !iv_max_no_of_tasks          TYPE i DEFAULT 10
-        !iv_no_resubmission_on_error TYPE boole_d DEFAULT space
-        !io_capi_message_handler     TYPE REF TO zif_capi_message_handler .
-    METHODS start
-      IMPORTING
-        !io_tasks         TYPE REF TO zif_capi_collection
-      RETURNING
-        VALUE(ro_results) TYPE REF TO zif_capi_collection .
+  class-methods SERIALIZE_RESULT
+    importing
+      !IO_RESULT type ref to IF_SERIALIZABLE_OBJECT
+    returning
+      value(RV_RESULT) type XSTRING .
+  class-methods SERIALIZE_TASK
+    importing
+      !IO_TASK type ref to ZIF_CAPI_TASK
+    returning
+      value(RV_TASK) type XSTRING .
+  class-methods DESERIALIZE_RESULT
+    importing
+      !IV_RESULT type XSTRING
+    returning
+      value(RO_RESULT) type ref to IF_SERIALIZABLE_OBJECT .
+  class-methods DESERIALIZE_TASK
+    importing
+      !IV_TASK type XSTRING
+    returning
+      value(RO_TASK) type ref to ZIF_CAPI_TASK .
+  methods CONSTRUCTOR
+    importing
+      !IV_SERVER_GROUP type RFCGR default SPACE
+      !IV_MAX_NO_OF_TASKS type I default 10
+      !IV_NO_RESUBMISSION_ON_ERROR type BOOLE_D default SPACE
+      !IO_CAPI_MESSAGE_HANDLER type ref to ZIF_CAPI_MESSAGE_HANDLER .
+  methods START
+    importing
+      !IO_TASKS type ref to ZIF_CAPI_COLLECTION
+    returning
+      value(RO_RESULTS) type ref to ZIF_CAPI_COLLECTION .
   PROTECTED SECTION.
   PRIVATE SECTION.
 
@@ -78,38 +73,6 @@ CLASS ZCL_CAPI_SPTA_WRAPPER IMPLEMENTATION.
     CALL TRANSFORMATION id_indent
       SOURCE XML iv_task
       RESULT obj = ro_task.
-
-  ENDMETHOD.
-
-
-  METHOD progress_indicator.
-    DATA: lv_percentage TYPE i,
-          lv_text       TYPE char50,
-          lv_completed  TYPE char5,
-          lv_total      TYPE char5.
-
-    IF iv_completed IS SUPPLIED AND iv_total IS SUPPLIED.
-
-      IF iv_total IS NOT INITIAL.
-        lv_percentage = ( iv_completed * 100 ) / iv_total.
-      ENDIF.
-
-      lv_completed = iv_completed.
-      lv_total = iv_total.
-      CONDENSE: lv_completed, lv_total.
-      CONCATENATE 'Completed'(001) lv_completed 'of'(002) lv_total INTO lv_text SEPARATED BY space.
-
-    ELSE.
-      lv_percentage = 0.
-      lv_text = iv_text.
-    ENDIF.
-
-    CALL METHOD cl_progress_indicator=>progress_indicate
-      EXPORTING
-        i_text               = '&1% (&2 of &3) of the objects processed'
-        i_processed          = iv_completed
-        i_total              = iv_total
-        i_output_immediately = abap_true.
 
   ENDMETHOD.
 
