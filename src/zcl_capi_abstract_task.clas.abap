@@ -58,7 +58,7 @@ CLASS ZCL_CAPI_ABSTRACT_TASK IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD zif_capi_callable~call ##NEEDED.
+  METHOD zif_capi_callable~call.
 *   This method needs to be overridden
   ENDMETHOD.
 
