@@ -1,3 +1,5 @@
+![ABAP 7.00+](https://img.shields.io/badge/ABAP-7.00%2B-brightgreen)
+
 # zconcurrency_api
 Simple ABAP Сoncurrency API based on SPTA Framework
 
