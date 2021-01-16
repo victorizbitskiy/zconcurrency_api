@@ -1,11 +1,11 @@
-interface ZIF_CAPI_EXECUTOR_SERVICE
-  public .
+INTERFACE zif_capi_executor_service
+  PUBLIC .
 
-  type-pools ABAP .
+  TYPE-POOLS abap .
 
-  methods INVOKE_ALL
-    importing
-      !IO_TASKS type ref to ZIF_CAPI_COLLECTION
-    returning
-      value(RO_RESULTS) type ref to ZIF_CAPI_COLLECTION .
-endinterface.
+  METHODS invoke_all
+    IMPORTING
+      !io_tasks         TYPE REF TO zif_capi_collection
+    RETURNING
+      VALUE(ro_results) TYPE REF TO zif_capi_collection .
+ENDINTERFACE.

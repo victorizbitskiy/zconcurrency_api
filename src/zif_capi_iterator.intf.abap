@@ -1,24 +1,24 @@
-interface ZIF_CAPI_ITERATOR
-  public .
+INTERFACE zif_capi_iterator
+  PUBLIC .
 
-  type-pools ABAP .
+  TYPE-POOLS abap .
 
-  methods GET_INDEX
-    returning
-      value(RV_INDEX) type I .
-  methods HAS_NEXT
-    returning
-      value(RV_HASNEXT) type BOOLE_D .
-  methods NEXT
-    returning
-      value(RO_OBJECT) type ref to OBJECT .
-  methods FIRST
-    returning
-      value(RO_OBJECT) type ref to OBJECT .
-  methods LAST
-    returning
-      value(RO_OBJECT) type ref to OBJECT .
-  methods CURRENT
-    returning
-      value(RO_OBJECT) type ref to OBJECT .
-endinterface.
+  METHODS get_index
+    RETURNING
+      VALUE(rv_index) TYPE i .
+  METHODS has_next
+    RETURNING
+      VALUE(rv_hasnext) TYPE boole_d .
+  METHODS next
+    RETURNING
+      VALUE(ro_object) TYPE REF TO object .
+  METHODS first
+    RETURNING
+      VALUE(ro_object) TYPE REF TO object .
+  METHODS last
+    RETURNING
+      VALUE(ro_object) TYPE REF TO object .
+  METHODS current
+    RETURNING
+      VALUE(ro_object) TYPE REF TO object .
+ENDINTERFACE.
