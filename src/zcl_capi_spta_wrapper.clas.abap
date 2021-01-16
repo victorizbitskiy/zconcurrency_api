@@ -94,7 +94,6 @@ CLASS ZCL_CAPI_SPTA_WRAPPER IMPLEMENTATION.
 
 
   METHOD start.
-
     DATA: lo_capi_spta_gateway TYPE REF TO zcl_capi_spta_gateway,
           lo_tasks             TYPE REF TO zcl_capi_collection,
           lo_results           TYPE REF TO zcl_capi_collection.

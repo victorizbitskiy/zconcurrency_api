@@ -23,4 +23,7 @@ INTERFACE zif_capi_message_handler
   METHODS get_message_list
     RETURNING
       VALUE(rt_message_list) TYPE ty_message_list_tab .
+  METHODS has_messages
+    RETURNING
+      VALUE(rv_value) TYPE boole_d .
 ENDINTERFACE.

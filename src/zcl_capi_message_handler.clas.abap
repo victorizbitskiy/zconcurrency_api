@@ -5,10 +5,6 @@ CLASS zcl_capi_message_handler DEFINITION
   PUBLIC SECTION.
 
     INTERFACES zif_capi_message_handler .
-
-    METHODS has_messages
-      RETURNING
-        VALUE(rv_value) TYPE boole_d .
   PROTECTED SECTION.
   PRIVATE SECTION.
 
@@ -18,17 +14,6 @@ ENDCLASS.
 
 
 CLASS ZCL_CAPI_MESSAGE_HANDLER IMPLEMENTATION.
-
-
-  METHOD has_messages.
-
-    IF lines( mt_message_list ) > 0.
-      rv_value = abap_true.
-    ELSE.
-      rv_value = abap_false.
-    ENDIF.
-
-  ENDMETHOD.
 
 
   METHOD zif_capi_message_handler~add_message.
@@ -46,5 +31,16 @@ CLASS ZCL_CAPI_MESSAGE_HANDLER IMPLEMENTATION.
 
   METHOD zif_capi_message_handler~get_message_list.
     rt_message_list = mt_message_list.
+  ENDMETHOD.
+
+
+  METHOD zif_capi_message_handler~has_messages.
+
+    IF lines( mt_message_list ) > 0.
+      rv_value = abap_true.
+    ELSE.
+      rv_value = abap_false.
+    ENDIF.
+
   ENDMETHOD.
 ENDCLASS.
