@@ -1,25 +1,25 @@
-CLASS zcl_capi_abstract_task DEFINITION
-  PUBLIC
-  ABSTRACT
-  CREATE PUBLIC .
+class ZCL_CAPI_ABSTRACT_TASK definition
+  public
+  abstract
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    INTERFACES zif_capi_callable .
-    INTERFACES if_serializable_object .
-    INTERFACES zif_capi_task .
+  interfaces ZIF_CAPI_CALLABLE .
+  interfaces IF_SERIALIZABLE_OBJECT .
+  interfaces ZIF_CAPI_TASK .
 
-    METHODS constructor
-      IMPORTING
-        !iv_name TYPE char30 OPTIONAL .
-  PROTECTED SECTION.
+  methods CONSTRUCTOR
+    importing
+      !IV_NAME type STRING optional .
+protected section.
 
-    CLASS-DATA gv_task_counter TYPE numc10 .
-    DATA mv_id TYPE guid_32 .
-    DATA mv_name TYPE char30 .
+  class-data GV_TASK_COUNTER type I .
+  data MV_ID type GUID_32 .
+  data MV_NAME type STRING .
 
-    METHODS create_task_name .
-    METHODS create_task_id .
+  methods CREATE_TASK_NAME .
+  methods CREATE_TASK_ID .
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -51,9 +51,10 @@ CLASS ZCL_CAPI_ABSTRACT_TASK IMPLEMENTATION.
 
 
   METHOD create_task_name.
+    DATA: lv_task_counter TYPE string.
 
-    gv_task_counter = gv_task_counter + 1.
-    CONCATENATE 'task_' gv_task_counter INTO mv_name.
+    lv_task_counter = gv_task_counter = gv_task_counter + 1.
+    CONCATENATE 'task_' lv_task_counter INTO mv_name.
 
   ENDMETHOD.
 

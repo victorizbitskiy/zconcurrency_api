@@ -1,15 +1,14 @@
-INTERFACE zif_capi_task
-  PUBLIC .
+interface ZIF_CAPI_TASK
+  public .
 
-  TYPE-POOLS abap .
 
-  INTERFACES if_serializable_object .
-  INTERFACES zif_capi_callable .
+  interfaces IF_SERIALIZABLE_OBJECT .
+  interfaces ZIF_CAPI_CALLABLE .
 
-  METHODS get_name
-    RETURNING
-      VALUE(rv_name) TYPE char30 .
-  METHODS get_id
-    RETURNING
-      VALUE(rv_id) TYPE guid_32 .
-ENDINTERFACE.
+  methods GET_NAME
+    returning
+      value(RV_NAME) type STRING .
+  methods GET_ID
+    returning
+      value(RV_ID) type GUID_32 .
+endinterface.

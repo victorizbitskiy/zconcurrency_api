@@ -1,9 +1,8 @@
-INTERFACE zif_capi_callable
-  PUBLIC .
+interface ZIF_CAPI_CALLABLE
+  public .
 
-  TYPE-POOLS abap .
 
-  METHODS call
-    RETURNING
-      VALUE(ro_result) TYPE REF TO if_serializable_object .
-ENDINTERFACE.
+  methods CALL
+    returning
+      value(RO_RESULT) type ref to IF_SERIALIZABLE_OBJECT .
+endinterface.

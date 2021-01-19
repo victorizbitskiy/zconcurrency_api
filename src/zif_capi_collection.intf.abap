@@ -1,30 +1,29 @@
-INTERFACE zif_capi_collection
-  PUBLIC .
+interface ZIF_CAPI_COLLECTION
+  public .
 
-  TYPE-POOLS abap .
 
-  METHODS size
-    RETURNING
-      VALUE(rv_size) TYPE i .
-  METHODS is_empty
-    RETURNING
-      VALUE(rv_empty) TYPE boole_d .
-  METHODS get_item
-    IMPORTING
-      !iv_index        TYPE i
-    RETURNING
-      VALUE(ro_object) TYPE REF TO object .
-  METHODS add
-    IMPORTING
-      !ir_object TYPE REF TO object .
-  METHODS remove_index
-    IMPORTING
-      !iv_index TYPE i .
-  METHODS remove
-    IMPORTING
-      !ir_item TYPE REF TO object .
-  METHODS clear .
-  METHODS get_iterator
-    RETURNING
-      VALUE(ro_iterator) TYPE REF TO zif_capi_iterator .
-ENDINTERFACE.
+  methods SIZE
+    returning
+      value(RV_SIZE) type I .
+  methods IS_EMPTY
+    returning
+      value(RV_EMPTY) type BOOLE_D .
+  methods GET_ITEM
+    importing
+      !IV_INDEX type I
+    returning
+      value(RO_OBJECT) type ref to OBJECT .
+  methods ADD
+    importing
+      !IR_OBJECT type ref to OBJECT .
+  methods REMOVE_INDEX
+    importing
+      !IV_INDEX type I .
+  methods REMOVE
+    importing
+      !IR_ITEM type ref to OBJECT .
+  methods CLEAR .
+  methods GET_ITERATOR
+    returning
+      value(RO_ITERATOR) type ref to ZIF_CAPI_ITERATOR .
+endinterface.

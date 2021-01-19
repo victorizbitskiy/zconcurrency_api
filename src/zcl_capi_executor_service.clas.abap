@@ -1,17 +1,17 @@
-CLASS zcl_capi_executor_service DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
+class ZCL_CAPI_EXECUTOR_SERVICE definition
+  public
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    INTERFACES zif_capi_executor_service .
+  interfaces ZIF_CAPI_EXECUTOR_SERVICE .
 
-    METHODS constructor
-      IMPORTING
-        !iv_server_group             TYPE rfcgr
-        !iv_max_no_of_tasks          TYPE i DEFAULT 10
-        !iv_no_resubmission_on_error TYPE boole_d DEFAULT abap_false
-        !io_capi_message_handler     TYPE REF TO zif_capi_message_handler .
+  methods CONSTRUCTOR
+    importing
+      !IV_SERVER_GROUP type RFCGR
+      !IV_MAX_NO_OF_TASKS type I default 10
+      !IV_NO_RESUBMISSION_ON_ERROR type BOOLE_D default ABAP_FALSE
+      !IO_CAPI_MESSAGE_HANDLER type ref to ZIF_CAPI_MESSAGE_HANDLER .
   PROTECTED SECTION.
   PRIVATE SECTION.
 
