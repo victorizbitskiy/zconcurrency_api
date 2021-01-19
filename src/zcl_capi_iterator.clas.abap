@@ -13,7 +13,7 @@ public section.
   PRIVATE SECTION.
 
     DATA mr_collection TYPE REF TO zif_capi_collection .
-    DATA mv_index TYPE i VALUE 0 ##NO_TEXT.
+    DATA mv_index TYPE i VALUE 0.
 ENDCLASS.
 
 

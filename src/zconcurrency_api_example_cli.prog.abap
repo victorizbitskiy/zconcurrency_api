@@ -112,7 +112,8 @@ CLASS lcl_result IMPLEMENTATION.
     lv_param = mv_param.
     lv_result = mv_result.
 
-    CONDENSE: lv_param, lv_result.
+    CONDENSE lv_param.
+    CONDENSE lv_result.
     CONCATENATE lv_param ` -> ` lv_result INTO rv_result.
 
   ENDMETHOD.
