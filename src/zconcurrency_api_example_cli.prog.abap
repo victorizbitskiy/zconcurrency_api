@@ -12,7 +12,7 @@ CLASS lcl_app IMPLEMENTATION.
           lo_results          TYPE REF TO zif_capi_collection,
           lo_results_iterator TYPE REF TO zif_capi_iterator,
           lo_result           TYPE REF TO lcl_result,
-          lv_result           TYPE char20.
+          lv_result           TYPE string.
 
 *   Create collection of tasks
     CREATE OBJECT lo_tasks.
@@ -106,8 +106,8 @@ CLASS lcl_result IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get.
-    DATA: lv_param  TYPE char10,
-          lv_result TYPE char10.
+    DATA: lv_param  TYPE string,
+          lv_result TYPE string.
 
     lv_param = mv_param.
     lv_result = mv_result.

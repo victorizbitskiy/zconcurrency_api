@@ -54,7 +54,7 @@ CLASS lcl_result DEFINITION FINAL.
 
     METHODS: constructor IMPORTING iv_param  TYPE i
                                    iv_result TYPE i,
-      get RETURNING VALUE(rv_result) TYPE char20.
+      get RETURNING VALUE(rv_result) TYPE string.
 
   PRIVATE SECTION.
     DATA: mv_param TYPE i.

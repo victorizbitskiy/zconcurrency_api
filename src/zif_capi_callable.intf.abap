@@ -1,8 +1,8 @@
-interface ZIF_CAPI_CALLABLE
-  public .
+INTERFACE zif_capi_callable
+  PUBLIC .
 
 
-  methods CALL
-    returning
-      value(RO_RESULT) type ref to IF_SERIALIZABLE_OBJECT .
-endinterface.
+  METHODS call
+    RETURNING
+      VALUE(ro_result) TYPE REF TO if_serializable_object .
+ENDINTERFACE.

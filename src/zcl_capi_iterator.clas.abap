@@ -1,19 +1,19 @@
-class ZCL_CAPI_ITERATOR definition
-  public
-  create public .
+CLASS zcl_capi_iterator DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces ZIF_CAPI_ITERATOR .
+    INTERFACES zif_capi_iterator .
 
-  methods CONSTRUCTOR
-    importing
-      !IR_COLLECTION type ref to ZIF_CAPI_COLLECTION .
+    METHODS constructor
+      IMPORTING
+        !ir_collection TYPE REF TO zif_capi_collection .
   PROTECTED SECTION.
   PRIVATE SECTION.
 
     DATA mr_collection TYPE REF TO zif_capi_collection .
-    DATA mv_index TYPE i VALUE 0.
+    DATA mv_index TYPE i VALUE 0 ##NO_TEXT.
 ENDCLASS.
 
 
