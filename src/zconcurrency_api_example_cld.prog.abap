@@ -30,7 +30,7 @@ ENDCLASS.
 *----------------------------------------------------------------------*
 *
 *----------------------------------------------------------------------*
-CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_abstract_task  FINAL.
+CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_abstract_task FINAL.
   PUBLIC SECTION.
 
     DATA: mo_context TYPE REF TO lcl_context.

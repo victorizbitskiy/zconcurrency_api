@@ -22,9 +22,7 @@ CLASS ZCL_CAPI_ITERATOR IMPLEMENTATION.
 
 
   METHOD constructor.
-
     mr_collection = ir_collection.
-
   ENDMETHOD.
 
 
