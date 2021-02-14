@@ -23,7 +23,7 @@ In short, it looks like this (Abap 7.4):
 *   Create collection of tasks
     DATA(lo_tasks) = NEW zcl_capi_collection( ).
 
-    DO 5 TIMES.
+    DO 10 TIMES.
       DATA(lo_task) = NEW lcl_task(
                                     NEW lcl_context(
                                                      VALUE lcl_context=>ty_params( param = sy-index )
