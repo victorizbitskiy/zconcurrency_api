@@ -37,7 +37,7 @@ In short, it looks like this (Abap 7.4):
                                                        iv_max_no_of_tasks          = 5
                                                        iv_no_resubmission_on_error = abap_false
                                                        io_capi_message_handler     = lo_message_handler ).
-*   Main method
+                                                       
     DATA(lo_results) = lo_executor->zif_capi_executor_service~invoke_all( lo_tasks ).
     DATA(lo_results_iterator) = lo_results->get_iterator( ).
 
