@@ -48,6 +48,7 @@ In short, it looks like this (Abap 7.4):
     ENDWHILE.
 
 ```
+It's easy, isn't it?
 
 # UML Class Diagram
 ![UML Class Diagram](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Diagram.png)
