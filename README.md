@@ -53,4 +53,4 @@ In short, it looks like this (Abap 7.4):
 ![UML Class Diagram](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Diagram.png)
 
 # License
-Unlicense License
+[Unlicense License](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/LICENSE)
