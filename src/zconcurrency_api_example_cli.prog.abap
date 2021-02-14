@@ -17,7 +17,7 @@ CLASS lcl_app IMPLEMENTATION.
 *   Create collection of tasks
     CREATE OBJECT lo_tasks.
 
-    DO 5 TIMES.
+    DO 10 TIMES.
       ls_params-param = sy-index.
 
 *     Optional object. It contains task parameters
