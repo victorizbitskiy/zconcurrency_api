@@ -75,12 +75,11 @@ ENDCLASS.
 CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_abstract_task FINAL.
   PUBLIC SECTION.
 
-    DATA: mo_context TYPE REF TO lcl_context.
-
     METHODS: constructor IMPORTING io_context TYPE REF TO lcl_context,
              zif_capi_callable~call REDEFINITION.
 
   PRIVATE SECTION.
+    DATA: mo_context TYPE REF TO lcl_context.
     DATA: mv_res TYPE i.
 
 ENDCLASS.
