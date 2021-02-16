@@ -41,16 +41,19 @@ CLASS lcl_app IMPLEMENTATION.
         iv_no_resubmission_on_error = abap_false
         io_capi_message_handler     = lo_message_handler.
 
-*   Main method
     lo_results = lo_executor->zif_capi_executor_service~invoke_all( lo_tasks ).
-
     lo_results_iterator = lo_results->get_iterator( ).
 
-    WHILE lo_results_iterator->has_next( ) = abap_true.
-      lo_result ?= lo_results_iterator->next( ).
-      lv_result = lo_result->get( ).
-      WRITE: / lv_result.
-    ENDWHILE.
+    IF lo_message_handler->zif_capi_message_handler~has_messages( ).
+*     Message processing...
+*     lt_message_list = lo_message_handler->zif_capi_message_handler~get_message_list( ).
+    ELSE.
+      WHILE lo_results_iterator->has_next( ) = abap_true.
+        lo_result ?= lo_results_iterator->next( ).
+        lv_result = lo_result->get( ).
+        WRITE: / lv_result.
+      ENDWHILE.
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
@@ -81,14 +84,16 @@ CLASS lcl_task IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD zif_capi_callable~call.
+    DATA: ls_params TYPE lcl_context=>ty_params.
 
-    mv_res = mo_context->ms_params-param ** 2.
+    ls_params = mo_context->get( ).
+    mv_res = ls_params-param ** 2.
 
     CREATE OBJECT ro_result
       TYPE
       lcl_result
       EXPORTING
-        iv_param  = mo_context->ms_params-param
+        iv_param  = ls_params-param
         iv_result = mv_res.
 
   ENDMETHOD.
@@ -117,5 +122,4 @@ CLASS lcl_result IMPLEMENTATION.
     CONCATENATE lv_param ` -> ` lv_result INTO rv_result.
 
   ENDMETHOD.
-
 ENDCLASS.
