@@ -51,10 +51,11 @@ CLASS lcl_context DEFINITION FINAL.
            END OF ty_params.
 
     METHODS: constructor IMPORTING is_params TYPE ty_params,
-    
-             get RETURNING value(rs_params) TYPE ty_params.
+             get RETURNING VALUE(rs_params) TYPE ty_params.
 
+  PRIVATE SECTION.
     DATA: ms_params TYPE ty_params.
+
 ENDCLASS.
 
 CLASS lcl_context IMPLEMENTATION.
@@ -77,7 +78,6 @@ CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_abstract_task FINAL.
     DATA: mo_context TYPE REF TO lcl_context.
 
     METHODS: constructor IMPORTING io_context TYPE REF TO lcl_context,
-    
              zif_capi_callable~call REDEFINITION.
 
   PRIVATE SECTION.
@@ -92,14 +92,16 @@ CLASS lcl_task IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD zif_capi_callable~call.
+    DATA: ls_params TYPE lcl_context=>ty_params.
 
-    mv_res = mo_context->ms_params-param ** 2.
+    ls_params = mo_context->get( ).
+    mv_res = ls_params-param ** 2.
 
     CREATE OBJECT ro_result
       TYPE
       lcl_result
       EXPORTING
-        iv_param  = mo_context->ms_params-param
+        iv_param  = ls_params-param
         iv_result = mv_res.
 
   ENDMETHOD.
@@ -115,7 +117,7 @@ CLASS lcl_result DEFINITION FINAL.
 
     METHODS: constructor IMPORTING iv_param  TYPE i
                                    iv_result TYPE i,
-             get RETURNING value(rv_result) TYPE char20.
+             get RETURNING VALUE(rv_result) TYPE string.
 
   PRIVATE SECTION.
     DATA: mv_param TYPE i.
@@ -130,17 +132,17 @@ CLASS lcl_result IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get.
-    DATA: lv_param  TYPE char10,
-          lv_result TYPE char10.
+    DATA: lv_param  TYPE string,
+          lv_result TYPE string.
 
     lv_param = mv_param.
     lv_result = mv_result.
 
-    CONDENSE: lv_param, lv_result.
+    CONDENSE lv_param.
+    CONDENSE lv_result.
     CONCATENATE lv_param ` -> ` lv_result INTO rv_result.
 
   ENDMETHOD.
-
 ENDCLASS.
 ```
 **Внимание:**  
