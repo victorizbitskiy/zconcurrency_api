@@ -1,7 +1,6 @@
 ![ABAP 7.00+](https://img.shields.io/badge/ABAP-7.00%2B-brightgreen)
 
-**ВНИМАНИЕ**: ABAP Concurrency API все еще разрабатывается, API может меняться. Пожалуйста, используйте его на свой страх и риск, пока не выпустится версия 1.0.
-
+**ВНИМАНИЕ**: ABAP Concurrency API все еще разрабатывается, API может меняться.
 ## `ABAP Concurrency API`
 API для параллельных вычислений, основанное на SPTA Framework.
 
