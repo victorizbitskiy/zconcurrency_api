@@ -54,7 +54,6 @@ CLASS lcl_app IMPLEMENTATION.
         WRITE: / lv_result.
       ENDWHILE.
     ENDIF.
-
   ENDMETHOD.
 ENDCLASS.
 *----------------------------------------------------------------------*
