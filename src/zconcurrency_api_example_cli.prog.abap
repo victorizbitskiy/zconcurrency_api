@@ -44,7 +44,7 @@ CLASS lcl_app IMPLEMENTATION.
     lo_results = lo_executor->zif_capi_executor_service~invoke_all( lo_tasks ).
     lo_results_iterator = lo_results->get_iterator( ).
 
-    IF lo_message_handler->zif_capi_message_handler~has_messages( ).
+    IF lo_message_handler->zif_capi_message_handler~has_messages( ) = abap_true.
 *     Message processing...
 *     lt_message_list = lo_message_handler->zif_capi_message_handler~get_message_list( ).
     ELSE.
