@@ -55,7 +55,6 @@ CLASS lcl_context DEFINITION FINAL.
 
   PRIVATE SECTION.
     DATA: ms_params TYPE ty_params.
-
 ENDCLASS.
 
 CLASS lcl_context IMPLEMENTATION.
@@ -81,7 +80,6 @@ CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_abstract_task FINAL.
   PRIVATE SECTION.
     DATA: mo_context TYPE REF TO lcl_context.
     DATA: mv_res TYPE i.
-
 ENDCLASS.
 
 CLASS lcl_task IMPLEMENTATION.
@@ -102,7 +100,6 @@ CLASS lcl_task IMPLEMENTATION.
       EXPORTING
         iv_param  = ls_params-param
         iv_result = mv_res.
-
   ENDMETHOD.
 ENDCLASS.
 ```
@@ -121,7 +118,6 @@ CLASS lcl_result DEFINITION FINAL.
   PRIVATE SECTION.
     DATA: mv_param TYPE i.
     DATA: mv_result TYPE i.
-
 ENDCLASS.
 
 CLASS lcl_result IMPLEMENTATION.
@@ -140,7 +136,6 @@ CLASS lcl_result IMPLEMENTATION.
     CONDENSE lv_param.
     CONDENSE lv_result.
     CONCATENATE lv_param ` -> ` lv_result INTO rv_result.
-
   ENDMETHOD.
 ENDCLASS.
 ```
