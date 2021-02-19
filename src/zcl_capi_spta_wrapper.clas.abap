@@ -110,10 +110,6 @@ CLASS ZCL_CAPI_SPTA_WRAPPER IMPLEMENTATION.
         io_capi_message_handler     = mo_capi_message_handler
         io_results                  = lo_results.
 
-    CALL FUNCTION 'SPBT_INITIALIZE'
-      EXPORTING
-        group_name = mv_server_group.
-
     CALL FUNCTION 'SPTA_PARA_PROCESS_START_2'
       EXPORTING
         server_group             = mv_server_group
