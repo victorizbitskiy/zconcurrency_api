@@ -217,7 +217,7 @@ All we did was describe what the *Task* and *Result* are.
 
 ![result](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/result.png)
 
-An example of using the `ABAP Concurrency API` can be found in the **CONCURRENCY_API_EXAMPLE **report.
+An example of using the `ABAP Concurrency API` can be found in the **ZCONCURRENCY_API_EXAMPLE** report.
 
 # UML Class Diagram
 
