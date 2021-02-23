@@ -42,7 +42,7 @@ There are two easy ways to install the ABAP Concurrency API:
 
 Let's consider a simple task:  
 
-*You need to find the squares of numbers from **`1`** до **`10`***.
+*You need to find the squares of numbers from **`1`** to **`10`***.
 
 The square of each of the numbers will be found in a separate task/process.  
 The example is detached from the real world, but it is enough to understand how to work with the API.
