@@ -199,13 +199,12 @@ Now, let's have a look at example:
 4. Now we come to the most important part of the API f- the concept of an `executor_service`. The executor asynchronously executes the tasks passed to it.  
    Create an object **lo_executor** of class **zcl_capi_executor_service**. The class constructor has 4 parameters:
 
-- **iv_server_group**             - server group (tcode: RZ12)
-
-- **iv_max_no_of_tasks**          - maximum number of concurrent tasks
-
-- **iv_no_resubmission_on_error** - flag "true" - don't restart the task in case of an error
-
-- **io_capi_message_handler**     - an object that will contain error messages (if they occurred)
+| Parameter name              | Description                                                  |
+| :-------------------------- | :----------------------------------------------------------- |
+| iv_server_group             | server group (tcode: RZ12)                                   |
+| iv_max_no_of_tasks          | maximum number of concurrent tasks                           |
+| iv_no_resubmission_on_error | flag "**true**" - don't restart the task in case of an error |
+| io_capi_message_handler     | an object that will contain error messages (if they occurred) |
 
   The **lo_executor** object has only one interface method **invoke_all ()**, which takes as input a **collection of tasks** and returns a **collection of results** **lo_results** (the approach was taken from ***java.util.concurrent.***).
 
