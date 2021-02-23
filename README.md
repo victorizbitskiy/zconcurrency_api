@@ -4,7 +4,7 @@
 
 ## `ABAP Concurrency API`
 
-APIs for parallel programming based on the SPTA Framework.
+API for parallel programming based on the SPTA Framework.
 
 ## What it is?
 
