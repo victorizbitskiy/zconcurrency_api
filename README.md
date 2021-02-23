@@ -19,7 +19,7 @@ Implementing parallel computing in ABAP typically involves the following steps:
 3. Asynchronous calling RFC function module in a loop
 4. Waiting for execution and **getting results of work**
 
-If you look at the resulting list, you will notice that, by and large, we are only interested in steps **`2`** and **` 4` **.
+If you look at the resulting list, you will notice that, by and large, we are only interested in steps **`2`** and **`4`**.
 Everything else is routine work that takes time every time and, potentially, can be a source of errors.
 
 To avoid generating an RFC function module every time you need to do parallel processing, you can use the SPTA Framework provided by the vendor.   
