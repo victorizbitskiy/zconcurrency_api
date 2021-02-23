@@ -204,8 +204,8 @@ ENDCLASS.
 
 Рассмотренный пример использования `ABAP Concurrency API` можно найти в отчете **ZCONCURRENCY_API_EXAMPLE**.
 
-# UML Class Diagram
+# UML диаграмма классов
 ![UML Class Diagram](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Diagram.png)
 
-# License
+# Лицензия
 [Unlicense License](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/LICENSE)
