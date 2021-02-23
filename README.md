@@ -1,48 +1,57 @@
 ![ABAP 7.00+](https://img.shields.io/badge/ABAP-7.00%2B-brightgreen)
 
-**ВНИМАНИЕ**: Проект все еще разрабатывается и API может меняться.
+**ATTENTION**: The API is still under development, and subject to change.
+
 ## `ABAP Concurrency API`
-API для параллельных вычислений, основанное на SPTA Framework.
 
-## Что это такое?
-`ABAP Concurrency API` - это несколько классов, предназначенных для реализации параллельных вычислений.
+APIs for parallel programming based on the SPTA Framework.
 
-## Зачем это нужно?
-Реализация параллельных вычислений в ABAP обычно включает следующие шаги:
-1. Создание RFC ФМ-а
-2. **Реализация** внутри него **бизнес-логики**
-3. Асинхронный вызов RFC ФМ-а в цикле
-4. Ожидание выполнения и **получение результатов работы**
+## What it is?
 
-Если посмотреть на получившийся список, то можно заметить, что по большому счету нас интересует только шаги **`2`** и **`4`**.
-Все остальное - это рутинная работа, которая каждый раз занимает время и, потенциально, может быть источником ошибок.
+Utility classes useful in concurrent programming.
 
-Чтобы не создавать RFC ФМ каждый раз когда необходимо выполнить параллельную обработку, можно использовать SPTA Framework, который нам предоставил вендор.  
-SPTA Framework это хороший инструмент, но интерфейс взаимодействия с ним оставляет желать лучшего. Из-за этого, разработчику приходится прикладывать не малые усилия, для того, чтобы реализовать сам процесс распараллеливания.  
+## What is this for?
 
-Кроме того, написать чистый код, используя непосредственно SPTA Framework тоже не самая простая задача. Нужно быть настоящим ниндзя, чтобы избежать использования глобальных переменных. В конечном итоге, код может получится запутанным и тяжело поддерживаемым.
+Implementing parallel computing in ABAP typically involves the following steps:
 
-`ABAP Concurrency API` позволяет избежать этих проблем. С ним вы можете позволить себе мыслить более абстрактно.
-Вам не нужно акцентировать внимание на распараллеливании. Вместо этого, вы можете уделить больше времени бизнес-логике вашего приложения.  
+1. Creating an RFC function module
+2. **Implementation of business logic** inside it
+3. Asynchronous calling RFC function module in a loop
+4. Waiting for execution and **getting results of work**
 
-## Установка
-Есть два простых способа установить `ABAP Concurrency API`:
+If you look at the resulting list, you will notice that, by and large, we are only interested in steps **`2`** and **` 4` **.
+Everything else is routine work that takes time every time and, potentially, can be a source of errors.
+
+To avoid generating an RFC function module every time you need to do parallel processing, you can use the SPTA Framework provided by the vendor.   
+
+The SPTA Framework is a good tool, but its interface leaves a lot to be desired. Because of this, the developer has to make a lot of effort to implement the parallelization process itself.
+
+In addition, writing clean code using the SPA Framework directly is also not the easiest task. You need to be a real ninja to avoid using global variables. After all, the code can be confusing and difficult to maintain.
+
+The `ABAP Concurrency API` avoids these problems. With it, you can allow yourself to think more abstractly.
+You don't need to focus on parallelization. Instead, you can spend more time on the business logic of your application.
+
+## Installation
+
+There are two easy ways to install the ABAP Concurrency API:
 
 1. [abapGit](http://www.abapgit.org).
 2. [SAPlink](https://gist.github.com/victorizbitskiy/bcbd9ea7ac4ef7a06e58c01b06b4cce0)
 
-## Использование
-Рассмотрим простую задачу:  
+## Using
 
-*Необходимо найти квадраты чисел от **`1`** до **`10`***.
+Let's consider a simple task:  
 
-Квадрат каждого из чисел будем искать в отдельной задаче/процессе.  
-Пример оторван от реального мира, но его достаточно для того, чтобы понять как работать с API.
+*You need to find the squares of numbers from **`1`** до **`10`***.
 
-Для начала создадим необходимые нам 3 класса: *Контекст*, *Задача* и *Результат*. 
-1. **lcl_contex**, объект этого класса будет инкапсулировать параметры задачи.
-Использование этого класса не обязательно. Можно обойтись и без него, передав параметры задачи непосредственно в ее конструктор.
-Однако, использование отдельного класса, на мой взгляд, предпочтительнее.
+The square of each of the numbers will be found in a separate task/process.  
+The example is detached from the real world, but it is enough to understand how to work with the API.
+
+First, let's create the 3 classes we need: *Context*, *Task* and *Result*.
+
+1. **lcl_contex**, an object of this class encapsulates the task parameters.
+   The use of this class is optional. You can do without it by passing the task parameters directly to its constructor.
+   However, in my opinion, it is preferable to use a separate class.
 
 ```abap
 CLASS lcl_context DEFINITION FINAL.
@@ -70,8 +79,9 @@ CLASS lcl_context IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-2. **lcl_task**, описывает объект *Задача*. Содержит бизнес-логику (в нашем случае возведение числа в степень 2).
-   Обратите внимание, что класс **lcl_task** наследуется от класса **zcl_capi_abstract_task** и переопределяет метод **zif_capi_callable~call**.
+
+2. **lcl_task**, describes an object *Task*. Contains business logic (in our case, raising a number to the power of 2).
+   Note that the **lcl_task** class inherits from the **zcl_capi_abstract_task** class and overrides the **zif_capi_callable~call** method.
 
 ```abap
 CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_abstract_task FINAL.
@@ -106,8 +116,9 @@ CLASS lcl_task IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-3. **lcl_result** описывает *Результат* выполнения задачи. 
-Этот класс должен реализовывать интерфейс **if_serializable_object**. В остальном вы можете описать его произвольным образом.
+
+3. **lcl_result** describes *the result* of the task.
+   This class must implement the **if_serializable_object** interface. Otherwise, you can describe it in any way you want.
 
 ```abap
 CLASS lcl_result DEFINITION FINAL.
@@ -142,12 +153,13 @@ CLASS lcl_result IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-**Внимание:**  
-Объекты классов **lcl_task** и **lcl_result** сериализуются/десериализуются в процессе выполнения, поэтому избегайте использования статичных атрибутов.
-Статичные атрибуты принадлежат классу, а не объекту. Их содержимое при сериализации/десериализации будет утеряно.
 
-Итак, объекты *Контекст*, *Задача* и *Результат* описаны. 
-Теперь посмотрим пример их применения:
+**Attention:**  
+Objects of the **local_task** and **lcl_result** classes are serialized/deserialized at runtime, so avoid using static attributes.
+Static attributes belong to the class, not the object. Their contents will be lost after serialization/deserialization.
+
+So, the objects *Context*, *Task*, and *Result* are described.
+Now, let's have a look at example:
 
 ```abap
     DATA: lo_result TYPE REF TO lcl_result.
@@ -180,32 +192,38 @@ ENDCLASS.
     ENDWHILE.
 
 ```
-1. Сначала создаем *Коллекцию задач* **lo_tasks**
-2. Далее, создаем *Задачу* **lo_task** и добавляем ее в *Коллекцию задач* **lo_tasks**
-3. Создаем *Обработчик сообщений* **lo_message_handler**
-4. Теперь мы подошли к наиболее важной части API - к понятию "сервиса-исполнителя". Сервис-исполнитель асинхронно выполняет переданные в него задачи.  
-   Создаем объект **lo_executor** класса **zcl_capi_executor_service**. Конструктор класса имеет 4 параметра:
 
-- **iv_server_group**             - группа серверов (tcode: RZ12)
-- **iv_max_no_of_tasks**          - максимальное количество одновременно работающих задач
-- **iv_no_resubmission_on_error** - флаг, 'true'- "не запускать повторно задачу при возникновении ошибке"
-- **io_capi_message_handler**     - объект, который будет содержать сообщения об ошибках (если они произошли)  
-  
-  Объект lo_executor имеет только один интерфейсный метод **invoke_all()**, который принимает на вход *Коллекцию задач* и возвращает *Коллекцию результатов* **lo_results**  (подход заимствован из **java.util.concurrent.***).
+1. First, create *Tasks collection* **lo_tasks**
+2. Next, create a *Task* **lo_task** and add it to the *Tasks collection* **lo_tasks**
+3. Create a message handler **lo_message_handler**
+4. Now we come to the most important part of the API f- the concept of an `executor_service`. The executor asynchronously executes the tasks passed to it.  
+   Create an object **lo_executor** of class **zcl_capi_executor_service**. The class constructor has 4 parameters:
 
-5. У *Коллекции результатов* **lo_results** есть итератор, используя который мы легко получаем *Результаты работы* **lo_result** и вызываем у них метод **get( )**.  
+- **iv_server_group**             - server group (tcode: RZ12)
 
-В итоге, нам не пришлось создавать RFC ФМ, описывать процесс распараллеливания и т.д.
-Все что мы сделали, это описали что собой представляют *Задача* и *Результат*.
+- **iv_max_no_of_tasks**          - maximum number of concurrent tasks
 
-**Результат работы:**
+- **iv_no_resubmission_on_error** - flag "true" - don't restart the task in case of an error
+
+- **io_capi_message_handler**     - an object that will contain error messages (if they occurred)
+
+  The **lo_executor** object has only one interface method **invoke_all ()**, which takes as input a **collection of tasks** and returns a **collection of results** **lo_results** (the approach was taken from ***java.util.concurrent.***).
+
+5. The *Collection of results* **lo_results** has an iterator, using which we easily get the **lo_result** and call the **get() **method from them.
+
+As a result, we did't have to create an RFC functional module, describe the parallelization process, etc.
+All we did was describe what the *Task* and *Result* are.
+
+**Result of execution:**
 
 ![result](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/result.png)
 
-Рассмотренный пример использования `ABAP Concurrency API` можно найти в отчете **ZCONCURRENCY_API_EXAMPLE**.
+An example of using the `ABAP Concurrency API` can be found in the **CONCURRENCY_API_EXAMPLE **report.
 
-# UML диаграмма классов
+# UML Class Diagram
+
 ![UML Class Diagram](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Diagram.png)
 
-# Лицензия
+# License
+
 [Unlicense License](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/LICENSE)
