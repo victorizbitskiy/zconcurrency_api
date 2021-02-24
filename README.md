@@ -205,9 +205,15 @@ All we did was describe what the *Task* and *Result* are.
 
 An example of using the `ABAP Concurrency API` can be found in the **ZCONCURRENCY_API_EXAMPLE** report.
 
-# UML Class Diagram
-
-![UML Class Diagram](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Diagram.png)
+# Diagrams
+<details>
+  <summary>1. UML Class Diagram</summary>
+   ![UML Class Diagram](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Diagram.png)
+</details>
+<details>
+  <summary>2. UML Sequence Diagram</summary>
+   ![UML Class Diagram](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Sequence%20Diagram.png)
+</details>
 
 # License
 
