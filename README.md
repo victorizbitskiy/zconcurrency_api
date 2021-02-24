@@ -106,13 +106,9 @@ CLASS lcl_task IMPLEMENTATION.
 
     ls_params = mo_context->get( ).
     mv_res = ls_params-param ** 2.
-
-    CREATE OBJECT ro_result
-      TYPE
-      lcl_result
-      EXPORTING
-        iv_param  = ls_params-param
-        iv_result = mv_res.
+    
+    ro_result = new lcl_result( iv_param  = ls_params-param
+                                iv_result = mv_res ).
   ENDMETHOD.
 ENDCLASS.
 ```
@@ -141,15 +137,7 @@ CLASS lcl_result IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get.
-    DATA: lv_param  TYPE string,
-          lv_result TYPE string.
-
-    lv_param = mv_param.
-    lv_result = mv_result.
-
-    CONDENSE lv_param.
-    CONDENSE lv_result.
-    CONCATENATE lv_param ` -> ` lv_result INTO rv_result.
+    rv_result = |{ mv_param } -> { mv_result }|.
   ENDMETHOD.
 ENDCLASS.
 ```
