@@ -194,11 +194,11 @@ ENDCLASS.
 
 # Diagrams
 <details>
-  <summary>1. UML диаграмма классов</summary>
+  <summary>UML диаграмма классов</summary>
    <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Diagram.png"><img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Diagram.png" alt="UML Class Diagram" style="max-width:100%;"></a></p>
 </details>
 <details>
-  <summary>2. UML диаграмма последовательности </summary>
+  <summary>UML диаграмма последовательности </summary>
    <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Sequence%20Diagram.png"><img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Sequence%20Diagram.png" alt="UML Sequence Diagram" style="max-width:100%;"></a></p>
 </details>
 
