@@ -192,7 +192,7 @@ Now, let's have a look at example:
 | iv_no_resubmission_on_error | flag "**true**" - don't restart the task in case of an error |
 | io_capi_message_handler     | an object that will contain error messages (if they occurred) |
 
-  The **lo_executor** object has only one interface method **invoke_all ()**, which takes as input a **collection of tasks** and returns a **collection of results** **lo_results** (the approach was taken from ***java.util.concurrent.***).
+  The **lo_executor** object has only one interface method **invoke_all ()**, which takes as input a **collection of tasks** and returns a **collection of results** **lo_results** (the approach was taken from **java.util.concurrent.***).
 
 5. The *Collection of results* **lo_results** has an iterator, using which we easily get the **lo_result** and call the **get() **method from them.
 
