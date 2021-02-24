@@ -102,9 +102,7 @@ CLASS lcl_task IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD zif_capi_callable~call.
-    DATA: ls_params TYPE lcl_context=>ty_params.
-
-    ls_params = mo_context->get( ).
+    DATA(ls_params) = mo_context->get( ).
     mv_res = ls_params-param ** 2.
     
     ro_result = new lcl_result( iv_param  = ls_params-param
