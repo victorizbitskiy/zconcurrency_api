@@ -13,12 +13,12 @@ CLASS zcl_capi_thread_pool_executor DEFINITION
         !iv_no_resubmission_on_error TYPE boole_d DEFAULT abap_false
         !io_capi_message_handler     TYPE REF TO zif_capi_message_handler .
   PROTECTED SECTION.
-PRIVATE SECTION.
+  PRIVATE SECTION.
 
-  DATA mv_server_group TYPE rfcgr .
-  DATA mv_n_threads TYPE i .
-  DATA mv_no_resubmission_on_error TYPE boole_d .
-  DATA mo_capi_message_handler TYPE REF TO zif_capi_message_handler .
+    DATA mv_server_group TYPE rfcgr .
+    DATA mv_n_threads TYPE i .
+    DATA mv_no_resubmission_on_error TYPE boole_d .
+    DATA mo_capi_message_handler TYPE REF TO zif_capi_message_handler .
 ENDCLASS.
 
 
@@ -26,7 +26,7 @@ ENDCLASS.
 CLASS ZCL_CAPI_THREAD_POOL_EXECUTOR IMPLEMENTATION.
 
 
-  METHOD CONSTRUCTOR.
+  METHOD constructor.
 
     mv_server_group = iv_server_group.
     mv_n_threads = iv_n_threads.

@@ -1,17 +1,17 @@
-class ZCL_CAPI_EXECUTORS definition
-  public
-  create public .
+CLASS zcl_capi_executors DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  class-methods NEW_FIXED_THREAD_POOL
-    importing
-      !IV_SERVER_GROUP type RFCGR
-      !IV_N_THREADS type I default 10
-      !IV_NO_RESUBMISSION_ON_ERROR type BOOLE_D default ABAP_FALSE
-      !IO_CAPI_MESSAGE_HANDLER type ref to ZIF_CAPI_MESSAGE_HANDLER
-    returning
-      value(RO_CAPI_THREAD_POOL_EXECUTOR) type ref to ZCL_CAPI_THREAD_POOL_EXECUTOR .
+    CLASS-METHODS new_fixed_thread_pool
+      IMPORTING
+        !iv_server_group                    TYPE rfcgr
+        !iv_n_threads                       TYPE i DEFAULT 10
+        !iv_no_resubmission_on_error        TYPE boole_d DEFAULT abap_false
+        !io_capi_message_handler            TYPE REF TO zif_capi_message_handler
+      RETURNING
+        VALUE(ro_capi_thread_pool_executor) TYPE REF TO zcl_capi_thread_pool_executor .
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
