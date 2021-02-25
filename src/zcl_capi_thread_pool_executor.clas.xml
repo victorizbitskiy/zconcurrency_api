@@ -3,28 +3,14 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>ZCL_CAPI_SPTA_WRAPPER</CLSNAME>
+    <CLSNAME>ZCL_CAPI_THREAD_POOL_EXECUTOR</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>ZCL_CAPI_SPTA_WRAPPER</DESCRIPT>
+    <DESCRIPT>ZCL_CAPI_THREAD_POOL_EXECUTOR</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
     <UNICODE>X</UNICODE>
    </VSEOCLASS>
-   <TPOOL>
-    <item>
-     <ID>I</ID>
-     <KEY>001</KEY>
-     <ENTRY>Completed</ENTRY>
-     <LENGTH>19</LENGTH>
-    </item>
-    <item>
-     <ID>I</ID>
-     <KEY>002</KEY>
-     <ENTRY>of</ENTRY>
-     <LENGTH>12</LENGTH>
-    </item>
-   </TPOOL>
   </asx:values>
  </asx:abap>
 </abapGit>

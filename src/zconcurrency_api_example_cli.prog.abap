@@ -7,12 +7,15 @@ CLASS lcl_app IMPLEMENTATION.
           lo_task             TYPE REF TO lcl_task,
           lo_context          TYPE REF TO lcl_context,
           ls_params           TYPE lcl_context=>ty_params,
-          lo_executor         TYPE REF TO zcl_capi_executor_service,
+          lo_executor         TYPE REF TO zif_capi_executor_service,
           lo_message_handler  TYPE REF TO zcl_capi_message_handler,
+          lt_message_list     TYPE zif_capi_message_handler=>ty_message_list_tab,
           lo_results          TYPE REF TO zif_capi_collection,
           lo_results_iterator TYPE REF TO zif_capi_iterator,
           lo_result           TYPE REF TO lcl_result,
           lv_result           TYPE string.
+
+    FIELD-SYMBOLS: <ls_message_list> LIKE LINE OF lt_message_list.
 
 *   Create collection of tasks
     CREATE OBJECT lo_tasks.
@@ -34,25 +37,29 @@ CLASS lcl_app IMPLEMENTATION.
 
     CREATE OBJECT lo_message_handler.
 
-    CREATE OBJECT lo_executor
-      EXPORTING
-        iv_server_group             = 'parallel_generators'
-        iv_max_no_of_tasks          = 5
-        iv_no_resubmission_on_error = abap_false
-        io_capi_message_handler     = lo_message_handler.
-
-    lo_results = lo_executor->zif_capi_executor_service~invoke_all( lo_tasks ).
+    lo_executor = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group             = 'parallel_generators'
+                                                             iv_n_threads                = 5
+                                                             iv_no_resubmission_on_error = abap_false
+                                                             io_capi_message_handler     = lo_message_handler ).
+    lo_results = lo_executor->invoke_all( lo_tasks ).
     lo_results_iterator = lo_results->get_iterator( ).
 
     IF lo_message_handler->zif_capi_message_handler~has_messages( ) = abap_true.
-*     Message processing...
-*     lt_message_list = lo_message_handler->zif_capi_message_handler~get_message_list( ).
+
+      lt_message_list = lo_message_handler->zif_capi_message_handler~get_message_list( ).
+
+      LOOP AT lt_message_list ASSIGNING <ls_message_list>.
+        WRITE: / <ls_message_list>-task_id, <ls_message_list>-task_name, <ls_message_list>-rfcsubrc, <ls_message_list>-rfcmsg.
+      ENDLOOP.
+
     ELSE.
+
       WHILE lo_results_iterator->has_next( ) = abap_true.
         lo_result ?= lo_results_iterator->next( ).
         lv_result = lo_result->get( ).
         WRITE: / lv_result.
       ENDWHILE.
+
     ENDIF.
   ENDMETHOD.
 ENDCLASS.

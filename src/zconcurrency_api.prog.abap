@@ -38,7 +38,7 @@ FORM before_rfc USING is_before_rfc_imp TYPE spta_t_before_rfc_imp
   IF lo_tasks_iterator->has_next( ) = abap_true.
 
     lo_task ?= lo_tasks_iterator->next( ).
-    lv_task = zcl_capi_spta_wrapper=>serialize_task( lo_task ).
+    lv_task = zcl_capi_spta_gateway=>serialize_task( lo_task ).
 
     CALL FUNCTION 'SPTA_INDX_PACKAGE_ENCODE'
       EXPORTING
@@ -76,9 +76,9 @@ FORM in_rfc USING is_in_rfc_imp TYPE spta_t_in_rfc_imp
     IMPORTING
       data    = lv_task.
 
-  lo_task = zcl_capi_spta_wrapper=>deserialize_task( lv_task ).
+  lo_task = zcl_capi_spta_gateway=>deserialize_task( lv_task ).
   lo_result = lo_task->zif_capi_callable~call( ).
-  lv_result = zcl_capi_spta_wrapper=>serialize_result( lo_result ).
+  lv_result = zcl_capi_spta_gateway=>serialize_result( lo_result ).
 
   CALL FUNCTION 'SPTA_INDX_PACKAGE_ENCODE'
     EXPORTING
@@ -119,7 +119,7 @@ FORM after_rfc USING it_rfcdata TYPE spta_t_indxtab
       IMPORTING
         data    = lv_result.
 
-    lo_result = zcl_capi_spta_wrapper=>deserialize_result( lv_result ).
+    lo_result = zcl_capi_spta_gateway=>deserialize_result( lv_result ).
 
     co_capi_spta_gateway->mo_results->add( lo_result ).
 
@@ -181,7 +181,7 @@ FORM process_failed_objects CHANGING cs_before_rfc_exp TYPE spta_t_before_rfc_ex
 
       IF lo_task->get_id( ) = <ls_failed_objects>-obj_id.
 
-        lv_task = zcl_capi_spta_wrapper=>serialize_task( lo_task ).
+        lv_task = zcl_capi_spta_gateway=>serialize_task( lo_task ).
 
         CALL FUNCTION 'SPTA_INDX_PACKAGE_ENCODE'
           EXPORTING
