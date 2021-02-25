@@ -130,19 +130,17 @@ CLASS ltc_capi_executor_service IMPLEMENTATION.
 
     CREATE OBJECT mo_tasks.
 
-    DO 5 TIMES.
-      ls_params-param = sy-index.
+    ls_params-param = 5.
 
-      CREATE OBJECT lo_context
-        EXPORTING
-          is_params = ls_params.
+    CREATE OBJECT lo_context
+      EXPORTING
+        is_params = ls_params.
 
-      CREATE OBJECT lo_task
-        EXPORTING
-          io_context = lo_context.
+    CREATE OBJECT lo_task
+      EXPORTING
+        io_context = lo_context.
 
-      mo_tasks->zif_capi_collection~add( lo_task ).
-    ENDDO.
+    mo_tasks->zif_capi_collection~add( lo_task ).
 
     CREATE OBJECT lo_message_handler.
 
@@ -167,17 +165,16 @@ CLASS ltc_capi_executor_service IMPLEMENTATION.
     lo_results = mo_cut->invoke_all( mo_tasks ).
     lo_results_iterator = lo_results->get_iterator( ).
 
-    WHILE lo_results_iterator->has_next( ).
-
-      lv_result_exp = sy-index ** 2.
+    IF lo_results_iterator->has_next( ).
 
       lo_result ?= lo_results_iterator->next( ).
       lv_result_act = lo_result->get( ).
+      lv_result_exp = 5 ** 2.
 
       cl_aunit_assert=>assert_equals( exp = lv_result_exp
                                       act = lv_result_act
                                       msg = 'Testing invoke_all( )' ).
-    ENDWHILE.
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
