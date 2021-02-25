@@ -163,12 +163,13 @@ Now, let's have a look at example:
     ENDDO.
 
     DATA(lo_message_handler) = NEW zcl_capi_message_handler( ).
-    DATA(lo_executor) = NEW zcl_capi_executor_service( iv_server_group             = 'parallel_generators'
-                                                       iv_max_no_of_tasks          = 5
-                                                       iv_no_resubmission_on_error = abap_false
-                                                       io_capi_message_handler     = lo_message_handler ).
-                                                       
-    DATA(lo_results) = lo_executor->zif_capi_executor_service~invoke_all( lo_tasks ).
+    
+    DATA(lo_executor) = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group             = 'parallel_generators'
+                                                                   iv_n_threads                = 5
+                                                                   iv_no_resubmission_on_error = abap_false
+                                                                   io_capi_message_handler     = lo_message_handler ).
+                                                             
+    lo_results = lo_executor->zif_capi_executor_service~invoke_all( lo_tasks ).
     DATA(lo_results_iterator) = lo_results->get_iterator( ).
 
     WHILE lo_results_iterator->has_next( ).
