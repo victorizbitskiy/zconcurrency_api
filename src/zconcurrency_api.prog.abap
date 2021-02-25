@@ -68,6 +68,8 @@ FORM in_rfc USING is_in_rfc_imp TYPE spta_t_in_rfc_imp
         lo_result TYPE REF TO if_serializable_object,
         lv_result TYPE xstring.
 
+  SET UPDATE TASK LOCAL.
+
   CALL FUNCTION 'SPTA_INDX_PACKAGE_DECODE'
     EXPORTING
       indxtab = ct_rfcdata
@@ -83,6 +85,8 @@ FORM in_rfc USING is_in_rfc_imp TYPE spta_t_in_rfc_imp
       data    = lv_result
     IMPORTING
       indxtab = ct_rfcdata.
+
+  COMMIT WORK.
 
 ENDFORM.
 
