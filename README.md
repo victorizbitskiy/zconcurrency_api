@@ -170,6 +170,7 @@ Now, let's have a look at example:
                                                                    io_capi_message_handler     = lo_message_handler ).
                                                              
     lo_results = lo_executor->zif_capi_executor_service~invoke_all( lo_tasks ).
+    
     DATA(lo_results_iterator) = lo_results->get_iterator( ).
 
     WHILE lo_results_iterator->has_next( ).
