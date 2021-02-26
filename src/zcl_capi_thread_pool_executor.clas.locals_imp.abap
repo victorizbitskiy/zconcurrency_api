@@ -105,7 +105,7 @@ CLASS lcl_result IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 
-CLASS ltc_capi_executor_service DEFINITION FOR TESTING
+CLASS ltc_capi_thread_pool_executor DEFINITION FOR TESTING
   DURATION SHORT
   RISK LEVEL HARMLESS.
 
@@ -120,7 +120,7 @@ CLASS ltc_capi_executor_service DEFINITION FOR TESTING
 
 ENDCLASS.       "ltcl_Commonregex
 
-CLASS ltc_capi_executor_service IMPLEMENTATION.
+CLASS ltc_capi_thread_pool_executor IMPLEMENTATION.
   METHOD setup.
     DATA: lo_task            TYPE REF TO lcl_task,
           lo_context         TYPE REF TO lcl_context,
@@ -131,19 +131,17 @@ CLASS ltc_capi_executor_service IMPLEMENTATION.
 
     CREATE OBJECT mo_tasks.
 
-    DO 5 TIMES.
-      ls_params-param = sy-index.
+    ls_params-param = 5.
 
-      CREATE OBJECT lo_context
-        EXPORTING
-          is_params = ls_params.
+    CREATE OBJECT lo_context
+      EXPORTING
+        is_params = ls_params.
 
-      CREATE OBJECT lo_task
-        EXPORTING
-          io_context = lo_context.
+    CREATE OBJECT lo_task
+      EXPORTING
+        io_context = lo_context.
 
-      mo_tasks->zif_capi_collection~add( lo_task ).
-    ENDDO.
+    mo_tasks->zif_capi_collection~add( lo_task ).
 
     CREATE OBJECT lo_message_handler.
 
@@ -151,8 +149,6 @@ CLASS ltc_capi_executor_service IMPLEMENTATION.
                                                         iv_n_threads                = 4
                                                         iv_no_resubmission_on_error = abap_false
                                                         io_capi_message_handler     = lo_message_handler ).
-
-
   ENDMETHOD.
 
   METHOD teardown.
@@ -169,17 +165,17 @@ CLASS ltc_capi_executor_service IMPLEMENTATION.
     lo_results = mo_cut->invoke_all( mo_tasks ).
     lo_results_iterator = lo_results->get_iterator( ).
 
-    WHILE lo_results_iterator->has_next( ).
-
-      lv_result_exp = sy-index ** 2.
+    IF lo_results_iterator->has_next( ) = abap_true.
 
       lo_result ?= lo_results_iterator->next( ).
       lv_result_act = lo_result->get( ).
+      lv_result_exp = 5 ** 2.
 
       cl_aunit_assert=>assert_equals( exp = lv_result_exp
                                       act = lv_result_act
                                       msg = 'Testing invoke_all( )' ).
-    ENDWHILE.
-
+    ELSE.
+      cl_aunit_assert=>fail( msg = 'Testing invoke_all( )' ).
+    ENDIF.
   ENDMETHOD.
 ENDCLASS.
