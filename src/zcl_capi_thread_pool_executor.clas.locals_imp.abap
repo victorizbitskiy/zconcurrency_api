@@ -119,7 +119,7 @@ CLASS ltc_capi_thread_pool_executor DEFINITION FOR TESTING
       teardown,
       _invoke_all FOR TESTING.
 
-ENDCLASS.       "ltcl_Commonregex
+ENDCLASS.
 
 CLASS ltc_capi_thread_pool_executor IMPLEMENTATION.
   METHOD setup.
