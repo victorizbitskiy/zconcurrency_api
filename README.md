@@ -184,8 +184,8 @@ Now, let's have a look at example:
 1. First, create *Tasks collection* **lo_tasks**
 2. Next, create a *Task* **lo_task** and add it to the *Tasks collection* **lo_tasks**
 3. Create a message handler **lo_message_handler**
-4. Now we come to the most important part of the API f- the concept of an `executor_service`. The executor asynchronously executes the tasks passed to it.  
-   Create an object **lo_executor** of class **zcl_capi_executor_service**. The class constructor has 4 parameters:
+4. Now we come to the most important part of the API of the “executor service” concept. The executor asynchronously executes the tasks passed to it.  
+   In the example, we call the static method **zcl_capi_executors=>new_fixed_thread_pool**, which returns a lo_executor with a fixed number of threads. This method has 4 parameters:
 
 | Parameter name              | Description                                                  |
 | :-------------------------- | :----------------------------------------------------------- |
@@ -194,7 +194,7 @@ Now, let's have a look at example:
 | iv_no_resubmission_on_error | flag "**true**" - don't restart the task in case of an error |
 | io_capi_message_handler     | an object that will contain error messages (if they occurred) |
 
-  The **lo_executor** object has only one interface method **invoke_all ()**, which takes as input a **collection of tasks** and returns a **collection of results** **lo_results** (the approach was taken from **java.util.concurrent.***).
+  The **lo_executor** object has only one interface method **zif_capi_executor_service~invoke_all ()**, which takes as input a **collection of tasks** and returns a **collection of results** **lo_results** (the approach was taken from **java.util.concurrent.***).
 
 5. The *Collection of results* **lo_results** has an iterator, using which we easily get the **lo_result** and call the **get() **method from them.
 
