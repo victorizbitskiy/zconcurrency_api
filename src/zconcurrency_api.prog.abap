@@ -120,7 +120,6 @@ FORM after_rfc USING it_rfcdata TYPE spta_t_indxtab
         data    = lv_result.
 
     lo_result = zcl_capi_spta_gateway=>deserialize_result( lv_result ).
-
     co_capi_spta_gateway->mo_results->add( lo_result ).
 
     lv_tc_size = co_capi_spta_gateway->mo_tasks->size( ).

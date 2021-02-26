@@ -38,18 +38,15 @@ CLASS ZCL_CAPI_THREAD_POOL_EXECUTOR IMPLEMENTATION.
 
   METHOD zif_capi_executor_service~invoke_all.
     DATA: lo_capi_spta_gateway TYPE REF TO zcl_capi_spta_gateway,
-          lo_tasks             TYPE REF TO zcl_capi_collection,
-          lo_results           TYPE REF TO zcl_capi_collection.
+          lo_tasks             TYPE REF TO zcl_capi_collection.
 
     lo_tasks ?= io_tasks.
-    CREATE OBJECT lo_results.
 
     CREATE OBJECT lo_capi_spta_gateway
       EXPORTING
         io_tasks                    = lo_tasks
         iv_no_resubmission_on_error = mv_no_resubmission_on_error
-        io_capi_message_handler     = mo_capi_message_handler
-        io_results                  = lo_results.
+        io_capi_message_handler     = mo_capi_message_handler.
 
     CALL FUNCTION 'SPTA_PARA_PROCESS_START_2'
       EXPORTING
@@ -64,7 +61,7 @@ CLASS ZCL_CAPI_THREAD_POOL_EXECUTOR IMPLEMENTATION.
       EXCEPTIONS
         invalid_server_group     = 1
         no_resources_available   = 2
-        OTHERS                   = 3.
+      OTHERS                     = 3.
     IF sy-subrc = 0.
       ro_results ?= lo_capi_spta_gateway->mo_results.
     ENDIF.

@@ -107,7 +107,8 @@ ENDCLASS.
 
 CLASS ltc_capi_thread_pool_executor DEFINITION FOR TESTING
   DURATION SHORT
-  RISK LEVEL HARMLESS.
+  RISK LEVEL HARMLESS
+  FINAL.
 
   PRIVATE SECTION.
     DATA: mo_cut   TYPE REF TO zif_capi_executor_service,
@@ -125,9 +126,7 @@ CLASS ltc_capi_thread_pool_executor IMPLEMENTATION.
     DATA: lo_task            TYPE REF TO lcl_task,
           lo_context         TYPE REF TO lcl_context,
           ls_params          TYPE lcl_context=>ty_params,
-          lo_message_handler TYPE REF TO zcl_capi_message_handler,
-          lo_results         TYPE REF TO zif_capi_collection,
-          lv_result          TYPE string.
+          lo_message_handler TYPE REF TO zcl_capi_message_handler.
 
     CREATE OBJECT mo_tasks.
 
