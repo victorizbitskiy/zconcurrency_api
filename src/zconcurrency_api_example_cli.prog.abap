@@ -49,7 +49,10 @@ CLASS lcl_app IMPLEMENTATION.
       lt_message_list = lo_message_handler->zif_capi_message_handler~get_message_list( ).
 
       LOOP AT lt_message_list ASSIGNING <ls_message_list>.
-        WRITE: / <ls_message_list>-task_id, <ls_message_list>-task_name, <ls_message_list>-rfcsubrc, <ls_message_list>-rfcmsg.
+        WRITE: / <ls_message_list>-task_id,
+                 <ls_message_list>-task_name,
+                 <ls_message_list>-rfcsubrc,
+                 <ls_message_list>-rfcmsg.
       ENDLOOP.
 
     ELSE.
