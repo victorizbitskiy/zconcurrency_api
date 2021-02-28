@@ -1,32 +1,11 @@
 
 CLASS ltc_capi_thread_pool_executor DEFINITION FOR TESTING
   DURATION SHORT
-  RISK LEVEL HARMLESS
-.
-*?﻿<asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
-*?<asx:values>
-*?<TESTCLASS_OPTIONS>
-*?<TEST_CLASS>ltc_Capi_Thread_Pool_Executor
-*?</TEST_CLASS>
-*?<TEST_MEMBER>f_Cut
-*?</TEST_MEMBER>
-*?<OBJECT_UNDER_TEST>ZCL_CAPI_THREAD_POOL_EXECUTOR
-*?</OBJECT_UNDER_TEST>
-*?<OBJECT_IS_LOCAL/>
-*?<GENERATE_FIXTURE>X
-*?</GENERATE_FIXTURE>
-*?<GENERATE_CLASS_FIXTURE>X
-*?</GENERATE_CLASS_FIXTURE>
-*?<GENERATE_INVOCATION>X
-*?</GENERATE_INVOCATION>
-*?<GENERATE_ASSERT_EQUAL>X
-*?</GENERATE_ASSERT_EQUAL>
-*?</TESTCLASS_OPTIONS>
-*?</asx:values>
-*?</asx:abap>
+  RISK LEVEL HARMLESS.
+
   PRIVATE SECTION.
     DATA:
-      f_cut TYPE REF TO zcl_capi_thread_pool_executor.  "class under test
+      mo_cut TYPE REF TO zcl_capi_thread_pool_executor.  "class under test
 
     CLASS-METHODS: class_setup.
     CLASS-METHODS: class_teardown.
@@ -40,14 +19,10 @@ CLASS ltc_capi_thread_pool_executor IMPLEMENTATION.
 
   METHOD class_setup.
 
-
-
   ENDMETHOD.
 
 
   METHOD class_teardown.
-
-
 
   ENDMETHOD.
 
@@ -55,17 +30,15 @@ CLASS ltc_capi_thread_pool_executor IMPLEMENTATION.
   METHOD setup.
     DATA lo_capi_message_handler TYPE REF TO zif_capi_message_handler.
 
-    f_cut = zcl_capi_executors=>new_fixed_thread_pool(
+    mo_cut = zcl_capi_executors=>new_fixed_thread_pool(
                 iv_server_group         = 'parallel_generators'
                 io_capi_message_handler = lo_capi_message_handler
-            ).
+             ).
 
   ENDMETHOD.
 
 
   METHOD teardown.
-
-
 
   ENDMETHOD.
 
@@ -77,7 +50,7 @@ CLASS ltc_capi_thread_pool_executor IMPLEMENTATION.
 
     CREATE OBJECT lo_tasks.
 
-    lo_results = f_cut->zif_capi_executor_service~invoke_all( lo_tasks ).
+    lo_results = mo_cut->zif_capi_executor_service~invoke_all( lo_tasks ).
 
     IF lo_results IS NOT BOUND.
       cl_aunit_assert=>fail( msg = 'Testing invoke_all' ).

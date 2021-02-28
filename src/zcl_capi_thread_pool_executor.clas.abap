@@ -1,17 +1,17 @@
-class ZCL_CAPI_THREAD_POOL_EXECUTOR definition
-  public
-  create public .
+CLASS zcl_capi_thread_pool_executor DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces ZIF_CAPI_EXECUTOR_SERVICE .
+    INTERFACES zif_capi_executor_service .
 
-  methods CONSTRUCTOR
-    importing
-      !IV_SERVER_GROUP type RFCGR
-      !IV_N_THREADS type I default 10
-      !IV_NO_RESUBMISSION_ON_ERROR type BOOLE_D default ABAP_FALSE
-      !IO_CAPI_MESSAGE_HANDLER type ref to ZIF_CAPI_MESSAGE_HANDLER .
+    METHODS constructor
+      IMPORTING
+        !iv_server_group             TYPE rfcgr
+        !iv_n_threads                TYPE i DEFAULT 10
+        !iv_no_resubmission_on_error TYPE boole_d DEFAULT abap_false
+        !io_capi_message_handler     TYPE REF TO zif_capi_message_handler .
   PROTECTED SECTION.
   PRIVATE SECTION.
 
@@ -61,7 +61,7 @@ CLASS ZCL_CAPI_THREAD_POOL_EXECUTOR IMPLEMENTATION.
       EXCEPTIONS
         invalid_server_group     = 1
         no_resources_available   = 2
-      OTHERS                     = 3.
+        OTHERS                   = 3.
     IF sy-subrc = 0.
       ro_results ?= lo_capi_spta_gateway->mo_results.
     ENDIF.
