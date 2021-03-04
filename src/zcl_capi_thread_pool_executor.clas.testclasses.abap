@@ -30,11 +30,8 @@ CLASS ltc_capi_thread_pool_executor IMPLEMENTATION.
   METHOD setup.
     DATA lo_capi_message_handler TYPE REF TO zif_capi_message_handler.
 
-    mo_cut = zcl_capi_executors=>new_fixed_thread_pool(
-                iv_server_group         = 'parallel_generators'
-                io_capi_message_handler = lo_capi_message_handler
-             ).
-
+    mo_cut = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group         = 'parallel_generators'
+                                                        io_capi_message_handler = lo_capi_message_handler ).
   ENDMETHOD.
 
 
