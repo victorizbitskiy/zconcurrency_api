@@ -6,5 +6,5 @@ INTERFACE zif_capi_facade_hcm_result
 
   METHODS get
     EXPORTING
-      VALUE(et_result) TYPE any .
+      VALUE(et_result) TYPE ANY TABLE .
 ENDINTERFACE.
