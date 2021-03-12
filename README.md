@@ -33,10 +33,7 @@ You don't need to focus on parallelization. Instead, you can spend more time on 
 
 ## Installation
 
-There are two easy ways to install the ABAP Concurrency API:
-
-1. [abapGit](http://www.abapgit.org).
-2. [SAPlink](https://gist.github.com/victorizbitskiy/bcbd9ea7ac4ef7a06e58c01b06b4cce0)
+Installation is done with [abapGit](http://www.abapgit.org).
 
 ## Using
 
