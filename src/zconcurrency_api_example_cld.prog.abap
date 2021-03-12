@@ -3,7 +3,8 @@
 *&---------------------------------------------------------------------*
 CLASS lcl_app DEFINITION FINAL.
   PUBLIC SECTION.
-    CLASS-METHODS: main.
+    CLASS-METHODS:
+      main.
 
 ENDCLASS.
 *----------------------------------------------------------------------*
@@ -13,11 +14,13 @@ ENDCLASS.
 *----------------------------------------------------------------------*
 CLASS lcl_context DEFINITION FINAL.
   PUBLIC SECTION.
-    INTERFACES: if_serializable_object.
+    INTERFACES:
+      if_serializable_object.
 
-    TYPES: BEGIN OF ty_params,
-             param TYPE i,
-           END OF ty_params.
+    TYPES:
+      BEGIN OF ty_params,
+        param TYPE i,
+      END OF ty_params.
 
     METHODS:
       constructor IMPORTING is_params TYPE ty_params,
@@ -51,7 +54,8 @@ ENDCLASS.
 *----------------------------------------------------------------------*
 CLASS lcl_result DEFINITION FINAL.
   PUBLIC SECTION.
-    INTERFACES: if_serializable_object.
+    INTERFACES:
+      if_serializable_object.
 
     METHODS:
       constructor IMPORTING iv_param  TYPE i
