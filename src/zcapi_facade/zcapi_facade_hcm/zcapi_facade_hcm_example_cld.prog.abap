@@ -25,10 +25,10 @@ CLASS lcl_context DEFINITION INHERITING FROM zcl_capi_facade_hcm_abstr_cntx FINA
 
     METHODS:
       constructor IMPORTING is_params TYPE ty_params,
-      get_params RETURNING VALUE(rs_params) TYPE lcl_context=>ty_params.
+      get_params RETURNING VALUE(rs_params) TYPE ty_params.
 
   PRIVATE SECTION.
-    DATA: ms_params TYPE lcl_context=>ty_params.
+    DATA: ms_params TYPE ty_params.
 
 ENDCLASS.
 *----------------------------------------------------------------------*

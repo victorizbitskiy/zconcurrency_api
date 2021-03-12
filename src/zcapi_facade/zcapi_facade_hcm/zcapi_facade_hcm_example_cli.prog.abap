@@ -75,10 +75,10 @@ CLASS lcl_task IMPLEMENTATION.
   METHOD constructor.
     DATA: lo_context TYPE REF TO lcl_context.
 
-*   Здесь табельные номера из Контекста перекладываются в mt_pernrs Задачи
+*   Set Pernrs numbers to mt_pernrs of Task
     super->constructor( io_context ).
 
-*   Получаем параметры Задачи из Контекста
+*   Set Context parameters
     lo_context ?= io_context.
     ms_params = lo_context->get_params( ).
 

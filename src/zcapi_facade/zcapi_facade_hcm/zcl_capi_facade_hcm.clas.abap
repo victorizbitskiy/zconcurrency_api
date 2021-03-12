@@ -61,7 +61,7 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
 
     FIELD-SYMBOLS: <ls_message_list> LIKE LINE OF lt_message_list.
 
-    FORMAT HOTSPOT ON .
+    FORMAT HOTSPOT ON.
     FORMAT COLOR 6.
 
     WRITE: / 'Errors occurred when tasks were executed in parallel. The data is inconsistent.'(001).
@@ -197,7 +197,7 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
         no_pbt_resources_found         = 5
         cant_init_different_pbt_groups = 6
         OTHERS                         = 7.
-    IF sy-subrc EQ 0.
+    IF sy-subrc = 0.
       rv_max_no_of_tasks = lv_free_pbt_wps * 40 / 100.
     ELSE.
       rv_max_no_of_tasks = 5.
@@ -210,19 +210,19 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
           lo_results_iterator TYPE REF TO zif_capi_iterator,
           lo_result           TYPE REF TO zif_capi_facade_hcm_result.
 
-    FIELD-SYMBOLS: <fs_any> TYPE ANY TABLE.
+    FIELD-SYMBOLS: <lt_any> TYPE ANY TABLE.
 
     lo_results_iterator = io_results->get_iterator( ).
 
     CREATE DATA lo_data LIKE et_result.
-    ASSIGN lo_data->* TO <fs_any>.
+    ASSIGN lo_data->* TO <lt_any>.
 
-    IF <fs_any> IS ASSIGNED.
+    IF <lt_any> IS ASSIGNED.
       WHILE lo_results_iterator->has_next( ) = abap_true.
         lo_result ?= lo_results_iterator->next( ).
-        CLEAR <fs_any>.
-        lo_result->get( IMPORTING et_result = <fs_any> ).
-        INSERT LINES OF <fs_any> INTO TABLE et_result.
+        CLEAR <lt_any>.
+        lo_result->get( IMPORTING et_result = <lt_any> ).
+        INSERT LINES OF <lt_any> INTO TABLE et_result.
       ENDWHILE.
     ENDIF.
   ENDMETHOD.
