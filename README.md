@@ -6,6 +6,15 @@
 
 API for parallel programming based on the SPTA Framework.
 
+# Table of contents
+1. [What it is?](#what-it-is)
+2. [What is this for?](#what-is-this-for)
+3. [Installation](#installation)
+4. [Using](#using)
+5. [Diagrams](#diagrams)
+6. [Dependencies](#dependencies)
+7. [License](#license)
+
 ## What it is?
 
 Utility classes useful in concurrent programming.
