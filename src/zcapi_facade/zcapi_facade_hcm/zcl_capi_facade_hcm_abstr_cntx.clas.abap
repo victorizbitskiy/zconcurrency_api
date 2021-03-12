@@ -1,11 +1,11 @@
-CLASS zcl_capi_facade_hcm_abstr_cntx DEFINITION
-  PUBLIC
-  ABSTRACT
-  CREATE PUBLIC .
+class ZCL_CAPI_FACADE_HCM_ABSTR_CNTX definition
+  public
+  abstract
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    INTERFACES zif_capi_facade_hcm_context .
+  interfaces ZIF_CAPI_FACADE_HCM_CONTEXT .
   PROTECTED SECTION.
 
     DATA mt_pernrs TYPE zif_capi_facade_hcm_context=>ty_t_pernrs .
