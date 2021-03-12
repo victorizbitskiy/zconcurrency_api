@@ -1,8 +1,18 @@
 ![ABAP 7.00+](https://img.shields.io/badge/ABAP-7.00%2B-brightgreen)
 
 **ВНИМАНИЕ**: Проект все еще разрабатывается и API может меняться.
+
 ## `ABAP Concurrency API`
 API для параллельных вычислений, основанное на SPTA Framework.
+
+# Table of Contents
+1. [Что это такое?](#Что это такое?)
+2. [Зачем это нужно?](#Зачем это нужно?)
+3. [Установка](#Установка)
+4. [Использование](#Использование)
+5. [Диаграммы](#Диаграммы)
+6. [Зависимости](#Зависимости)
+7. [Лицензия](#Лицензия)
 
 ## Что это такое?
 `ABAP Concurrency API` - это несколько классов, предназначенных для реализации параллельных вычислений.
@@ -191,7 +201,7 @@ ENDCLASS.
 
 Рассмотренный пример использования `ABAP Concurrency API` можно найти в отчете **ZCONCURRENCY_API_EXAMPLE**.
 
-# Diagrams
+# Диаграммы
 <details>
   <summary>UML диаграмма классов</summary>
    <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia.png"><img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia.png" alt="UML Class Diagram" style="max-width:100%;"></a></p>
@@ -205,7 +215,6 @@ ENDCLASS.
 Требуется установленный стандартный пакет разработки **SPTA**.
 
 # Лицензия
-
 [![CC0](http://i.creativecommons.org/p/zero/1.0/88x31.png)](http://creativecommons.org/publicdomain/zero/1.0/)
 
 Насколько это возможно в соответствии с законом, автор отказался от всех авторских и смежных прав на эту работу.
