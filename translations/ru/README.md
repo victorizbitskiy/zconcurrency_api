@@ -207,12 +207,12 @@ ENDCLASS.
 Рассмотренный пример использования `ABAP Concurrency API` можно найти в отчете **ZCONCURRENCY_API_EXAMPLE**.
 </details>
 
-# Использование в модуле HCM
+## Использование в модуле HCM
 <details>
 <summary>Подробнее ...</summary>
 </details>
 
-# Диаграммы
+## Диаграммы
 <details>
   <summary>UML диаграмма классов</summary>
    <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia.png"><img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia.png" alt="UML Class Diagram" style="max-width:100%;"></a></p>
@@ -222,10 +222,10 @@ ENDCLASS.
    <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Sequence%20Dia.png"><img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Sequence%20Dia.png" alt="UML Sequence Diagram" style="max-width:100%;"></a></p>
 </details>
 
-# Зависимости
+## Зависимости
 Требуется установленный стандартный пакет разработки **SPTA**.
 
-# Лицензия
+## Лицензия
 [![CC0](http://i.creativecommons.org/p/zero/1.0/88x31.png)](http://creativecommons.org/publicdomain/zero/1.0/)
 
 Насколько это возможно в соответствии с законом, автор отказался от всех авторских и смежных прав на эту работу.
