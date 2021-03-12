@@ -1,5 +1,5 @@
 *&---------------------------------------------------------------------*
-*& Include          ZCAPI_FACADE_HCM_DEMO_CLI
+*& Include          ZCAPI_FACADE_HCM_EXAMPLE_CLI
 *&---------------------------------------------------------------------*
 CLASS lcl_app IMPLEMENTATION.
   METHOD start_of_selection.
@@ -24,7 +24,8 @@ CLASS lcl_app IMPLEMENTATION.
 
     FIELD-SYMBOLS: <ls_employees> LIKE LINE OF lt_employees.
 
-*   For example only. I suggest using the default '1000'.
+*   2 Pernr number per task. For example only.
+*   Use the default '1000'.
     lv_package_size = 2.
 
     ls_params-begda = sy-datum.

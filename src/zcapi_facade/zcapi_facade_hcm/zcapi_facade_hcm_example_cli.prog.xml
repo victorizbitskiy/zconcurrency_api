@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <PROGDIR>
-    <NAME>ZCAPI_FACADE_HCM_DEMO_CLD</NAME>
+    <NAME>ZCAPI_FACADE_HCM_EXAMPLE_CLI</NAME>
     <SUBC>I</SUBC>
     <RSTAT>K</RSTAT>
     <RLOAD>E</RLOAD>
@@ -12,7 +12,7 @@
    <TPOOL>
     <item>
      <ID>R</ID>
-     <ENTRY>Include ZCAPI_FACADE_HCM_DEMO_CLD</ENTRY>
+     <ENTRY>Include ZCAPI_FACADE_HCM_DEMO_CLI</ENTRY>
      <LENGTH>33</LENGTH>
     </item>
    </TPOOL>

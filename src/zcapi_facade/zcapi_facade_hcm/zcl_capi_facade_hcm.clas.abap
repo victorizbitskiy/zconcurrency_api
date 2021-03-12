@@ -10,7 +10,7 @@ CLASS zcl_capi_facade_hcm DEFINITION
         !io_context         TYPE REF TO zcl_capi_facade_hcm_abstr_cntx
         !it_pernrs          TYPE zif_capi_facade_hcm_context=>ty_t_pernrs
         !iv_task_class_name TYPE string
-        !iv_package_size    TYPE i DEFAULT '1000' .
+        !iv_package_size    TYPE i DEFAULT 1000 .
     METHODS execute
       IMPORTING
         !iv_server_group TYPE rfcgr DEFAULT 'parallel_generators'
@@ -34,7 +34,7 @@ CLASS zcl_capi_facade_hcm DEFINITION
         !et_result  TYPE ANY TABLE .
     METHODS max_no_of_tasks
       IMPORTING
-        !iv_server_group          TYPE rfcgr DEFAULT 'parallel_generators'
+        !iv_server_group          TYPE rfcgr OPTIONAL
       RETURNING
         VALUE(rv_max_no_of_tasks) TYPE i .
     METHODS long_class_name
@@ -81,7 +81,6 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
     LOOP AT lt_message_list ASSIGNING <ls_message_list>.
       WRITE: / <ls_message_list>-task_name, <ls_message_list>-rfcmsg.
     ENDLOOP.
-
   ENDMETHOD.
 
 
@@ -100,8 +99,8 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
 
     DATA: lv_max_no_of_tasks TYPE i.
 
-* The execute( ) method is an implementation of the Facade structural pattern.
-* It is designed to simplify the parallelization process and use the Abap Concurrency API.
+*   The execute( ) method is an implementation of the Facade structural pattern.
+*   It is designed to simplify the parallelization process and use the Abap Concurrency API.
 
     lv_long_class_name = long_class_name( ).
     lt_pernrs = mt_pernrs.
@@ -110,9 +109,9 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
 
     lv_number_of_pernrs = lines( lt_pernrs ).
 
-* Divide personnel numbers into parts for each task
+*   Divide personnel numbers into parts for each task
     DO.
-*   Out of personnel numbers?
+*     Out of personnel numbers?
       IF lv_number_of_pernrs IS INITIAL.
         EXIT. " Yes
       ENDIF.
@@ -150,7 +149,7 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
                                                              iv_n_threads                = lv_max_no_of_tasks
                                                              iv_no_resubmission_on_error = abap_false
                                                              io_capi_message_handler     = lo_message_handler ).
-* Let's start the tasks for execution.
+*   Let's start the tasks for execution.
     lo_results = lo_executor->invoke_all( lo_tasks ).
 
     IF lo_message_handler->zif_capi_message_handler~has_messages( ) = abap_true.
@@ -226,6 +225,5 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
         INSERT LINES OF <fs_any> INTO TABLE et_result.
       ENDWHILE.
     ENDIF.
-
   ENDMETHOD.
 ENDCLASS.

@@ -1,5 +1,5 @@
 *&---------------------------------------------------------------------*
-*& Include          ZCAPI_FACADE_HCM_DEMO_CLD
+*& Include          ZCAPI_FACADE_HCM_EXAMPLE_CLD
 *&---------------------------------------------------------------------*
 CLASS lcl_app DEFINITION FINAL.
   PUBLIC SECTION.

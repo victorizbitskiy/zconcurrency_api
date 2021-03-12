@@ -1,12 +1,12 @@
 *&---------------------------------------------------------------------*
-*& Report ZCAPI_FACADE_HCM_DEMO
+*& Report ZCAPI_FACADE_HCM_EXAMPLE
 *&---------------------------------------------------------------------*
 *&
 *&---------------------------------------------------------------------*
-REPORT zcapi_facade_hcm_demo.
+REPORT zcapi_facade_hcm_example.
 
-INCLUDE: zcapi_facade_hcm_demo_cld,
-         zcapi_facade_hcm_demo_cli.
+INCLUDE: zcapi_facade_hcm_example_cld,
+         zcapi_facade_hcm_example_cli.
 
 START-OF-SELECTION.
   lcl_app=>start_of_selection( ).
