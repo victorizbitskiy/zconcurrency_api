@@ -17,7 +17,6 @@ ENDCLASS.
 *----------------------------------------------------------------------*
 CLASS lcl_context DEFINITION INHERITING FROM zcl_capi_facade_hcm_abstr_cntx FINAL.
   PUBLIC SECTION.
-    INTERFACES: if_serializable_object.
 
     TYPES: BEGIN OF ty_params,
              begda TYPE begda,

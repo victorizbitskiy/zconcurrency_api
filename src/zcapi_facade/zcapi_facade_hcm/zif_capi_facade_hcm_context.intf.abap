@@ -2,8 +2,6 @@ interface ZIF_CAPI_FACADE_HCM_CONTEXT
   public .
 
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-
   types:
     BEGIN OF ty_pernrs,
       sign   TYPE c LENGTH 1,
