@@ -3,14 +3,14 @@
 *&---------------------------------------------------------------------*
 CLASS lcl_app IMPLEMENTATION.
   METHOD start_of_selection.
-    DATA: ls_pernrs LIKE LINE OF mt_pernrs.
+    DATA: ls_pernrs LIKE LINE OF gt_pernrs.
 
 *   Modeling the selection of personnel numbers
     DO 10 TIMES.
       ls_pernrs-sign = 'I'.
       ls_pernrs-option = 'EQ'.
       ls_pernrs-low = sy-index.
-      APPEND ls_pernrs TO mt_pernrs.
+      APPEND ls_pernrs TO gt_pernrs.
     ENDDO.
 
   ENDMETHOD.
@@ -38,7 +38,7 @@ CLASS lcl_app IMPLEMENTATION.
     CREATE OBJECT lo_capi_facade_hcm
       EXPORTING
         io_context         = lo_context
-        it_pernrs          = mt_pernrs
+        it_pernrs          = gt_pernrs
         iv_task_class_name = 'LCL_TASK'
         iv_package_size    = lv_package_size.
 *
