@@ -16,7 +16,7 @@ CLASS lcl_app IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD end_of_selection.
-    DATA: lv_package_size    TYPE int4,
+    DATA: lv_package_size    TYPE i,
           ls_params          TYPE lcl_context=>ty_params,
           lo_context         TYPE REF TO lcl_context,
           lo_capi_facade_hcm TYPE REF TO zcl_capi_facade_hcm,
