@@ -5,7 +5,7 @@ CLASS lcl_app DEFINITION FINAL.
   PUBLIC SECTION.
 
     CLASS-DATA:
-      mt_pernrs TYPE zif_capi_facade_hcm_context=>ty_t_pernrs.
+      gt_pernrs TYPE zif_capi_facade_hcm_context=>ty_t_pernrs.
 
     CLASS-METHODS:
       end_of_selection,
