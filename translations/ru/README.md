@@ -193,7 +193,7 @@ ENDCLASS.
 | iv_no_resubmission_on_error | флаг, "**true**"- не запускать повторно задачу при возникновении ошибке |
 | io_capi_message_handler     | объект, который будет содержать сообщения об ошибках (если они произошли) |
   
-  Объект lo_executor имеет только один интерфейсный метод **zif_capi_executor_service~invoke_all()**, который принимает на вход *Коллекцию задач* и возвращает *Коллекцию результатов* **lo_results**  (подход заимствован из **java.util.concurrent.***).
+  Объект lo_executor имеет только один интерфейсный метод **zif_capi_executor_service~invoke_all()**, который принимает на вход *Коллекцию задач* и возвращает *Коллекцию результатов* **lo_results**  (подход заимствован из **java.util.concurrent.**).
 
 5. У *Коллекции результатов* **lo_results** есть итератор, используя который мы легко получаем *Результаты работы* **lo_result** и вызываем у них метод **get( )**.  
 
@@ -284,55 +284,137 @@ CLASS lcl_task IMPLEMENTATION.
   METHOD zif_capi_callable~call.
     DATA: lt_employees TYPE lcl_result=>ty_t_employees,
           ls_employees LIKE LINE OF lt_employees.
-
-    FIELD-SYMBOLS: <ls_pernr> LIKE LINE OF mt_pernrs.
-
-    LOOP AT mt_pernrs ASSIGNING <ls_pernr>.
+          
+*   Simulation of reading the full name of employees by their personnel numbers.
+    LOOP AT mt_pernrs ASSIGNING FIELD-SYMBOL(<ls_pernr>).
       ls_employees-pernr = <ls_pernr>-low.
 
       CASE <ls_pernr>-low.
         WHEN 00000001.
-          ls_employees-ename = 'John Smyth 1'.
+          ls_employees-ename = 'John Doe 1'.
         WHEN 00000002.
-          ls_employees-ename = 'John Smyth 2'.
+          ls_employees-ename = 'John Doe 2'.
         WHEN 00000003.
-          ls_employees-ename = 'John Smyth 3'.
+          ls_employees-ename = 'John Doe 3'.
         WHEN 00000004.
-          ls_employees-ename = 'John Smyth 4'.
+          ls_employees-ename = 'John Doe 4'.
         WHEN 00000005.
-          ls_employees-ename = 'John Smyth 5'.
+          ls_employees-ename = 'John Doe 5'.
         WHEN 00000006.
-          ls_employees-ename = 'John Smyth 6'.
+          ls_employees-ename = 'John Doe 6'.
         WHEN 00000007.
-          ls_employees-ename = 'John Smyth 7'.
+          ls_employees-ename = 'John Doe 7'.
         WHEN 00000008.
-          ls_employees-ename = 'John Smyth 8'.
+          ls_employees-ename = 'John Doe 8'.
         WHEN 00000009.
-          ls_employees-ename = 'John Smyth 9'.
+          ls_employees-ename = 'John Doe 9'.
         WHEN 00000010.
-          ls_employees-ename = 'John Smyth 10'.
+          ls_employees-ename = 'John Doe 10'.
         WHEN OTHERS.
       ENDCASE.
 
       INSERT ls_employees INTO TABLE lt_employees.
     ENDLOOP.
 
-    CREATE OBJECT ro_result
-      TYPE
-      lcl_result
-      EXPORTING
-        it_employees = lt_employees.
+    ro_result = NEW lcl_result( lt_employees ).
 
   ENDMETHOD.
 ENDCLASS.
 ```
-  TODO...
-  
+3. **lcl_result** описывает *Результат* выполнения задачи. 
+Этот класс должен реализовывать интерфейс **zif_capi_facade_hcm_result**. В остальном вы можете описать его произвольным образом.
+
+```abap
+CLASS lcl_result DEFINITION FINAL.
+  PUBLIC SECTION.
+    INTERFACES:
+      zif_capi_facade_hcm_result.
+
+    TYPES:
+      BEGIN OF ty_employees,
+        pernr TYPE n LENGTH 8,
+        ename TYPE string,
+      END OF ty_employees,
+
+      ty_t_employees TYPE STANDARD TABLE OF ty_employees WITH KEY pernr.
+
+    METHODS:
+      constructor IMPORTING it_employees TYPE ty_t_employees.
+
+  PRIVATE SECTION.
+    DATA: mt_employees TYPE ty_t_employees.
+
+ENDCLASS.
+
+CLASS lcl_result IMPLEMENTATION.
+  METHOD constructor.
+    mt_employees = it_employees.
+  ENDMETHOD.
+
+  METHOD zif_capi_facade_hcm_result~get.
+    et_result = mt_employees.
+  ENDMETHOD.                    "get
+ENDCLASS.
+```
+**Внимание:**  
+Объекты классов **lcl_task** и **lcl_result** сериализуются/десериализуются в процессе выполнения, поэтому избегайте использования статичных атрибутов.
+Статичные атрибуты принадлежат классу, а не объекту. Их содержимое при сериализации/десериализации будет утеряно.
+
+Итак, объекты *Контекст*, *Задача* и *Результат* описаны. 
+Теперь посмотрим пример их применения:
+
+```abap 
+    DATA: lt_employees TYPE lcl_result=>ty_t_employees.
+
+*   2 Pernr number per task. For example only.
+*   Use the default '1000'.
+    DATA(lv_package_size) = 2.
+
+    DATA(lo_context) = NEW lcl_context(
+                                        VALUE lcl_context=>ty_params( begda = sy-datum
+                                                                      endda = sy-datum
+                                                                     )
+                                       ).
+
+    DATA(lo_capi_facade_hcm) = NEW zcl_capi_facade_hcm( io_context         = lo_context
+                                                        it_pernrs          = gt_pernrs
+                                                        iv_task_class_name = 'LCL_TASK'
+                                                        iv_package_size    = lv_package_size ).
+
+    lo_capi_facade_hcm->execute( IMPORTING et_result = lt_employees ).
+    
+    WRITE: `PERNR    ENAME`.
+    LOOP AT lt_employees ASSIGNING FIELD-SYMBOL(<ls_employees>).
+      WRITE: / <ls_employees>-pernr, <ls_employees>-ename.
+    ENDLOOP.
+```
+1. Сначала создаем *Контектс* **lo_context**, который содержит параметры запуска *Задачи* 
+2. Далее, создаем *Фасад* **lo_capi_facade_hcm**, конструктор которого имеет 4 параметра:
+
+| Имя параметра               | Описание                                                     |
+| :-------------------------- | :----------------------------------------------------------- |
+| io_context                  | объект, содержащий параметры запуска задачи                  |
+| it_pernrs                   | диапазон табельных номеров                                   |
+| iv_task_class_name          | имя класса Задача                                            |
+| iv_package_size             | количество табельных номеров на одну задачу                  |
+
+Максимальное количество одновременно работающих задач/процессов вычисляется как 40% от числа свободных диалоговых процессов (DIA, sm50).
+Это все, что нужно сделать.
+
+**Результат работы:**
+
+![result](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/result.png)
+
+Рассмотренный пример использования Фасада для `ABAP Concurrency API` можно найти в отчете **ZCAPI_FACADE_HCM_EXAMPLE**.
 </details>
 
 ## Диаграммы
 <details>
-  <summary>UML диаграмма классов</summary>
+  <summary>UML диаграмма классов ABAP Concurrency API</summary>
+   <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia.png"><img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia.png" alt="UML Class Diagram" style="max-width:100%;"></a></p>
+</details>
+<details>
+  <summary>UML диаграмма классов ABAP Concurrency API для HCM>
    <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia.png"><img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia.png" alt="UML Class Diagram" style="max-width:100%;"></a></p>
 </details>
 <details>
