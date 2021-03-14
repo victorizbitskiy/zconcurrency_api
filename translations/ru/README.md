@@ -414,8 +414,8 @@ ENDCLASS.
    <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia.png"><img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia.png" alt="UML Class Diagram" style="max-width:100%;"></a></p>
 </details>
 <details>
-  <summary>UML диаграмма классов ABAP Concurrency API для HCM>
-   <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia%20ABAP%20CAPI%20for%20HCM.png"><img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia%20ABAP%20CAPI%20for%20HCM.png" alt="UML Class Diagram" style="max-width:100%;"></a></p>
+  <summary>UML диаграмма классов ABAP Concurrency API для HCM></summary>
+   <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia%20ABAP%20CAPI%20for%20HCM.png"><img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia%20ABAP%20CAPI%20for%20HCM.png" alt="UML Class Diagram HCM" style="max-width:100%;"></a></p>
 </details>
 <details>
   <summary>UML диаграмма последовательности </summary>
