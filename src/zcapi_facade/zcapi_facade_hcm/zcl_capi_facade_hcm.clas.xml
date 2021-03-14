@@ -10,9 +10,14 @@
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
     <UNICODE>X</UNICODE>
-    <MSG_ID>ZCAPI_FACADE_HCM</MSG_ID>
    </VSEOCLASS>
    <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>000</KEY>
+     <ENTRY>The task object could not be created</ENTRY>
+     <LENGTH>72</LENGTH>
+    </item>
     <item>
      <ID>I</ID>
      <KEY>001</KEY>
