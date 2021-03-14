@@ -223,10 +223,7 @@ ENDCLASS.
 Рассмотренный пример использования `ABAP Concurrency API` можно найти в отчете **ZCONCURRENCY_API_EXAMPLE**.
 
 ## Использование в модуле HCM
-<details>
-<base target="_blank">
-<summary>Подробнее ...</summary>
-  Для упрощения работы с ABAP Concurrency API в модуле HCM предлагается использовать реализацию структурного паттерна <a href="https://ru.wikipedia.org/wiki/%D0%A4%D0%B0%D1%81%D0%B0%D0%B4_(%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD_%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F)">Фасад</a> - пакет ZCAPI_FACADE_HCM. Дополнение инкапсулирует разбиение табельных номеров на пакеты, создание объектов Задача и получение результата. 
+   Для упрощения работы с ABAP Concurrency API в модуле HCM предлагается использовать реализацию структурного паттерна <a href="https://ru.wikipedia.org/wiki/%D0%A4%D0%B0%D1%81%D0%B0%D0%B4_(%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD_%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F)">Фасад</a> - пакет ZCAPI_FACADE_HCM. Дополнение инкапсулирует разбиение табельных номеров на пакеты, создание объектов Задача и получение результата. 
   
 Рассмотрим задачу:  
 
@@ -237,6 +234,10 @@ ENDCLASS.
 
 1. **lcl_contex**, объект этого класса будет инкапсулировать параметры задачи. Обратие внимание, что класс *lcl_contex* должен быть унаследован от абстрактного класса **zcl_capi_facade_hcm_abstr_cntx**. При реализации необходимо переопределить метод *constructor*.
 
+<details>
+<base target="_blank">
+<summary>Посмотреть код ...</summary>
+  
   ```abap
   CLASS lcl_context DEFINITION INHERITING FROM zcl_capi_facade_hcm_abstr_cntx FINAL.
   PUBLIC SECTION.
@@ -267,9 +268,15 @@ CLASS lcl_context IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
   ```
+</details>
+
 2. **lcl_task**, описывает объект *Задача*. Содержит бизнес-логику (получение ФИО по табельному номеру сотрудника).
   Класс **lcl_task** должен быть наследован от класса **zcl_capi_facade_hcm_abstr_task**. Необходимо реализовать метод *constructor* и переопределить метод *zif_capi_callable~call*.
 
+<details>
+<base target="_blank">
+<summary>Посмотреть код ...</summary>
+  
 ```abap
 CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_facade_hcm_abstr_task FINAL.
   PUBLIC SECTION.
@@ -336,9 +343,16 @@ CLASS lcl_task IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+
+</details>
+  
 3. **lcl_result** описывает *Результат* выполнения задачи. 
 Этот класс должен реализовывать интерфейс **zif_capi_facade_hcm_result**. В остальном вы можете описать его произвольным образом.
 
+<details>
+<base target="_blank">
+<summary>Посмотреть код ...</summary>
+  
 ```abap
 CLASS lcl_result DEFINITION FINAL.
   PUBLIC SECTION.
@@ -371,6 +385,9 @@ CLASS lcl_result IMPLEMENTATION.
   ENDMETHOD.                    "get
 ENDCLASS.
 ```
+
+<details>
+
 **Внимание:**  
 Объекты классов **lcl_task** и **lcl_result** сериализуются/десериализуются в процессе выполнения, поэтому избегайте использования статичных атрибутов.
 Статичные атрибуты принадлежат классу, а не объекту. Их содержимое при сериализации/десериализации будет утеряно.
@@ -378,6 +395,10 @@ ENDCLASS.
 Итак, объекты *Контекст*, *Задача* и *Результат* описаны. 
 Теперь посмотрим пример их применения:
 
+<details>
+<base target="_blank">
+<summary>Посмотреть код ...</summary>
+  
 ```abap 
     DATA: lt_employees TYPE lcl_result=>ty_t_employees.
 
@@ -403,6 +424,8 @@ ENDCLASS.
       WRITE: / <ls_employees>-pernr, <ls_employees>-ename.
     ENDLOOP.
 ```
+</details>
+  
 1. Сначала создаем *Контектс* **lo_context**, который содержит параметры запуска *Задачи* 
 2. Далее, создаем *Фасад* **lo_capi_facade_hcm**, конструктор которого имеет 4 параметра:
 
@@ -429,7 +452,7 @@ ENDCLASS.
    <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia.png"><img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia.png" alt="UML Class Diagram" style="max-width:100%;"></a></p>
 </details>
 <details>
-  <summary>UML диаграмма классов ABAP Concurrency API для HCM></summary>
+  <summary>UML диаграмма классов ABAP Concurrency API для HCM</summary>
    <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia%20ABAP%20CAPI%20for%20HCM.png"><img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/UML%20Class%20Dia%20ABAP%20CAPI%20for%20HCM.png" alt="UML Class Diagram HCM" style="max-width:100%;"></a></p>
 </details>
 <details>
