@@ -40,10 +40,6 @@ SPTA Framework это хороший инструмент, но интерфей
 Установка выполняется с помощью [abapGit](http://www.abapgit.org).
 
 ## Использование
-
-<details>
-<summary>Подробнее ...</summary>
-
 Рассмотрим простую задачу:  
 
 *Необходимо найти квадраты чисел от **`1`** до **`10`***.
@@ -225,7 +221,6 @@ ENDCLASS.
 ![result](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/docs/img/result.png)
 
 Рассмотренный пример использования `ABAP Concurrency API` можно найти в отчете **ZCONCURRENCY_API_EXAMPLE**.
-</details>
 
 ## Использование в модуле HCM
 <details>
