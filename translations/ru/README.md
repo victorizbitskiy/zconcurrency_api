@@ -83,7 +83,7 @@ CLASS lcl_context IMPLEMENTATION.
 ENDCLASS.
 ```
 2. **lcl_task**, описывает объект *Задача*. Содержит бизнес-логику (в нашем случае возведение числа в степень 2).
-   Обратите внимание, что класс **lcl_task** наследуется от класса **zcl_capi_abstract_task** и переопределяет метод **zif_capi_callable~call**.
+   Обратите внимание, что класс **lcl_task** наследуется от класса **zcl_capi_abstract_task** и переопределяет метод *zif_capi_callable~call*.
 
 ```abap
 CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_abstract_task FINAL.
@@ -211,7 +211,122 @@ ENDCLASS.
 <details>
 <base target="_blank">
 <summary>Подробнее ...</summary>
-  Для упрощения работы с ABAP Concurrency API в модуле HCM предлагается использовать реализацию структурного паттерна <a href="https://ru.wikipedia.org/wiki/%D0%A4%D0%B0%D1%81%D0%B0%D0%B4_(%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD_%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F)">Фасад</a>. С помошью этой реализации можно легко решать задачи, в которых по перечню табельных номеров необходиом получить какую-либо информацию. При этом обработка будет выполнена параллельно. TODO...
+  Для упрощения работы с ABAP Concurrency API в модуле HCM предлагается использовать реализацию структурного паттерна <a href="https://ru.wikipedia.org/wiki/%D0%A4%D0%B0%D1%81%D0%B0%D0%B4_(%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD_%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F)">Фасад</a> - пакет ZCAPI_FACADE_HCM. Дополнение инкапсулирует разбиение табельных номеров на пакеты, создание объектов Задача и получение результата. 
+  
+Рассмотрим задачу:  
+
+*Необходимо по табельным номерам получить ФИО сотрудников.
+
+ФИО сотрудников будем искать в отдельной задаче/процессе.
+Для начала все также создадим 3 класса: *Контекст*, *Задача* и *Результат*.
+
+1. **lcl_contex**, объект этого класса будет инкапсулировать параметры задачи. Обратие внимание, что класс *lcl_contex* должен быть унаследован от абстрактного класса **zcl_capi_facade_hcm_abstr_cntx**. При реализации необходимо переопределить метод *constructor*.
+
+  ```abap
+  CLASS lcl_context DEFINITION INHERITING FROM zcl_capi_facade_hcm_abstr_cntx FINAL.
+  PUBLIC SECTION.
+
+    TYPES:
+      BEGIN OF ty_params,
+        begda TYPE d,
+        endda TYPE d,
+      END OF ty_params.
+
+    METHODS:
+      constructor IMPORTING is_params TYPE ty_params,
+      get_params RETURNING VALUE(rs_params) TYPE ty_params.
+
+  PRIVATE SECTION.
+    DATA: ms_params TYPE ty_params.
+
+ENDCLASS.
+
+CLASS lcl_context IMPLEMENTATION.
+  METHOD constructor.
+    super->constructor( ).
+    ms_params = is_params.
+  ENDMETHOD.
+
+  METHOD get_params.
+    rs_params = ms_params.
+  ENDMETHOD.
+ENDCLASS.
+  ```
+2. **lcl_task**, описывает объект *Задача*. Содержит бизнес-логику (получение ФИО по табельному номеру сотрудника).
+  Класс **lcl_task** должен быть наследован от класса **zcl_capi_facade_hcm_abstr_task**. Необходимо реализовать метод *constructor* и переопределить метод *zif_capi_callable~call*.
+
+```abap
+CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_facade_hcm_abstr_task FINAL.
+  PUBLIC SECTION.
+
+    METHODS:
+      constructor IMPORTING io_context TYPE REF TO zcl_capi_facade_hcm_abstr_cntx,
+      zif_capi_callable~call REDEFINITION.
+
+  PRIVATE SECTION.
+    DATA: ms_params TYPE lcl_context=>ty_params.
+
+ENDCLASS.
+
+CLASS lcl_task IMPLEMENTATION.
+  METHOD constructor.
+    DATA: lo_context TYPE REF TO lcl_context.
+
+*   Set Pernrs numbers to mt_pernrs of Task
+    super->constructor( io_context ).
+
+*   Set Context parameters
+    lo_context ?= io_context.
+    ms_params = lo_context->get_params( ).
+
+  ENDMETHOD.
+
+  METHOD zif_capi_callable~call.
+    DATA: lt_employees TYPE lcl_result=>ty_t_employees,
+          ls_employees LIKE LINE OF lt_employees.
+
+    FIELD-SYMBOLS: <ls_pernr> LIKE LINE OF mt_pernrs.
+
+    LOOP AT mt_pernrs ASSIGNING <ls_pernr>.
+      ls_employees-pernr = <ls_pernr>-low.
+
+      CASE <ls_pernr>-low.
+        WHEN 00000001.
+          ls_employees-ename = 'John Smyth 1'.
+        WHEN 00000002.
+          ls_employees-ename = 'John Smyth 2'.
+        WHEN 00000003.
+          ls_employees-ename = 'John Smyth 3'.
+        WHEN 00000004.
+          ls_employees-ename = 'John Smyth 4'.
+        WHEN 00000005.
+          ls_employees-ename = 'John Smyth 5'.
+        WHEN 00000006.
+          ls_employees-ename = 'John Smyth 6'.
+        WHEN 00000007.
+          ls_employees-ename = 'John Smyth 7'.
+        WHEN 00000008.
+          ls_employees-ename = 'John Smyth 8'.
+        WHEN 00000009.
+          ls_employees-ename = 'John Smyth 9'.
+        WHEN 00000010.
+          ls_employees-ename = 'John Smyth 10'.
+        WHEN OTHERS.
+      ENDCASE.
+
+      INSERT ls_employees INTO TABLE lt_employees.
+    ENDLOOP.
+
+    CREATE OBJECT ro_result
+      TYPE
+      lcl_result
+      EXPORTING
+        it_employees = lt_employees.
+
+  ENDMETHOD.
+ENDCLASS.
+```
+  TODO...
   
 </details>
 
