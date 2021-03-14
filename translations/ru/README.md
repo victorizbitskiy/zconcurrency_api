@@ -385,8 +385,7 @@ CLASS lcl_result IMPLEMENTATION.
   ENDMETHOD.                    "get
 ENDCLASS.
 ```
-
-<details>
+</details>
 
 **Внимание:**  
 Объекты классов **lcl_task** и **lcl_result** сериализуются/десериализуются в процессе выполнения, поэтому избегайте использования статичных атрибутов.
