@@ -56,6 +56,9 @@ SPTA Framework это хороший инструмент, но интерфей
 Использование этого класса не обязательно. Можно обойтись и без него, передав параметры задачи непосредственно в ее конструктор.
 Однако, использование отдельного класса, на мой взгляд, предпочтительнее.
 
+<details>
+<summary>Посмотреть код ...</summary>
+  
 ```abap
 CLASS lcl_context DEFINITION FINAL.
   PUBLIC SECTION.
@@ -82,9 +85,13 @@ CLASS lcl_context IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+</details>
+  
 2. **lcl_task**, описывает объект *Задача*. Содержит бизнес-логику (в нашем случае возведение числа в степень 2).
    Обратите внимание, что класс **lcl_task** наследуется от класса **zcl_capi_abstract_task** и переопределяет метод *zif_capi_callable~call*.
-
+<details>
+<summary>Посмотреть код ...</summary>
+  
 ```abap
 CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_abstract_task FINAL.
   PUBLIC SECTION.
@@ -112,9 +119,14 @@ CLASS lcl_task IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+</details>
+
 3. **lcl_result** описывает *Результат* выполнения задачи. 
 Этот класс должен реализовывать интерфейс **if_serializable_object**. В остальном вы можете описать его произвольным образом.
 
+<details>
+<summary>Посмотреть код ...</summary>
+  
 ```abap
 CLASS lcl_result DEFINITION FINAL.
   PUBLIC SECTION.
@@ -140,6 +152,9 @@ CLASS lcl_result IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+
+</details>
+
 **Внимание:**  
 Объекты классов **lcl_task** и **lcl_result** сериализуются/десериализуются в процессе выполнения, поэтому избегайте использования статичных атрибутов.
 Статичные атрибуты принадлежат классу, а не объекту. Их содержимое при сериализации/десериализации будет утеряно.
@@ -147,6 +162,9 @@ ENDCLASS.
 Итак, объекты *Контекст*, *Задача* и *Результат* описаны. 
 Теперь посмотрим пример их применения:
 
+<details>
+<summary>Посмотреть код ...</summary>
+  
 ```abap
     DATA: lo_result TYPE REF TO lcl_result.
 
@@ -180,6 +198,8 @@ ENDCLASS.
     ENDWHILE.
 
 ```
+</details>
+  
 1. Сначала создаем *Коллекцию задач* **lo_tasks**
 2. Далее, создаем *Задачу* **lo_task** и добавляем ее в *Коллекцию задач* **lo_tasks**
 3. Создаем *Обработчик сообщений* **lo_message_handler**
