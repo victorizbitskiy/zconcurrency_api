@@ -238,7 +238,7 @@ Let's consider a simple task:
 
 *Get the full name of employees by personnel numbers.*
 
-First, we will also create 3 classes: * Context *, * Task * and * Result *.
+First, we will also create 3 classes: *Context*, *Task* and *Result*.
 
 1. **lcl_contex**, an object of this class will encapsulate the task parameters. Note that the *lcl_contex* class must inherit from the abstract class **zcl_capi_facade_hcm_abstr_cntx**. When implementing, you must override the *constructor* method.
 <details>
@@ -277,7 +277,7 @@ ENDCLASS.
   ```
 </details>
 
-2. **lcl_task**, describes the * Task * object. Contains business logic (getting full name by personnel number of an employee).
+2. **lcl_task**, describes the *Task* object. Contains business logic (getting full name by personnel number of an employee).
    The **lcl_task** class must inherit from the **zcl_capi_facade_hcm_abstr_task** class. You must implement the *constructor* method and override the *zif_capi_callable~call* method.
 <details>
 <base target="_blank">
@@ -430,8 +430,8 @@ Now, let's have a look at example:
 ```
 </details>
 
-1. First, create * Contexts * ** lo_context **, which contains parameters for launching * Tasks *.
-2. Next, create * Facade * ** lo_capi_facade_hcm **, the constructor of which has 4 parameters:
+1. First, create *Contexts* **lo_context**, which contains parameters for launching *Tasks*.
+2. Next, create *Facade* **lo_capi_facade_hcm**, the constructor of which has 4 parameters:
 
 | Parameter name              | Description                                                         |
 | :-------------------------- | :-------------------------------------------------------------------|
