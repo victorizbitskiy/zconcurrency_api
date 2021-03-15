@@ -59,7 +59,10 @@ First, let's create the 3 classes: *Context*, *Task* and *Result*.
 1. **lcl_contex**, an object of this class encapsulates the task parameters.
    The use of this class is optional. You can do without it by passing the task parameters directly to its constructor.
    However, in my opinion, it is preferable to use a separate class.
-
+<details>
+<base target="_blank">
+<summary>Show code...</summary>
+   
 ```abap
 CLASS lcl_context DEFINITION FINAL.
   PUBLIC SECTION.
@@ -86,10 +89,14 @@ CLASS lcl_context IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+</details>
 
 2. **lcl_task**, describes an object *Task*. Contains business logic (in our case, raising a number to the power of 2).
    Note that the **lcl_task** class inherits from the **zcl_capi_abstract_task** class and overrides the **zif_capi_callable~call** method.
-
+<details>
+<base target="_blank">
+<summary>Show code...</summary>
+   
 ```abap
 CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_abstract_task FINAL.
   PUBLIC SECTION.
@@ -117,10 +124,15 @@ CLASS lcl_task IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-
+</details>
+   
 3. **lcl_result** describes *the result* of the task.
    This class must implement the **if_serializable_object** interface. Otherwise, you can describe it in any way you want.
 
+<details>
+<base target="_blank">
+<summary>Show code...</summary>
+   
 ```abap
 CLASS lcl_result DEFINITION FINAL.
   PUBLIC SECTION.
@@ -146,6 +158,7 @@ CLASS lcl_result IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+</details>
 
 **Attention:**  
 Objects of the **local_task** and **lcl_result** classes are serialized/deserialized at runtime, so avoid using static attributes.
@@ -154,6 +167,10 @@ Static attributes belong to the class, not the object. Their contents will be lo
 So, the objects *Context*, *Task*, and *Result* are described.
 Now, let's have a look at example:
 
+<details>
+<base target="_blank">
+<summary>Show code...</summary>
+   
 ```abap
     DATA: lo_result TYPE REF TO lcl_result.
 
@@ -185,9 +202,9 @@ Now, let's have a look at example:
       DATA(lv_result) = lo_result->get( ).
       WRITE: / lv_result.
     ENDWHILE.
-
 ```
-
+</details>
+   
 1. First, create *Tasks collection* **lo_tasks**
 2. Next, create a *Task* **lo_task** and add it to the *Tasks collection* **lo_tasks**
 3. Create a message handler **lo_message_handler**
@@ -226,7 +243,7 @@ First, we will also create 3 classes: * Context *, * Task * and * Result *.
 1. **lcl_contex**, an object of this class will encapsulate the task parameters. Note that the *lcl_contex* class must inherit from the abstract class **zcl_capi_facade_hcm_abstr_cntx**. When implementing, you must override the *constructor* method.
 <details>
 <base target="_blank">
-<summary>Посмотреть код ...</summary>
+<summary>Show code...</summary>
   
   ```abap
   CLASS lcl_context DEFINITION INHERITING FROM zcl_capi_facade_hcm_abstr_cntx FINAL.
@@ -264,7 +281,7 @@ ENDCLASS.
    The **lcl_task** class must inherit from the **zcl_capi_facade_hcm_abstr_task** class. You must implement the *constructor* method and override the *zif_capi_callable~call* method.
 <details>
 <base target="_blank">
-<summary>Посмотреть код ...</summary>
+<summary>Show code...</summary>
   
 ```abap
 CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_facade_hcm_abstr_task FINAL.
@@ -340,7 +357,7 @@ This class must implement the ** zif_capi_facade_hcm_result ** interface. Otherw
 
 <details>
 <base target="_blank">
-<summary>Посмотреть код ...</summary>
+<summary>Show code...</summary>
   
 ```abap
 CLASS lcl_result DEFINITION FINAL.
@@ -384,7 +401,7 @@ Now, let's have a look at example:
 
 <details>
 <base target="_blank">
-<summary>Посмотреть код ...</summary>
+<summary>Show code...</summary>
   
 ```abap 
     DATA: lt_employees TYPE lcl_result=>ty_t_employees.
