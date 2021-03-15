@@ -53,7 +53,7 @@ SPTA Framework это хороший инструмент, но интерфей
 Однако, использование отдельного класса, на мой взгляд, предпочтительнее.
 
 <details>
-<summary>Посмотреть код ...</summary>
+<summary>Посмотреть код...</summary>
   
 ```abap
 CLASS lcl_context DEFINITION FINAL.
@@ -86,7 +86,7 @@ ENDCLASS.
 2. **lcl_task**, описывает объект *Задача*. Содержит бизнес-логику (в нашем случае возведение числа в степень 2).
    Обратите внимание, что класс **lcl_task** наследуется от класса **zcl_capi_abstract_task** и переопределяет метод *zif_capi_callable~call*.
 <details>
-<summary>Посмотреть код ...</summary>
+<summary>Посмотреть код...</summary>
   
 ```abap
 CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_abstract_task FINAL.
@@ -121,7 +121,7 @@ ENDCLASS.
 Этот класс должен реализовывать интерфейс **if_serializable_object**. В остальном вы можете описать его произвольным образом.
 
 <details>
-<summary>Посмотреть код ...</summary>
+<summary>Посмотреть код...</summary>
   
 ```abap
 CLASS lcl_result DEFINITION FINAL.
@@ -159,7 +159,7 @@ ENDCLASS.
 Теперь посмотрим пример их применения:
 
 <details>
-<summary>Посмотреть код ...</summary>
+<summary>Посмотреть код...</summary>
   
 ```abap
     DATA: lo_result TYPE REF TO lcl_result.
@@ -236,7 +236,7 @@ ENDCLASS.
 
 <details>
 <base target="_blank">
-<summary>Посмотреть код ...</summary>
+<summary>Посмотреть код...</summary>
   
   ```abap
   CLASS lcl_context DEFINITION INHERITING FROM zcl_capi_facade_hcm_abstr_cntx FINAL.
@@ -275,7 +275,7 @@ ENDCLASS.
 
 <details>
 <base target="_blank">
-<summary>Посмотреть код ...</summary>
+<summary>Посмотреть код...</summary>
   
 ```abap
 CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_facade_hcm_abstr_task FINAL.
@@ -351,7 +351,7 @@ ENDCLASS.
 
 <details>
 <base target="_blank">
-<summary>Посмотреть код ...</summary>
+<summary>Посмотреть код...</summary>
   
 ```abap
 CLASS lcl_result DEFINITION FINAL.
@@ -395,7 +395,7 @@ ENDCLASS.
 
 <details>
 <base target="_blank">
-<summary>Посмотреть код ...</summary>
+<summary>Посмотреть код...</summary>
   
 ```abap 
     DATA: lt_employees TYPE lcl_result=>ty_t_employees.
