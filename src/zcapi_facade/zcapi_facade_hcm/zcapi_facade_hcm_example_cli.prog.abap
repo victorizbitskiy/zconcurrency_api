@@ -41,9 +41,10 @@ CLASS lcl_app IMPLEMENTATION.
         it_pernrs          = gt_pernrs
         iv_task_class_name = 'LCL_TASK'
         iv_package_size    = lv_package_size.
-*
+
     lo_capi_facade_hcm->execute( IMPORTING et_result = lt_employees ).
 
+    WRITE: `PERNR    ENAME`.
     LOOP AT lt_employees ASSIGNING <ls_employees>.
       WRITE: / <ls_employees>-pernr, <ls_employees>-ename.
     ENDLOOP.
@@ -95,25 +96,25 @@ CLASS lcl_task IMPLEMENTATION.
 
       CASE <ls_pernr>-low.
         WHEN 00000001.
-          ls_employees-ename = 'John Smyth 1'.
+          ls_employees-ename = 'John Doe 1'.
         WHEN 00000002.
-          ls_employees-ename = 'John Smyth 2'.
+          ls_employees-ename = 'John Doe 2'.
         WHEN 00000003.
-          ls_employees-ename = 'John Smyth 3'.
+          ls_employees-ename = 'John Doe 3'.
         WHEN 00000004.
-          ls_employees-ename = 'John Smyth 4'.
+          ls_employees-ename = 'John Doe 4'.
         WHEN 00000005.
-          ls_employees-ename = 'John Smyth 5'.
+          ls_employees-ename = 'John Doe 5'.
         WHEN 00000006.
-          ls_employees-ename = 'John Smyth 6'.
+          ls_employees-ename = 'John Doe 6'.
         WHEN 00000007.
-          ls_employees-ename = 'John Smyth 7'.
+          ls_employees-ename = 'John Doe 7'.
         WHEN 00000008.
-          ls_employees-ename = 'John Smyth 8'.
+          ls_employees-ename = 'John Doe 8'.
         WHEN 00000009.
-          ls_employees-ename = 'John Smyth 9'.
+          ls_employees-ename = 'John Doe 9'.
         WHEN 00000010.
-          ls_employees-ename = 'John Smyth 10'.
+          ls_employees-ename = 'John Doe 10'.
         WHEN OTHERS.
       ENDCASE.
 

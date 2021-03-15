@@ -1,21 +1,21 @@
-class ZCL_CAPI_FACADE_HCM definition
-  public
-  final
-  create public .
+CLASS zcl_capi_facade_hcm DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  methods CONSTRUCTOR
-    importing
-      !IO_CONTEXT type ref to ZCL_CAPI_FACADE_HCM_ABSTR_CNTX
-      !IT_PERNRS type ZIF_CAPI_FACADE_HCM_CONTEXT=>TY_T_PERNRS
-      !IV_TASK_CLASS_NAME type STRING
-      !IV_PACKAGE_SIZE type I default 1000 .
-  methods EXECUTE
-    importing
-      !IV_SERVER_GROUP type RFCGR default 'parallel_generators'
-    exporting
-      !ET_RESULT type ANY TABLE .
+    METHODS constructor
+      IMPORTING
+        !io_context         TYPE REF TO zcl_capi_facade_hcm_abstr_cntx
+        !it_pernrs          TYPE zif_capi_facade_hcm_context=>ty_t_pernrs
+        !iv_task_class_name TYPE string
+        !iv_package_size    TYPE i DEFAULT 1000 .
+    METHODS execute
+      IMPORTING
+        !iv_server_group TYPE rfcgr DEFAULT 'parallel_generators'
+      EXPORTING
+        !et_result       TYPE ANY TABLE .
   PROTECTED SECTION.
   PRIVATE SECTION.
 

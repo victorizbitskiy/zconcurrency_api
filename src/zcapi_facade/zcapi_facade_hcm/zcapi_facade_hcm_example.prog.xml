@@ -13,8 +13,8 @@
    <TPOOL>
     <item>
      <ID>R</ID>
-     <ENTRY>Program ZCAPI_FACADE_HCM_DEMO</ENTRY>
-     <LENGTH>29</LENGTH>
+     <ENTRY>Program ZCAPI_FACADE_HCM_EXAMPLE</ENTRY>
+     <LENGTH>32</LENGTH>
     </item>
    </TPOOL>
   </asx:values>
