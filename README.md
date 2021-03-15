@@ -220,7 +220,7 @@ Now, let's have a look at example:
 
   The **lo_executor** object has only one interface method **zif_capi_executor_service~invoke_all ()**, which takes as input a **collection of tasks** and returns a **collection of results** **lo_results** (the approach was taken from **java.util.concurrent.***).
 
-5. The *Collection of results* **lo_results** has an iterator, using which we easily get the **lo_result** and call the **get() **method from them.
+5. The *Collection of results* **lo_results** has an iterator, using which we easily get the **lo_result** and call the **get()** method from them.
 
 As a result, we did't have to create an RFC functional module, describe the parallelization process, etc.
 All we did was describe what the *Task* and *Result* are.
@@ -353,7 +353,7 @@ ENDCLASS.
 </details>
 
 3. **lcl_result** describes *Result* of task execution.
-This class must implement the ** zif_capi_facade_hcm_result ** interface. Otherwise, you can describe it in any way.
+This class must implement the **zif_capi_facade_hcm_result** interface. Otherwise, you can describe it in any way.
 
 <details>
 <base target="_blank">
