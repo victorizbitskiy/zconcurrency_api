@@ -1,4 +1,5 @@
 ![ABAP 7.00+](https://img.shields.io/badge/ABAP-7.00%2B-brightgreen)
+![lint](https://github.com/victorizbitskiy/zconcurrency_api/actions/workflows/main.yml/badge.svg)
 
 **ATTENTION**: The API is still under development, and subject to change.
 
