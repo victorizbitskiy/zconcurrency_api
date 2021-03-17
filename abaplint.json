@@ -182,7 +182,7 @@
       "statics": true
     },
     "begin_end_names": true,
-    "check_transformation_exists": true,
+    "check_transformation_exists": false,
     "check_syntax": true,
     "class_attribute_names": {
       "ignoreExceptions": true,
