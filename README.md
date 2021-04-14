@@ -18,7 +18,8 @@ API for parallel programming based on the SPTA Framework.
 5. [Using in the HCM module](#using-in-the-HCM-module)
 6. [Diagrams](#diagrams)
 7. [Dependencies](#dependencies)
-8. [License](#license)
+8. [Limitations](#limitations)
+9. [License](#license)
 
 ## What it is?
 
@@ -476,6 +477,11 @@ The considered example of using the Facade for the `ABAP Concurrency API` can be
 
 ## Dependencies
 SPTA package required.
+
+## Limitations:
+Batch input is not supported.
+This limitation is related to the use of SPTA Framework.  
+See the note [734205](https://launchpad.support.sap.com/#/notes/734205) for details .
 
 ## License
 
