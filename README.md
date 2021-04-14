@@ -481,7 +481,7 @@ SPTA package required.
 ## Limitations:
 Batch input is not supported.
 This limitation is related to the use of SPTA Framework.  
-See the note [734205](https://launchpad.support.sap.com/#/notes/734205) for details .
+See the note [734205](https://launchpad.support.sap.com/#/notes/734205) for details.
 
 ## License
 
