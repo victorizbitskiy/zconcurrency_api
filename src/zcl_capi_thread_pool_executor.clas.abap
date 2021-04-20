@@ -64,6 +64,11 @@ CLASS ZCL_CAPI_THREAD_POOL_EXECUTOR IMPLEMENTATION.
         OTHERS                   = 3.
     IF sy-subrc = 0.
       ro_results ?= lo_capi_spta_gateway->mo_results.
+    ELSE.
+      RAISE EXCEPTION TYPE zcx_capi_tasks_invocation
+        EXPORTING
+          textid       = zcx_capi_tasks_invocation=>error_message
+          server_group = mv_server_group.
     ENDIF.
   ENDMETHOD.
 ENDCLASS.

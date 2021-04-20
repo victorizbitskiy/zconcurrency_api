@@ -16,11 +16,13 @@ CLASS lcl_app IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD end_of_selection.
-    DATA: lv_package_size    TYPE i,
-          ls_params          TYPE lcl_context=>ty_params,
-          lo_context         TYPE REF TO lcl_context,
-          lo_capi_facade_hcm TYPE REF TO zcl_capi_facade_hcm,
-          lt_employees       TYPE lcl_result=>ty_t_employees.
+    DATA: lv_package_size          TYPE i,
+          ls_params                TYPE lcl_context=>ty_params,
+          lo_context               TYPE REF TO lcl_context,
+          lo_capi_facade_hcm       TYPE REF TO zcl_capi_facade_hcm,
+          lt_employees             TYPE lcl_result=>ty_t_employees,
+          lo_capi_tasks_invocation TYPE REF TO zcx_capi_tasks_invocation,
+          lv_message_text          TYPE string.
 
     FIELD-SYMBOLS: <ls_employees> LIKE LINE OF lt_employees.
 
@@ -42,12 +44,18 @@ CLASS lcl_app IMPLEMENTATION.
         iv_task_class_name = 'LCL_TASK'
         iv_package_size    = lv_package_size.
 
-    lo_capi_facade_hcm->execute( IMPORTING et_result = lt_employees ).
+    TRY.
+        lo_capi_facade_hcm->execute( IMPORTING et_result = lt_employees ).
 
-    WRITE: `PERNR    ENAME`.
-    LOOP AT lt_employees ASSIGNING <ls_employees>.
-      WRITE: / <ls_employees>-pernr, <ls_employees>-ename.
-    ENDLOOP.
+        WRITE: `PERNR    ENAME`.
+        LOOP AT lt_employees ASSIGNING <ls_employees>.
+          WRITE: / <ls_employees>-pernr, <ls_employees>-ename.
+        ENDLOOP.
+
+      CATCH zcx_capi_tasks_invocation INTO lo_capi_tasks_invocation.
+        lv_message_text = lo_capi_tasks_invocation->get_text( ).
+        WRITE lv_message_text.
+    ENDTRY.
 
   ENDMETHOD.
 ENDCLASS.
@@ -90,6 +98,10 @@ CLASS lcl_task IMPLEMENTATION.
           ls_employees LIKE LINE OF lt_employees.
 
     FIELD-SYMBOLS: <ls_pernr> LIKE LINE OF mt_pernrs.
+
+*   Simulation of reading the full name of employees by their personnel numbers.
+*   The ms_params attribute is available here.
+*   We won't be using it in this example, but you can.
 
     LOOP AT mt_pernrs ASSIGNING <ls_pernr>.
       ls_employees-pernr = <ls_pernr>-low.

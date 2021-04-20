@@ -1,7 +1,8 @@
 
 CLASS ltc_capi_thread_pool_executor DEFINITION FOR TESTING
   DURATION SHORT
-  RISK LEVEL HARMLESS.
+  RISK LEVEL HARMLESS
+  FINAL.
 
   PRIVATE SECTION.
     DATA:
@@ -41,17 +42,23 @@ CLASS ltc_capi_thread_pool_executor IMPLEMENTATION.
 
 
   METHOD invoke_all.
-
     DATA lo_tasks TYPE REF TO zcl_capi_collection.
     DATA lo_results TYPE REF TO zif_capi_collection.
+    DATA lo_capi_tasks_invocation TYPE REF TO zcx_capi_tasks_invocation.
+    DATA lv_message_text TYPE string.
 
     CREATE OBJECT lo_tasks.
 
-    lo_results = mo_cut->zif_capi_executor_service~invoke_all( lo_tasks ).
+    TRY.
+        lo_results = mo_cut->zif_capi_executor_service~invoke_all( lo_tasks ).
 
-    IF lo_results IS NOT BOUND.
-      cl_aunit_assert=>fail( msg = 'Testing invoke_all' ).
-    ENDIF.
+        IF lo_results IS NOT BOUND.
+          cl_aunit_assert=>fail( msg = 'Testing invoke_all' ).
+        ENDIF.
+      CATCH zcx_capi_tasks_invocation INTO lo_capi_tasks_invocation.
+       lv_message_text = lo_capi_tasks_invocation->get_text( ).
+       cl_aunit_assert=>fail( msg = lv_message_text ).
+    ENDTRY.
 
   ENDMETHOD.
 
