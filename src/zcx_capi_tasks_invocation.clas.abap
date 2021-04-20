@@ -1,14 +1,14 @@
-CLASS zcx_capi_tasks_invocation DEFINITION
-  PUBLIC
-  INHERITING FROM cx_static_check
-  CREATE PUBLIC .
+class ZCX_CAPI_TASKS_INVOCATION definition
+  public
+  inheriting from CX_STATIC_CHECK
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    INTERFACES if_t100_message .
+  interfaces IF_T100_MESSAGE .
 
-    CONSTANTS:
-      BEGIN OF error_message,
+  constants:
+    BEGIN OF error_message,
         msgid TYPE symsgid VALUE 'SPTA',
         msgno TYPE symsgno VALUE '004',
         attr1 TYPE scx_attrname VALUE 'SERVER_GROUP',
@@ -16,13 +16,13 @@ CLASS zcx_capi_tasks_invocation DEFINITION
         attr3 TYPE scx_attrname VALUE '',
         attr4 TYPE scx_attrname VALUE '',
       END OF error_message .
-    DATA server_group TYPE rfcgr .
+  data SERVER_GROUP type RFCGR .
 
-    METHODS constructor
-      IMPORTING
-        !textid       LIKE if_t100_message=>t100key OPTIONAL
-        !previous     LIKE previous OPTIONAL
-        !server_group TYPE rfcgr OPTIONAL .
+  methods CONSTRUCTOR
+    importing
+      !TEXTID like IF_T100_MESSAGE=>T100KEY optional
+      !PREVIOUS like PREVIOUS optional
+      !SERVER_GROUP type RFCGR optional .
 protected section.
 private section.
 ENDCLASS.

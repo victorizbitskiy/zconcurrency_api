@@ -56,8 +56,8 @@ CLASS ltc_capi_thread_pool_executor IMPLEMENTATION.
           cl_aunit_assert=>fail( msg = 'Testing invoke_all' ).
         ENDIF.
       CATCH zcx_capi_tasks_invocation INTO lo_capi_tasks_invocation.
-       lv_message_text = lo_capi_tasks_invocation->get_text( ).
-       cl_aunit_assert=>fail( msg = lv_message_text ).
+        lv_message_text = lo_capi_tasks_invocation->get_text( ).
+        cl_aunit_assert=>fail( msg = lv_message_text ).
     ENDTRY.
 
   ENDMETHOD.
