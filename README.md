@@ -197,21 +197,30 @@ Now, let's have a look at example:
     ENDDO.
 
     DATA(lo_message_handler) = NEW zcl_capi_message_handler( ).
-    
+
     DATA(lo_executor) = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group             = 'parallel_generators'
                                                                    iv_n_threads                = 5
                                                                    iv_no_resubmission_on_error = abap_false
                                                                    io_capi_message_handler     = lo_message_handler ).
-                                                             
-    lo_results = lo_executor->zif_capi_executor_service~invoke_all( lo_tasks ).
-    
-    DATA(lo_results_iterator) = lo_results->get_iterator( ).
+    TRY.
+        DATA(lo_results) = lo_executor->zif_capi_executor_service~invoke_all( lo_tasks ).
 
-    WHILE lo_results_iterator->has_next( ).
-      lo_result ?= lo_results_iterator->next( ).
-      DATA(lv_result) = lo_result->get( ).
-      WRITE: / lv_result.
-    ENDWHILE.
+        IF lo_message_handler->zif_capi_message_handler~has_messages( ) = abap_false.
+
+          DATA(lo_results_iterator) = lo_results->get_iterator( ).
+
+          WHILE lo_results_iterator->has_next( ) = abap_true.
+            lo_result ?= lo_results_iterator->next( ).
+            DATA(lv_result) = lo_result->get( ).
+            WRITE: / lv_result.
+          ENDWHILE.
+
+        ENDIF.
+
+      CATCH zcx_capi_tasks_invocation INTO DATA(lo_capi_tasks_invocation).
+        DATA(lv_message_text) = lo_capi_tasks_invocation->get_text( ).
+        WRITE lv_message_text.
+    ENDTRY.
 ```
 </details>
    
@@ -324,6 +333,9 @@ CLASS lcl_task IMPLEMENTATION.
           ls_employees LIKE LINE OF lt_employees.
           
 *   Simulation of reading the full name of employees by their personnel numbers.
+*   The ms_params attribute is available here.
+*   We won't be using it in this example, but you can.
+
     LOOP AT mt_pernrs ASSIGNING FIELD-SYMBOL(<ls_pernr>).
       ls_employees-pernr = <ls_pernr>-low.
 
@@ -430,13 +442,18 @@ Now, let's have a look at example:
                                                         it_pernrs          = gt_pernrs
                                                         iv_task_class_name = 'LCL_TASK'
                                                         iv_package_size    = lv_package_size ).
+    TRY.
+        lo_capi_facade_hcm->execute( IMPORTING et_result = lt_employees ).
 
-    lo_capi_facade_hcm->execute( IMPORTING et_result = lt_employees ).
-    
-    WRITE: `PERNR    ENAME`.
-    LOOP AT lt_employees ASSIGNING FIELD-SYMBOL(<ls_employees>).
-      WRITE: / <ls_employees>-pernr, <ls_employees>-ename.
-    ENDLOOP.
+        WRITE: `PERNR    ENAME`.
+        LOOP AT lt_employees ASSIGNING FIELD-SYMBOL(<ls_employees>).
+          WRITE: / <ls_employees>-pernr, <ls_employees>-ename.
+        ENDLOOP.
+
+      CATCH zcx_capi_tasks_invocation INTO DATA(lo_capi_tasks_invocation).
+        DATA(lv_message_text) = lo_capi_tasks_invocation->get_text( ).
+        WRITE lv_message_text.
+    ENDTRY.
 ```
 </details>
 
