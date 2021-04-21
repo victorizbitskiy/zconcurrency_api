@@ -196,15 +196,13 @@ ENDCLASS.
 
           WHILE lo_results_iterator->has_next( ) = abap_true.
             lo_result ?= lo_results_iterator->next( ).
-            DATA(lv_result) = lo_result->get( ).
-            WRITE: / lv_result.
+            WRITE: / lo_result->get( ).
           ENDWHILE.
 
         ENDIF.
 
       CATCH zcx_capi_tasks_invocation INTO DATA(lo_capi_tasks_invocation).
-        DATA(lv_message_text) = lo_capi_tasks_invocation->get_text( ).
-        WRITE lv_message_text.
+        WRITE lo_capi_tasks_invocation->get_text( ).
     ENDTRY.
 ```
 </details>
@@ -439,8 +437,7 @@ ENDCLASS.
         ENDLOOP.
 
       CATCH zcx_capi_tasks_invocation INTO DATA(lo_capi_tasks_invocation).
-        DATA(lv_message_text) = lo_capi_tasks_invocation->get_text( ).
-        WRITE lv_message_text.
+        WRITE lo_capi_tasks_invocation->get_text( ).
     ENDTRY.
 ```
 </details>
