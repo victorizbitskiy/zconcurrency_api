@@ -185,7 +185,7 @@ ENDCLASS.
 
     DATA(lo_executor) = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group             = 'parallel_generators'
                                                                    iv_n_threads                = 5
-                                                                   iv_no_resubmission_on_error = abap_false
+                                                                   iv_no_resubmission_on_error = abap_true
                                                                    io_capi_message_handler     = lo_message_handler ).
     TRY.
         DATA(lo_results) = lo_executor->zif_capi_executor_service~invoke_all( lo_tasks ).
