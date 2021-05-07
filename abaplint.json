@@ -151,6 +151,8 @@
       "pattern": "^TY_.+$",
       "exclude": ["/json/"]
     },
+    "7bit_ascii": {
+    },
     "abapdoc": false,
     "check_ddic": true,
     "check_include": true,
