@@ -1,5 +1,5 @@
 <img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/logo/octo.svg" height="100px"/>\
-<a href="http://www.freepik.com">Designed by macrovector/Freepik</a>
+<a href="https://ru.freepik.com/macrovector">Designed by macrovector/Freepik</a>
 
 ![ABAP 7.00+](https://img.shields.io/badge/ABAP-7.00%2B-brightgreen)
 ![lint](https://github.com/victorizbitskiy/zconcurrency_api/actions/workflows/main.yml/badge.svg)
