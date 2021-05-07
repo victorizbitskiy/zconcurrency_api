@@ -227,7 +227,7 @@
     "global_class": true,
     "identical_form_names": true,
     "if_in_if": true,
-    "implement_methods": true,
+    "implement_methods": false,
     "in_statement_indentation": false,
     "indentation": {
       "ignoreExceptions": true,
