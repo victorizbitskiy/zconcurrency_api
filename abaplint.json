@@ -164,7 +164,8 @@
         "FUGR",
         "DEVC",
         "TRAN",
-        "W3MI"
+        "W3MI",
+        "MSAG"
       ]
     },
     "ambiguous_statement": false,
