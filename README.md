@@ -1,6 +1,7 @@
 <img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/logo/octo.svg" height="100px"/>\
 <a href="https://ru.freepik.com/macrovector">Designed by macrovector/Freepik</a>
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/LICENSE)
 ![ABAP 7.00+](https://img.shields.io/badge/ABAP-7.00%2B-brightgreen)
 ![lint](https://github.com/victorizbitskiy/zconcurrency_api/actions/workflows/main.yml/badge.svg)
 
@@ -19,7 +20,6 @@ API for parallel programming based on the SPTA Framework.
 6. [Diagrams](#diagrams)
 7. [Dependencies](#dependencies)
 8. [Limitations](#limitations)
-9. [License](#license)
 
 ## What it is?
 
@@ -496,9 +496,3 @@ SPTA package required.
 Batch input is not supported.
 This limitation is related to the use of SPTA Framework.  
 See the note [734205](https://launchpad.support.sap.com/#/notes/734205) and [710920](https://launchpad.support.sap.com/#/notes/710920) for details.
-
-## License
-
-[![CC0](http://i.creativecommons.org/p/zero/1.0/88x31.png)](http://creativecommons.org/publicdomain/zero/1.0/)
-
-To the extent possible under law, the author has waived all copyrights and related or neighboring rights to this work.
