@@ -1,6 +1,7 @@
 <img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/logo/octo.svg" height="100px"/>\
 <a href="https://ru.freepik.com/macrovector">Designed by macrovector/Freepik</a>
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/LICENSE)
 ![ABAP 7.00+](https://img.shields.io/badge/ABAP-7.00%2B-brightgreen)
 ![lint](https://github.com/victorizbitskiy/zconcurrency_api/actions/workflows/main.yml/badge.svg)
 
@@ -18,7 +19,6 @@ API для параллельных вычислений, основанный �
 6. [UML диаграммы](#Диаграммы)
 7. [Зависимости](#Зависимости)
 8. [Ограничения](#Ограничения)
-9. [Лицензия](#Лицензия)
 
 ## Что это такое?
 `ABAP Concurrency API` - это несколько классов, предназначенных для реализации параллельных вычислений.
@@ -484,8 +484,3 @@ ENDCLASS.
 ## Ограничения
 Пакетный ввод не поддерживается.  
 Это связано с тем, что API использует стандартный SPTA Framework, в котором перед вызовом CALL FUNCTION STARTING NEW TASK не выполняется проверка того, что максимальное количество сеансов пользовательского интерфейса еще не достигнуто (см. ноты [734205](https://launchpad.support.sap.com/#/notes/734205), [710920](https://launchpad.support.sap.com/#/notes/710920)).
-
-## Лицензия
-[![CC0](http://i.creativecommons.org/p/zero/1.0/88x31.png)](http://creativecommons.org/publicdomain/zero/1.0/)
-
-Насколько это возможно в соответствии с законом, автор отказался от всех авторских и смежных прав на эту работу.
