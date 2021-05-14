@@ -7,6 +7,9 @@
 
 **ATTENTION**: The API is still under development and subject to change.
 
+Translations:
+- [:ru: На русском языке](https://github.com/victorizbitskiy/zconcurrency_api/tree/main/translations/ru) 
+
 ## `ABAP Concurrency API`
 
 API for parallel programming based on the SPTA Framework.
