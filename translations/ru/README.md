@@ -7,6 +7,9 @@
 
 **ВНИМАНИЕ**: Проект все еще разрабатывается и API может меняться.
 
+Переводы:
+- [:uk: In English](https://github.com/victorizbitskiy/zconcurrency_api) 
+
 ## `ABAP Concurrency API`
 API для параллельных вычислений, основанный на SPTA Framework.
 
