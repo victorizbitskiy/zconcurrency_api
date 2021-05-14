@@ -160,15 +160,10 @@
     "ambiguous_statement": false,
     "avoid_use": {
       "define": true,
-      "endselect": true,
-      "execSQL": true,
-      "kernelCall": true,
-      "communication": true,
-      "systemCall": true,
-      "defaultKey": false,
-      "describeLines": true,
+      "statics": false,
+      "defaultKey": true,
       "break": true,
-      "statics": true
+      "describeLines": true
     },
     "begin_end_names": true,
     "check_transformation_exists": false,
