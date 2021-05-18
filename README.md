@@ -3,7 +3,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/LICENSE)
 ![ABAP 7.00+](https://img.shields.io/badge/ABAP-7.00%2B-brightgreen)
-[![Code Statistics](https://img.shields.io/badge/CodeStatistics-abaplint-blue)](https://github.com/victorizbitskiy/zconcurrency_api)
+[![Code Statistics](https://img.shields.io/badge/CodeStatistics-abaplint-blue)](https://abaplint.app/stats/victorizbitskiy/zconcurrency_api)
 
 **ATTENTION**: The API is still under development and subject to change.
 
