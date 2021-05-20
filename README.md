@@ -174,7 +174,7 @@ ENDCLASS.
 </details>
 
 **Attention:**  
-Objects of the **local_task** and **lcl_result** classes are serialized/deserialized at runtime, so avoid using static attributes.
+Objects of the **lcl_task** and **lcl_result** classes are serialized/deserialized at runtime, so avoid using static attributes.
 Static attributes belong to the class, not the object. Their contents will be lost after serialization/deserialization.
 
 So, the objects *Context*, *Task*, and *Result* are described.
