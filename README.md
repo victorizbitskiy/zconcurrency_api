@@ -44,7 +44,7 @@ To avoid generating an RFC function module every time you need to do parallel pr
 
 The SPTA Framework is a good tool, but its interface leaves a lot to be desired. Because of this, the developer has to make a lot of effort to implement the parallelization process itself.
 
-In addition, writing clean code using the SPA Framework directly is also not the easiest task. You need to be a real ninja to avoid using global variables. After all, the code can be confusing and difficult to maintain.
+In addition, writing clean code using the SPTA Framework directly is also not the easiest task. You need to be a real ninja to avoid using global variables. After all, the code can be confusing and difficult to maintain.
 
 The `ABAP Concurrency API` avoids these problems. With it, you can allow yourself to think more abstractly.
 You don't need to focus on parallelization. Instead, you can spend more time on the business logic of your application.
