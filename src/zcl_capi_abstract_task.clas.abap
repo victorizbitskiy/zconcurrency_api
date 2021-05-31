@@ -14,7 +14,7 @@ CLASS zcl_capi_abstract_task DEFINITION
         !iv_name TYPE string OPTIONAL .
   PROTECTED SECTION.
 
-    CLASS-DATA gv_task_counter TYPE i .
+    CLASS-DATA gv_tasks_quantity TYPE i .
     DATA mv_id TYPE guid_32 .
     DATA mv_name TYPE string .
 
@@ -32,10 +32,10 @@ CLASS ZCL_CAPI_ABSTRACT_TASK IMPLEMENTATION.
 
     create_task_id( ).
 
-    IF iv_name IS SUPPLIED.
-      mv_name = iv_name.
-    ELSE.
+    IF iv_name IS INITIAL.
       create_task_name( ).
+    ELSE.
+      mv_name = iv_name.
     ENDIF.
 
   ENDMETHOD.
@@ -51,10 +51,10 @@ CLASS ZCL_CAPI_ABSTRACT_TASK IMPLEMENTATION.
 
 
   METHOD create_task_name.
-    DATA: lv_task_counter TYPE string.
+    DATA: lv_tasks_quantity TYPE string.
 
-    lv_task_counter = gv_task_counter = gv_task_counter + 1.
-    CONCATENATE 'task_' lv_task_counter INTO mv_name.
+    lv_tasks_quantity = gv_tasks_quantity = gv_tasks_quantity + 1.
+    CONCATENATE 'task_' lv_tasks_quantity INTO mv_name.
 
   ENDMETHOD.
 
