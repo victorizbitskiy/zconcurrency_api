@@ -34,11 +34,6 @@ CLASS zcl_capi_facade_hcm DEFINITION
         !io_results TYPE REF TO zif_capi_collection
       EXPORTING
         !et_result  TYPE ANY TABLE .
-    METHODS max_no_of_tasks
-      IMPORTING
-        !iv_server_group          TYPE rfcgr OPTIONAL
-      RETURNING
-        VALUE(rv_max_no_of_tasks) TYPE i .
     METHODS long_class_name
       RETURNING
         VALUE(rv_long_class_name) TYPE string .
@@ -145,7 +140,7 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
     ENDDO.
 
     CREATE OBJECT lo_message_handler.
-    lv_max_no_of_tasks = max_no_of_tasks( iv_server_group ).
+    lv_max_no_of_tasks = zcl_capi_thread_pool_executor=>max_no_of_tasks( iv_server_group ).
 
     lo_executor = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group             = iv_server_group
                                                              iv_n_threads                = lv_max_no_of_tasks
@@ -179,31 +174,6 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
 *     Nope
         CONCATENATE '\' 'PROGRAM=' sy-cprog '\CLASS=' mv_task_class_name INTO rv_long_class_name.
     ENDTRY.
-  ENDMETHOD.
-
-
-  METHOD max_no_of_tasks.
-    DATA: lv_free_pbt_wps TYPE i.
-
-    CALL FUNCTION 'SPBT_INITIALIZE'
-      EXPORTING
-        group_name                     = iv_server_group
-      IMPORTING
-*       MAX_PBT_WPS                    =
-        free_pbt_wps                   = lv_free_pbt_wps
-      EXCEPTIONS
-        invalid_group_name             = 1
-        internal_error                 = 2
-        pbt_env_already_initialized    = 3
-        currently_no_resources_avail   = 4
-        no_pbt_resources_found         = 5
-        cant_init_different_pbt_groups = 6
-        OTHERS                         = 7.
-    IF sy-subrc = 0.
-      rv_max_no_of_tasks = lv_free_pbt_wps * 40 / 100.
-    ELSE.
-      rv_max_no_of_tasks = 5.
-    ENDIF.
   ENDMETHOD.
 
 

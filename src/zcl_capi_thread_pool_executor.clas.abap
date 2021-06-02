@@ -12,6 +12,11 @@ CLASS zcl_capi_thread_pool_executor DEFINITION
         !iv_n_threads                TYPE i DEFAULT 10
         !iv_no_resubmission_on_error TYPE boole_d DEFAULT abap_false
         !io_capi_message_handler     TYPE REF TO zif_capi_message_handler .
+    CLASS-METHODS max_no_of_tasks
+      IMPORTING
+        !iv_server_group          TYPE rfcgr
+      RETURNING
+        VALUE(rv_max_no_of_tasks) TYPE i .
   PROTECTED SECTION.
   PRIVATE SECTION.
 
@@ -33,6 +38,31 @@ CLASS ZCL_CAPI_THREAD_POOL_EXECUTOR IMPLEMENTATION.
     mv_no_resubmission_on_error = iv_no_resubmission_on_error.
     mo_capi_message_handler = io_capi_message_handler.
 
+  ENDMETHOD.
+
+
+  METHOD max_no_of_tasks.
+    DATA: lv_free_pbt_wps TYPE i.
+
+    CALL FUNCTION 'SPBT_INITIALIZE'
+      EXPORTING
+        group_name                     = iv_server_group
+      IMPORTING
+*       MAX_PBT_WPS                    =
+        free_pbt_wps                   = lv_free_pbt_wps
+      EXCEPTIONS
+        invalid_group_name             = 1
+        internal_error                 = 2
+        pbt_env_already_initialized    = 3
+        currently_no_resources_avail   = 4
+        no_pbt_resources_found         = 5
+        cant_init_different_pbt_groups = 6
+        OTHERS                         = 7.
+    IF sy-subrc = 0.
+      rv_max_no_of_tasks = lv_free_pbt_wps * 40 / 100.
+    ELSE.
+      rv_max_no_of_tasks = 5.
+    ENDIF.
   ENDMETHOD.
 
 

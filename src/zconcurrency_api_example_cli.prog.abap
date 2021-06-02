@@ -3,6 +3,8 @@
 *&---------------------------------------------------------------------*
 CLASS lcl_app IMPLEMENTATION.
   METHOD main.
+    CONSTANTS: lc_server_group TYPE rfcgr VALUE 'parallel_generators'.
+
     DATA: lo_tasks                 TYPE REF TO zcl_capi_collection,
           lo_task                  TYPE REF TO lcl_task,
           lo_context               TYPE REF TO lcl_context,
@@ -15,7 +17,8 @@ CLASS lcl_app IMPLEMENTATION.
           lo_result                TYPE REF TO lcl_result,
           lv_result                TYPE string,
           lo_capi_tasks_invocation TYPE REF TO zcx_capi_tasks_invocation,
-          lv_message_text          TYPE string.
+          lv_message_text          TYPE string,
+          lv_max_no_of_tasks       TYPE i.
 
     FIELD-SYMBOLS: <ls_message_list> LIKE LINE OF lt_message_list.
 
@@ -38,9 +41,10 @@ CLASS lcl_app IMPLEMENTATION.
     ENDDO.
 
     CREATE OBJECT lo_message_handler.
+    lv_max_no_of_tasks = zcl_capi_thread_pool_executor=>max_no_of_tasks( lc_server_group ).
 
-    lo_executor = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group             = 'parallel_generators'
-                                                             iv_n_threads                = 5
+    lo_executor = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group             = lc_server_group
+                                                             iv_n_threads                = lv_max_no_of_tasks
                                                              iv_no_resubmission_on_error = abap_false
                                                              io_capi_message_handler     = lo_message_handler ).
     TRY.
