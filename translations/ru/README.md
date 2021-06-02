@@ -170,7 +170,8 @@ ENDCLASS.
 <summary>Посмотреть код...</summary>
   
 ```abap
-    DATA: lo_result TYPE REF TO lcl_result.
+    CONSTANTS lc_server_group TYPE rfcgr VALUE 'parallel_generators'.
+    DATA lo_result TYPE REF TO lcl_result.
 
 *   Create collection of tasks
     DATA(lo_tasks) = NEW zcl_capi_collection( ).
@@ -185,9 +186,10 @@ ENDCLASS.
     ENDDO.
 
     DATA(lo_message_handler) = NEW zcl_capi_message_handler( ).
-
-    DATA(lo_executor) = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group             = 'parallel_generators'
-                                                                   iv_n_threads                = 5
+    DATA(lv_max_no_of_tasks) = zcl_capi_thread_pool_executor=>max_no_of_tasks( lc_server_group ).
+  
+    DATA(lo_executor) = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group             = lc_server_group
+                                                                   iv_n_threads                = lv_max_no_of_tasks
                                                                    iv_no_resubmission_on_error = abap_true
                                                                    io_capi_message_handler     = lo_message_handler ).
     TRY.
