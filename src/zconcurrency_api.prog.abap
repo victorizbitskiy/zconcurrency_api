@@ -17,7 +17,6 @@ FORM before_rfc USING is_before_rfc_imp TYPE spta_t_before_rfc_imp
                       ct_objects_in_process TYPE spta_t_objects_in_process
                       co_capi_spta_gateway TYPE REF TO zcl_capi_spta_gateway.
 
-  STATICS: lo_tasks_iterator  TYPE REF TO zif_capi_iterator.
   DATA: lo_task               TYPE REF TO zif_capi_task,
         lv_task               TYPE xstring,
         ls_objects_in_process LIKE LINE OF ct_objects_in_process.
@@ -31,13 +30,9 @@ FORM before_rfc USING is_before_rfc_imp TYPE spta_t_before_rfc_imp
     RETURN.
   ENDIF.
 
-  IF lo_tasks_iterator IS NOT BOUND.
-    lo_tasks_iterator = co_capi_spta_gateway->mo_tasks->get_iterator( ).
-  ENDIF.
+  IF co_capi_spta_gateway->mo_tasks_iterator->has_next( ) = abap_true.
 
-  IF lo_tasks_iterator->has_next( ) = abap_true.
-
-    lo_task ?= lo_tasks_iterator->next( ).
+    lo_task ?= co_capi_spta_gateway->mo_tasks_iterator->next( ).
     lv_task = zcl_capi_spta_gateway=>serialize_task( lo_task ).
 
     CALL FUNCTION 'SPTA_INDX_PACKAGE_ENCODE'
