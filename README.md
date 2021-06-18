@@ -12,7 +12,8 @@ Translations:
 
 ## `ABAP Concurrency API`
 
-API for parallel processing based on the SPTA Framework.
+API for parallel processing based on the SPTA Framework.  
+Hereinafter, the concepts of `concurrency` and `parallelism` are considered synonyms, meaning parallel execution of computations.
 
 # Table of contents
 1. [What it is?](#what-it-is)
