@@ -99,6 +99,8 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
 *   The execute( ) method is an implementation of the Facade structural pattern.
 *   It is designed to simplify the parallelization process and use the Abap Concurrency API.
 
+    CLEAR et_result.
+
     lv_long_class_name = long_class_name( ).
     lt_pernrs = mt_pernrs.
 
@@ -183,6 +185,8 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
           lo_result           TYPE REF TO zif_capi_facade_hcm_result.
 
     FIELD-SYMBOLS: <lt_any> TYPE ANY TABLE.
+
+    CLEAR et_result.
 
     lo_results_iterator = io_results->get_iterator( ).
 
