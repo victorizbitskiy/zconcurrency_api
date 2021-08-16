@@ -11,7 +11,7 @@ CLASS zcl_capi_thread_pool_executor DEFINITION
         !iv_server_group             TYPE rfcgr
         !iv_n_threads                TYPE i DEFAULT 10
         !iv_no_resubmission_on_error TYPE boole_d DEFAULT abap_false
-        !io_capi_message_handler     TYPE REF TO zif_capi_message_handler .
+        !io_capi_message_handler     TYPE REF TO zif_capi_message_handler OPTIONAL .
     CLASS-METHODS max_no_of_tasks
       IMPORTING
         !iv_server_group          TYPE rfcgr
@@ -36,7 +36,12 @@ CLASS ZCL_CAPI_THREAD_POOL_EXECUTOR IMPLEMENTATION.
     mv_server_group = iv_server_group.
     mv_n_threads = iv_n_threads.
     mv_no_resubmission_on_error = iv_no_resubmission_on_error.
-    mo_capi_message_handler = io_capi_message_handler.
+
+    IF io_capi_message_handler IS BOUND.
+      mo_capi_message_handler = io_capi_message_handler.
+    ELSE.
+      CREATE OBJECT mo_capi_message_handler TYPE zcl_capi_message_handler.
+    ENDIF.
 
   ENDMETHOD.
 
