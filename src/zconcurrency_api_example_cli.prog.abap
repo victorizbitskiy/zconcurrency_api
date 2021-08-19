@@ -45,7 +45,6 @@ CLASS lcl_app IMPLEMENTATION.
 
     lo_executor = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group             = lc_server_group
                                                              iv_n_threads                = lv_max_no_of_tasks
-                                                             iv_no_resubmission_on_error = abap_true
                                                              io_capi_message_handler     = lo_message_handler ).
     TRY.
         lo_results = lo_executor->invoke_all( lo_tasks ).
