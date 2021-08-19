@@ -192,7 +192,6 @@ ENDCLASS.
   
     DATA(lo_executor) = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group             = lc_server_group
                                                                    iv_n_threads                = lv_max_no_of_tasks
-                                                                   iv_no_resubmission_on_error = abap_true
                                                                    io_capi_message_handler     = lo_message_handler ).
     TRY.
         DATA(lo_results) = lo_executor->zif_capi_executor_service~invoke_all( lo_tasks ).
@@ -201,7 +200,7 @@ ENDCLASS.
 
           DATA(lo_results_iterator) = lo_results->get_iterator( ).
 
-          WHILE lo_results_iterator->has_next( ) = abap_true.
+          WHILE lo_results_iterator->has_next( ).
             lo_result ?= lo_results_iterator->next( ).
             WRITE: / lo_result->get( ).
           ENDWHILE.
