@@ -20,7 +20,7 @@ Hereinafter, the concepts of `concurrency` and `parallelism` are considered syno
 1. [What it is?](#what-it-is)
 2. [What is this for?](#what-is-this-for)
 3. [Installation](#installation)
-4. [Usage](#using)
+4. [Usage](#usage)
 5. [Usage. HCM module](#using-in-the-HCM-module)
 6. [Diagrams](#diagrams)
 7. [Dependencies](#dependencies)
@@ -55,7 +55,7 @@ You don't need to focus on parallelization. Instead, you can spend more time on 
 
 Installation is done with [abapGit](http://www.abapgit.org).
 
-## Using
+## Usage
 
 Let's consider a simple task:  
 
