@@ -234,11 +234,11 @@ Now, let's have a look at example:
 4. Now we come to the most important part of the API of the “executor service” concept. The executor asynchronously executes the tasks passed to it.  
    In the example, we call the static method **zcl_capi_executors=>new_fixed_thread_pool**, which returns a lo_executor with a fixed number of threads. This method has 4 parameters:
 
-| Parameter name              | Optional | Description                                                  |
-| :-------------------------- | :------: | :----------------------------------------------------------- |
-| iv_server_group             |          | server group (tcode: RZ12)                                   |
-| iv_max_no_of_tasks          |          | maximum number of concurrent tasks                           |
-| iv_no_resubmission_on_error |          | flag "**true**" - don't restart the task in case of an error |
+| Parameter name              | Optional | Description                                                   |
+| :-------------------------- | :------: | :-------------------------------------------------------------|
+| iv_server_group             |          | server group (tcode: RZ12)                                    |
+| iv_max_no_of_tasks          |          | maximum number of concurrent tasks                            |
+| iv_no_resubmission_on_error |          | flag "**true**" - don't restart the task in case of an error  |
 | io_capi_message_handler     |    X     | an object that will contain error messages (if they occurred) |
 
   The **lo_executor** object has only one interface method **zif_capi_executor_service~invoke_all ()**, which takes as input a **collection of tasks** and returns a **collection of results** **lo_results** (the approach was taken from **java.util.concurrent.***).
