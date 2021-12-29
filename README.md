@@ -433,7 +433,7 @@ Now, let's have a look at example:
     DATA: lt_employees TYPE lcl_result=>ty_t_employees.
 
 *   2 Pernr number per task. For example only.
-*   Use the default '1000'.
+*   '200' will be fine.
     DATA(lv_package_size) = 2.
 
     DATA(lo_context) = NEW lcl_context(
