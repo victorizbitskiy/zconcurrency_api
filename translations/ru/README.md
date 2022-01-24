@@ -426,12 +426,10 @@ ENDCLASS.
 *   2 Pernr number per task. For example only.
 *   '200' will be fine.
     DATA(lv_package_size) = 2.
-
-    DATA(lo_context) = NEW lcl_context(
-                                        VALUE lcl_context=>ty_params( begda = sy-datum
-                                                                      endda = sy-datum
-                                                                     )
-                                       ).
+  
+    DATA(ls_params) =  VALUE lcl_context=>ty_params( begda = sy-datum
+                                                     endda = sy-datum ).
+    DATA(lo_context) = NEW lcl_context( ls_params ).
 
     DATA(lo_capi_facade_hcm) = NEW zcl_capi_facade_hcm( io_context         = lo_context
                                                         it_pernrs          = gt_pernrs
