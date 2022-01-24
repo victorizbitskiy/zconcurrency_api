@@ -193,12 +193,11 @@ Now, let's have a look at example:
     DATA(lo_tasks) = NEW zcl_capi_collection( ).
 
     DO 10 TIMES.
-      DATA(lo_task) = NEW lcl_task(
-                                    NEW lcl_context(
-                                                     VALUE lcl_context=>ty_params( param = sy-index )
-                                                     )
-                                    ).
+   
+      DATA(lo_context) = NEW lcl_context( VALUE lcl_context=>ty_params( param = sy-index ) ).
+      DATA(lo_task) = NEW lcl_task( lo_context ).
       lo_tasks->zif_capi_collection~add( lo_task ).
+   
     ENDDO.
 
     DATA(lo_message_handler) = NEW zcl_capi_message_handler( ).
