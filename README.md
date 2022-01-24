@@ -76,7 +76,7 @@ First, let's create the 3 classes: *Context*, *Task* and *Result*.
 ```abap
 CLASS lcl_context DEFINITION FINAL.
   PUBLIC SECTION.
-    INTERFACES: if_serializable_object.
+    INTERFACES if_serializable_object.
 
     TYPES: 
       BEGIN OF ty_params,
@@ -88,7 +88,7 @@ CLASS lcl_context DEFINITION FINAL.
       get RETURNING VALUE(rs_params) TYPE ty_params.
 
   PRIVATE SECTION.
-    DATA: ms_params TYPE ty_params.
+    DATA ms_params TYPE ty_params.
 ENDCLASS.
 
 CLASS lcl_context IMPLEMENTATION.
@@ -118,8 +118,8 @@ CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_abstract_task FINAL.
       zif_capi_callable~call REDEFINITION.
 
   PRIVATE SECTION.
-    DATA: mo_context TYPE REF TO lcl_context.
-    DATA: mv_res TYPE i.
+    DATA mo_context TYPE REF TO lcl_context.
+    DATA mv_res TYPE i.
 ENDCLASS.
 
 CLASS lcl_task IMPLEMENTATION.
@@ -149,8 +149,7 @@ ENDCLASS.
 ```abap
 CLASS lcl_result DEFINITION FINAL.
   PUBLIC SECTION.
-    INTERFACES: 
-      if_serializable_object.
+    INTERFACES if_serializable_object.
 
     METHODS: 
       constructor IMPORTING iv_param  TYPE i
@@ -158,8 +157,8 @@ CLASS lcl_result DEFINITION FINAL.
       get RETURNING VALUE(rv_result) TYPE string.
 
   PRIVATE SECTION.
-    DATA: mv_param TYPE i.
-    DATA: mv_result TYPE i.
+    DATA mv_param TYPE i.
+    DATA mv_result TYPE i.
 ENDCLASS.
 
 CLASS lcl_result IMPLEMENTATION.
@@ -315,13 +314,13 @@ CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_facade_hcm_abstr_task FINAL.
       zif_capi_callable~call REDEFINITION.
 
   PRIVATE SECTION.
-    DATA: ms_params TYPE lcl_context=>ty_params.
+    DATA ms_params TYPE lcl_context=>ty_params.
 
 ENDCLASS.
 
 CLASS lcl_task IMPLEMENTATION.
   METHOD constructor.
-    DATA: lo_context TYPE REF TO lcl_context.
+    DATA lo_context TYPE REF TO lcl_context.
 
 *   Set Pernrs numbers to mt_pernrs of Task
     super->constructor( io_context ).
@@ -333,8 +332,8 @@ CLASS lcl_task IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD zif_capi_callable~call.
-    DATA: lt_employees TYPE lcl_result=>ty_t_employees,
-          ls_employees LIKE LINE OF lt_employees.
+    DATA lt_employees TYPE lcl_result=>ty_t_employees.
+    DATA ls_employees LIKE LINE OF lt_employees.
           
 *   Simulation of reading the full name of employees by their personnel numbers.
 *   The ms_params attribute is available here.
@@ -388,8 +387,7 @@ This class must implement the **zif_capi_facade_hcm_result** interface. Otherwis
 ```abap
 CLASS lcl_result DEFINITION FINAL.
   PUBLIC SECTION.
-    INTERFACES:
-      zif_capi_facade_hcm_result.
+    INTERFACES zif_capi_facade_hcm_result.
 
     TYPES:
       BEGIN OF ty_employees,
@@ -399,11 +397,10 @@ CLASS lcl_result DEFINITION FINAL.
 
       ty_t_employees TYPE STANDARD TABLE OF ty_employees WITH KEY pernr.
 
-    METHODS:
-      constructor IMPORTING it_employees TYPE ty_t_employees.
+    METHODS constructor IMPORTING it_employees TYPE ty_t_employees.
 
   PRIVATE SECTION.
-    DATA: mt_employees TYPE ty_t_employees.
+    DATA mt_employees TYPE ty_t_employees.
 
 ENDCLASS.
 
@@ -430,17 +427,15 @@ Now, let's have a look at example:
 <summary>Show code...</summary>
   
 ```abap 
-    DATA: lt_employees TYPE lcl_result=>ty_t_employees.
+    DATA lt_employees TYPE lcl_result=>ty_t_employees.
 
 *   2 Pernr number per task. For example only.
 *   '200' will be fine.
     DATA(lv_package_size) = 2.
-
-    DATA(lo_context) = NEW lcl_context(
-                                        VALUE lcl_context=>ty_params( begda = sy-datum
-                                                                      endda = sy-datum
-                                                                     )
-                                       ).
+   
+    DATA(ls_params) = VALUE lcl_context=>ty_params( begda = sy-datum
+                                                    endda = sy-datum ).
+    DATA(lo_context) = NEW lcl_context( ls_params ).
 
     DATA(lo_capi_facade_hcm) = NEW zcl_capi_facade_hcm( io_context         = lo_context
                                                         it_pernrs          = gt_pernrs
@@ -449,7 +444,7 @@ Now, let's have a look at example:
     TRY.
         lo_capi_facade_hcm->execute( IMPORTING et_result = lt_employees ).
 
-        WRITE: `PERNR    ENAME`.
+        WRITE `PERNR    ENAME`.
         LOOP AT lt_employees ASSIGNING FIELD-SYMBOL(<ls_employees>).
           WRITE: / <ls_employees>-pernr, <ls_employees>-ename.
         ENDLOOP.
