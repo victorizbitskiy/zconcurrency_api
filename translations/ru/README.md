@@ -68,17 +68,19 @@ SPTA Framework это хороший инструмент, но интерфей
 ```abap
 CLASS lcl_context DEFINITION FINAL.
   PUBLIC SECTION.
-    INTERFACES: if_serializable_object.
+    INTERFACES if_serializable_object.
 
-    TYPES: BEGIN OF ty_params,
-             param TYPE i,
-           END OF ty_params.
+    TYPES: 
+      BEGIN OF ty_params,
+        param TYPE i,
+      END OF ty_params.
 
-    METHODS: constructor IMPORTING is_params TYPE ty_params,
-             get RETURNING VALUE(rs_params) TYPE ty_params.
+    METHODS: 
+      constructor IMPORTING is_params TYPE ty_params,
+      get RETURNING VALUE(rs_params) TYPE ty_params.
 
   PRIVATE SECTION.
-    DATA: ms_params TYPE ty_params.
+    DATA ms_params TYPE ty_params.
 ENDCLASS.
 
 CLASS lcl_context IMPLEMENTATION.
@@ -102,12 +104,13 @@ ENDCLASS.
 CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_abstract_task FINAL.
   PUBLIC SECTION.
 
-    METHODS: constructor IMPORTING io_context TYPE REF TO lcl_context,
-             zif_capi_callable~call REDEFINITION.
+    METHODS: 
+      constructor IMPORTING io_context TYPE REF TO lcl_context,
+      zif_capi_callable~call REDEFINITION.
 
   PRIVATE SECTION.
-    DATA: mo_context TYPE REF TO lcl_context.
-    DATA: mv_res TYPE i.
+    DATA mo_context TYPE REF TO lcl_context.
+    DATA mv_res TYPE i.
 ENDCLASS.
 
 CLASS lcl_task IMPLEMENTATION.
@@ -136,15 +139,16 @@ ENDCLASS.
 ```abap
 CLASS lcl_result DEFINITION FINAL.
   PUBLIC SECTION.
-    INTERFACES: if_serializable_object.
+    INTERFACES if_serializable_object.
 
-    METHODS: constructor IMPORTING iv_param  TYPE i
-                                   iv_result TYPE i,
-             get RETURNING VALUE(rv_result) TYPE string.
+    METHODS: 
+      constructor IMPORTING iv_param  TYPE i
+                            iv_result TYPE i,
+      get RETURNING VALUE(rv_result) TYPE string.
 
   PRIVATE SECTION.
-    DATA: mv_param TYPE i.
-    DATA: mv_result TYPE i.
+    DATA mv_param TYPE i.
+    DATA mv_result TYPE i.
 ENDCLASS.
 
 CLASS lcl_result IMPLEMENTATION.
@@ -179,12 +183,11 @@ ENDCLASS.
     DATA(lo_tasks) = NEW zcl_capi_collection( ).
 
     DO 10 TIMES.
-      DATA(lo_task) = NEW lcl_task(
-                                    NEW lcl_context(
-                                                     VALUE lcl_context=>ty_params( param = sy-index )
-                                                     )
-                                    ).
+  
+      DATA(lo_context) = NEW lcl_context( VALUE lcl_context=>ty_params( param = sy-index ) ).
+      DATA(lo_task) = NEW lcl_task( lo_context ).
       lo_tasks->zif_capi_collection~add( lo_task ).
+  
     ENDDO.
 
     DATA(lo_message_handler) = NEW zcl_capi_message_handler( ).
@@ -202,7 +205,7 @@ ENDCLASS.
 
           WHILE lo_results_iterator->has_next( ).
             lo_result ?= lo_results_iterator->next( ).
-            WRITE: / lo_result->get( ).
+            WRITE / lo_result->get( ).
           ENDWHILE.
 
         ENDIF.
@@ -270,7 +273,7 @@ ENDCLASS.
       get_params RETURNING VALUE(rs_params) TYPE ty_params.
 
   PRIVATE SECTION.
-    DATA: ms_params TYPE ty_params.
+    DATA ms_params TYPE ty_params.
 
 ENDCLASS.
 
@@ -309,7 +312,7 @@ ENDCLASS.
 
 CLASS lcl_task IMPLEMENTATION.
   METHOD constructor.
-    DATA: lo_context TYPE REF TO lcl_context.
+    DATA lo_context TYPE REF TO lcl_context.
 
 *   Set Pernrs numbers to mt_pernrs of Task
     super->constructor( io_context ).
@@ -321,8 +324,9 @@ CLASS lcl_task IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD zif_capi_callable~call.
-    DATA: lt_employees TYPE lcl_result=>ty_t_employees,
-          ls_employees LIKE LINE OF lt_employees.
+  
+    DATA lt_employees TYPE lcl_result=>ty_t_employees.
+    DATA ls_employees LIKE LINE OF lt_employees.
           
 *   Simulation of reading the full name of employees by their personnel numbers.
 *   The ms_params attribute is available here.
@@ -376,8 +380,7 @@ ENDCLASS.
 ```abap
 CLASS lcl_result DEFINITION FINAL.
   PUBLIC SECTION.
-    INTERFACES:
-      zif_capi_facade_hcm_result.
+    INTERFACES zif_capi_facade_hcm_result.
 
     TYPES:
       BEGIN OF ty_employees,
@@ -418,7 +421,7 @@ ENDCLASS.
 <summary>Посмотреть код...</summary>
   
 ```abap 
-    DATA: lt_employees TYPE lcl_result=>ty_t_employees.
+    DATA lt_employees TYPE lcl_result=>ty_t_employees.
 
 *   2 Pernr number per task. For example only.
 *   '200' will be fine.
@@ -437,7 +440,7 @@ ENDCLASS.
     TRY.
         lo_capi_facade_hcm->execute( IMPORTING et_result = lt_employees ).
 
-        WRITE: `PERNR    ENAME`.
+        WRITE `PERNR    ENAME`.
         LOOP AT lt_employees ASSIGNING FIELD-SYMBOL(<ls_employees>).
           WRITE: / <ls_employees>-pernr, <ls_employees>-ename.
         ENDLOOP.
