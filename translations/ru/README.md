@@ -120,6 +120,7 @@ CLASS lcl_task IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD zif_capi_callable~call.
+  
     DATA(ls_params) = mo_context->get( ).
     mv_res = ls_params-param ** 2.
 
