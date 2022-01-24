@@ -193,9 +193,9 @@ ENDCLASS.
     DATA(lo_message_handler) = NEW zcl_capi_message_handler( ).
     DATA(lv_max_no_of_tasks) = zcl_capi_thread_pool_executor=>max_no_of_tasks( lc_server_group ).
   
-    DATA(lo_executor) = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group             = lc_server_group
-                                                                   iv_n_threads                = lv_max_no_of_tasks
-                                                                   io_capi_message_handler     = lo_message_handler ).
+    DATA(lo_executor) = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group         = lc_server_group
+                                                                   iv_n_threads            = lv_max_no_of_tasks
+                                                                   io_capi_message_handler = lo_message_handler ).
     TRY.
         DATA(lo_results) = lo_executor->zif_capi_executor_service~invoke_all( lo_tasks ).
 
