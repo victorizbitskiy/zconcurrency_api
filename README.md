@@ -331,6 +331,7 @@ CLASS lcl_task IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD zif_capi_callable~call.
+   
     DATA lt_employees TYPE lcl_result=>ty_t_employees.
     DATA ls_employees LIKE LINE OF lt_employees.
           
