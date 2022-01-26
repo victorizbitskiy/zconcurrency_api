@@ -499,9 +499,9 @@ ENDCLASS.
 
 ## Как внести свой вклад
 [Эта инструкция](https://docs.abapgit.org/guide-contributing.html) поможет вам.
-  
+
 ## Остались вопросы?
 Если у вас есть вопросы или предложения не стесняйтесь отправлять их [(GitHub issue)](https://github.com/victorizbitskiy/zconcurrency_api/issues/new).
-  
+
 ## Логотип
 Логотип проекта <a href="https://ru.freepik.com/macrovector">designed by macrovector/Freepik</a>
