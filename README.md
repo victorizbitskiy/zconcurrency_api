@@ -1,5 +1,4 @@
 <img src="https://github.com/victorizbitskiy/zconcurrency_api/blob/main/logo/octo.svg" height="100px"/>\
-<a href="https://ru.freepik.com/macrovector">Designed by macrovector/Freepik</a>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/victorizbitskiy/zconcurrency_api/blob/main/LICENSE)
 ![ABAP 7.00+](https://img.shields.io/badge/ABAP-7.00%2B-brightgreen)
@@ -25,6 +24,9 @@ Hereinafter, the concepts of `concurrency` and `parallelism` are considered syno
 6. [Diagrams](#diagrams)
 7. [Dependencies](#dependencies)
 8. [Limitations](#limitations)
+9. [Как внести свой вклад](#Как-внести-свой-вклад)
+10. [Остались вопросы?](#Остались-вопросы?)
+11. [Логотип](#Логотип)
 
 ## What it is?
 
@@ -499,3 +501,12 @@ SPTA package required.
 Batch input is not supported.
 This limitation is related to the use of SPTA Framework.  
 See the note [734205](https://launchpad.support.sap.com/#/notes/734205) and [710920](https://launchpad.support.sap.com/#/notes/710920) for details.
+
+## How to contribute
+[This instruction](https://docs.abapgit.org/guide-contributing.html) will help you.
+  
+## Got questions?
+If you have questions or general suggestions, don't hesitate to submit a new [(GitHub issue)](https://github.com/victorizbitskiy/zconcurrency_api/issues/new).
+  
+## Logo
+Project logo <a href="https://ru.freepik.com/macrovector">designed by macrovector/Freepik</a>
