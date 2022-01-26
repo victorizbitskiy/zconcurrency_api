@@ -64,7 +64,8 @@ Let's consider a simple task:
 The square of each of the numbers will be found in a separate task/process.  
 The example is detached from the real world, but it is enough to understand how to work with the API.
 
-First, let's create the 3 classes: *Context*, *Task* and *Result*.
+First, let's create the 3 local classes: *Context*, *Task* and *Result*. 
+You can choose which classes to create (local or global).  
 
 1. **lcl_contex**, an object of this class encapsulates the task parameters.
    The use of this class is optional. You can do without it by passing the task parameters directly to its constructor.
