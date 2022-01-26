@@ -25,7 +25,7 @@ Hereinafter, the concepts of `concurrency` and `parallelism` are considered syno
 7. [Dependencies](#dependencies)
 8. [Limitations](#limitations)
 9. [How to contribute](#how-to-contribute)
-10. [Got questions?](#got-questions?)
+10. [Got questions](#Got-questions)
 11. [Logo](#logo)
 
 ## What it is?
