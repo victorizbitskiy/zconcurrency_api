@@ -184,7 +184,7 @@ ENDCLASS.
     CONSTANTS lc_server_group TYPE rfcgr VALUE 'parallel_generators'.
     DATA lo_result TYPE REF TO lcl_result.
 
-*   Create collection of tasks
+    " Create collection of tasks
     DATA(lo_tasks) = NEW zcl_capi_collection( ).
 
     DO 10 TIMES.
@@ -319,10 +319,10 @@ CLASS lcl_task IMPLEMENTATION.
   METHOD constructor.
     DATA lo_context TYPE REF TO lcl_context.
 
-*   Set Pernrs numbers to mt_pernrs of Task
+    " Set Pernrs numbers to mt_pernrs of Task
     super->constructor( io_context ).
 
-*   Set Context parameters
+    " Set Context parameters
     lo_context ?= io_context.
     ms_params = lo_context->get_params( ).
 
@@ -333,9 +333,9 @@ CLASS lcl_task IMPLEMENTATION.
     DATA lt_employees TYPE lcl_result=>ty_t_employees.
     DATA ls_employees LIKE LINE OF lt_employees.
           
-*   Simulation of reading the full name of employees by their personnel numbers.
-*   The ms_params attribute is available here.
-*   We won't be using it in this example, but you can.
+    " Simulation of reading the full name of employees by their personnel numbers.
+    " The ms_params attribute is available here.
+    " We won't be using it in this example, but you can.
 
     LOOP AT mt_pernrs ASSIGNING FIELD-SYMBOL(<ls_pernr>).
       ls_employees-pernr = <ls_pernr>-low.
@@ -428,8 +428,8 @@ ENDCLASS.
 ```abap 
     DATA lt_employees TYPE lcl_result=>ty_t_employees.
 
-*   2 Pernr number per task. For example only.
-*   '200' will be fine.
+    " 2 Pernr number per task. For example only.
+    " '200' will be fine.
     DATA(lv_package_size) = 2.
   
     DATA(ls_params) =  VALUE lcl_context=>ty_params( begda = sy-datum
