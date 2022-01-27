@@ -11,7 +11,7 @@ CLASS zcl_capi_executors DEFINITION
         !iv_no_resubmission_on_error        TYPE boole_d DEFAULT abap_true
         !io_capi_message_handler            TYPE REF TO zif_capi_message_handler OPTIONAL
       RETURNING
-        VALUE(ro_capi_thread_pool_executor) TYPE REF TO zcl_capi_thread_pool_executor .
+        VALUE(ro_result) TYPE REF TO zcl_capi_thread_pool_executor .
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -23,7 +23,7 @@ CLASS ZCL_CAPI_EXECUTORS IMPLEMENTATION.
 
   METHOD new_fixed_thread_pool.
 
-    CREATE OBJECT ro_capi_thread_pool_executor
+    CREATE OBJECT ro_result
       EXPORTING
         iv_server_group             = iv_server_group
         iv_n_threads                = iv_n_threads

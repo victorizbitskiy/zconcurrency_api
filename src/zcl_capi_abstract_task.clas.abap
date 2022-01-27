@@ -51,7 +51,8 @@ CLASS ZCL_CAPI_ABSTRACT_TASK IMPLEMENTATION.
 
 
   METHOD create_task_name.
-    DATA: lv_tasks_quantity TYPE string.
+
+    DATA lv_tasks_quantity TYPE string.
 
     lv_tasks_quantity = gv_tasks_quantity = gv_tasks_quantity + 1.
     CONCATENATE 'task_' lv_tasks_quantity INTO mv_name.
@@ -60,16 +61,16 @@ CLASS ZCL_CAPI_ABSTRACT_TASK IMPLEMENTATION.
 
 
   METHOD zif_capi_callable~call.
-*   This method needs to be overridden
+    " This method needs to be overridden (REDEFINITION)
   ENDMETHOD.
 
 
   METHOD zif_capi_task~get_id.
-    rv_id = mv_id.
+    rv_result = mv_id.
   ENDMETHOD.
 
 
   METHOD zif_capi_task~get_name.
-    rv_name = mv_name.
+    rv_result = mv_name.
   ENDMETHOD.
 ENDCLASS.

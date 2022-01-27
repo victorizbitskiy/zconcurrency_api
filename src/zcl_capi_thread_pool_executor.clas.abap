@@ -16,7 +16,7 @@ CLASS zcl_capi_thread_pool_executor DEFINITION
       IMPORTING
         !iv_server_group          TYPE rfcgr
       RETURNING
-        VALUE(rv_max_no_of_tasks) TYPE i .
+        VALUE(rv_result) TYPE i .
   PROTECTED SECTION.
   PRIVATE SECTION.
 
@@ -47,13 +47,13 @@ CLASS ZCL_CAPI_THREAD_POOL_EXECUTOR IMPLEMENTATION.
 
 
   METHOD max_no_of_tasks.
-    DATA: lv_free_pbt_wps TYPE i.
+
+    DATA lv_free_pbt_wps TYPE i.
 
     CALL FUNCTION 'SPBT_INITIALIZE'
       EXPORTING
         group_name                     = iv_server_group
       IMPORTING
-*       MAX_PBT_WPS                    =
         free_pbt_wps                   = lv_free_pbt_wps
       EXCEPTIONS
         invalid_group_name             = 1
@@ -64,16 +64,21 @@ CLASS ZCL_CAPI_THREAD_POOL_EXECUTOR IMPLEMENTATION.
         cant_init_different_pbt_groups = 6
         OTHERS                         = 7.
     IF sy-subrc = 0.
-      rv_max_no_of_tasks = lv_free_pbt_wps * 40 / 100.
+      " We take not all processes.
+      " We take only  of all processes.
+      " 40% is chosen empirically.
+      rv_result = lv_free_pbt_wps * 40 / 100.
     ELSE.
-      rv_max_no_of_tasks = 5.
+      rv_result = 5.
     ENDIF.
+
   ENDMETHOD.
 
 
   METHOD zif_capi_executor_service~invoke_all.
-    DATA: lo_capi_spta_gateway TYPE REF TO zcl_capi_spta_gateway,
-          lo_tasks             TYPE REF TO zcl_capi_collection.
+
+    DATA lo_capi_spta_gateway TYPE REF TO zcl_capi_spta_gateway.
+    DATA lo_tasks             TYPE REF TO zcl_capi_collection.
 
     lo_tasks ?= io_tasks.
 
@@ -98,12 +103,13 @@ CLASS ZCL_CAPI_THREAD_POOL_EXECUTOR IMPLEMENTATION.
         no_resources_available   = 2
         OTHERS                   = 3.
     IF sy-subrc = 0.
-      ro_results ?= lo_capi_spta_gateway->mo_results.
+      ro_result ?= lo_capi_spta_gateway->mo_results.
     ELSE.
       RAISE EXCEPTION TYPE zcx_capi_tasks_invocation
         EXPORTING
           textid       = zcx_capi_tasks_invocation=>error_message
           server_group = mv_server_group.
     ENDIF.
+
   ENDMETHOD.
 ENDCLASS.

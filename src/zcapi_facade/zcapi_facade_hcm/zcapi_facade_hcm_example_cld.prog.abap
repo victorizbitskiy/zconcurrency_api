@@ -31,7 +31,8 @@ CLASS lcl_context DEFINITION INHERITING FROM zcl_capi_facade_hcm_abstr_cntx FINA
       get_params RETURNING VALUE(rs_params) TYPE ty_params.
 
   PRIVATE SECTION.
-    DATA: ms_params TYPE ty_params.
+
+    DATA ms_params TYPE ty_params.
 
 ENDCLASS.
 *----------------------------------------------------------------------*
@@ -47,7 +48,8 @@ CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_facade_hcm_abstr_task FINAL.
       zif_capi_callable~call REDEFINITION.
 
   PRIVATE SECTION.
-    DATA: ms_params TYPE lcl_context=>ty_params.
+
+    DATA ms_params TYPE lcl_context=>ty_params.
 
 ENDCLASS.
 *----------------------------------------------------------------------*
@@ -57,8 +59,8 @@ ENDCLASS.
 *----------------------------------------------------------------------*
 CLASS lcl_result DEFINITION FINAL.
   PUBLIC SECTION.
-    INTERFACES:
-      zif_capi_facade_hcm_result.
+
+    INTERFACES zif_capi_facade_hcm_result.
 
     TYPES:
       BEGIN OF ty_employees,
@@ -72,6 +74,7 @@ CLASS lcl_result DEFINITION FINAL.
       constructor IMPORTING it_employees TYPE ty_t_employees.
 
   PRIVATE SECTION.
-    DATA: mt_employees TYPE ty_t_employees.
+
+    DATA mt_employees TYPE ty_t_employees.
 
 ENDCLASS.

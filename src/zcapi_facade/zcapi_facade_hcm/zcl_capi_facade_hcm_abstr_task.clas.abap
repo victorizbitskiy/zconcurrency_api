@@ -22,7 +22,9 @@ CLASS ZCL_CAPI_FACADE_HCM_ABSTR_TASK IMPLEMENTATION.
 
 
   METHOD constructor.
+
     super->constructor( iv_name ).
     mt_pernrs = io_context->zif_capi_facade_hcm_context~get_pernrs( ).
+
   ENDMETHOD.
 ENDCLASS.

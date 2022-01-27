@@ -4,15 +4,15 @@ INTERFACE zif_capi_collection
 
   METHODS size
     RETURNING
-      VALUE(rv_size) TYPE i .
+      VALUE(rv_result) TYPE i .
   METHODS is_empty
     RETURNING
-      VALUE(rv_empty) TYPE boole_d .
+      VALUE(rv_result) TYPE boole_d .
   METHODS get_item
     IMPORTING
       !iv_index        TYPE i
     RETURNING
-      VALUE(ro_object) TYPE REF TO object .
+      VALUE(ro_result) TYPE REF TO object .
   METHODS add
     IMPORTING
       !ir_object TYPE REF TO object .
@@ -25,5 +25,5 @@ INTERFACE zif_capi_collection
   METHODS clear .
   METHODS get_iterator
     RETURNING
-      VALUE(ro_iterator) TYPE REF TO zif_capi_iterator .
+      VALUE(ro_result) TYPE REF TO zif_capi_iterator .
 ENDINTERFACE.

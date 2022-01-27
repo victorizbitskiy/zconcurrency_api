@@ -3,24 +3,25 @@
 *&---------------------------------------------------------------------*
 CLASS lcl_app IMPLEMENTATION.
   METHOD main.
-    CONSTANTS: lc_server_group TYPE rfcgr VALUE 'parallel_generators'.
 
-    DATA: lo_tasks                 TYPE REF TO zcl_capi_collection,
-          lo_task                  TYPE REF TO lcl_task,
-          lo_context               TYPE REF TO lcl_context,
-          ls_params                TYPE lcl_context=>ty_params,
-          lo_executor              TYPE REF TO zif_capi_executor_service,
-          lo_message_handler       TYPE REF TO zcl_capi_message_handler,
-          lt_message_list          TYPE zif_capi_message_handler=>ty_message_list_tab,
-          lo_results               TYPE REF TO zif_capi_collection,
-          lo_results_iterator      TYPE REF TO zif_capi_iterator,
-          lo_result                TYPE REF TO lcl_result,
-          lv_result                TYPE string,
-          lo_capi_tasks_invocation TYPE REF TO zcx_capi_tasks_invocation,
-          lv_message_text          TYPE string,
-          lv_max_no_of_tasks       TYPE i.
+    CONSTANTS lc_server_group TYPE rfcgr VALUE 'parallel_generators'.
 
-    FIELD-SYMBOLS: <ls_message_list> LIKE LINE OF lt_message_list.
+    DATA lo_tasks                 TYPE REF TO zcl_capi_collection.
+    DATA lo_task                  TYPE REF TO lcl_task.
+    DATA lo_context               TYPE REF TO lcl_context.
+    DATA ls_params                TYPE lcl_context=>ty_params.
+    DATA lo_executor              TYPE REF TO zif_capi_executor_service.
+    DATA lo_message_handler       TYPE REF TO zcl_capi_message_handler.
+    DATA lt_message_list          TYPE zif_capi_message_handler=>ty_message_list_tab.
+    DATA lo_results               TYPE REF TO zif_capi_collection.
+    DATA lo_results_iterator      TYPE REF TO zif_capi_iterator.
+    DATA lo_result                TYPE REF TO lcl_result.
+    DATA lv_result                TYPE string.
+    DATA lo_capi_tasks_invocation TYPE REF TO zcx_capi_tasks_invocation.
+    DATA lv_message_text          TYPE string.
+    DATA lv_max_no_of_tasks       TYPE i.
+
+    FIELD-SYMBOLS <ls_message_list> LIKE LINE OF lt_message_list.
 
 *   Create collection of tasks
     CREATE OBJECT lo_tasks.
@@ -43,9 +44,9 @@ CLASS lcl_app IMPLEMENTATION.
     CREATE OBJECT lo_message_handler.
     lv_max_no_of_tasks = zcl_capi_thread_pool_executor=>max_no_of_tasks( lc_server_group ).
 
-    lo_executor = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group             = lc_server_group
-                                                             iv_n_threads                = lv_max_no_of_tasks
-                                                             io_capi_message_handler     = lo_message_handler ).
+    lo_executor = zcl_capi_executors=>new_fixed_thread_pool( iv_server_group         = lc_server_group
+                                                             iv_n_threads            = lv_max_no_of_tasks
+                                                             io_capi_message_handler = lo_message_handler ).
     TRY.
         lo_results = lo_executor->invoke_all( lo_tasks ).
         lo_results_iterator = lo_results->get_iterator( ).
@@ -66,7 +67,7 @@ CLASS lcl_app IMPLEMENTATION.
           WHILE lo_results_iterator->has_next( ) = abap_true.
             lo_result ?= lo_results_iterator->next( ).
             lv_result = lo_result->get( ).
-            WRITE: / lv_result.
+            WRITE / lv_result.
           ENDWHILE.
 
         ENDIF.
@@ -100,12 +101,15 @@ ENDCLASS.
 *----------------------------------------------------------------------*
 CLASS lcl_task IMPLEMENTATION.
   METHOD constructor.
+
     super->constructor( ).
     mo_context = io_context.
+
   ENDMETHOD.
 
   METHOD zif_capi_callable~call.
-    DATA: ls_params TYPE lcl_context=>ty_params.
+
+    DATA ls_params TYPE lcl_context=>ty_params.
 
     ls_params = mo_context->get( ).
     mv_res = ls_params-param ** 2.
@@ -127,13 +131,16 @@ ENDCLASS.
 *----------------------------------------------------------------------*
 CLASS lcl_result IMPLEMENTATION.
   METHOD constructor.
+
     mv_param = iv_param.
     mv_result = iv_result.
+
   ENDMETHOD.
 
   METHOD get.
-    DATA: lv_param  TYPE string,
-          lv_result TYPE string.
+
+    DATA lv_param  TYPE string.
+    DATA lv_result TYPE string.
 
     lv_param = mv_param.
     lv_result = mv_result.

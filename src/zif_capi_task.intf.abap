@@ -7,8 +7,8 @@ INTERFACE zif_capi_task
 
   METHODS get_name
     RETURNING
-      VALUE(rv_name) TYPE string .
+      VALUE(rv_result) TYPE string .
   METHODS get_id
     RETURNING
-      VALUE(rv_id) TYPE guid_32 .
+      VALUE(rv_result) TYPE guid_32 .
 ENDINTERFACE.

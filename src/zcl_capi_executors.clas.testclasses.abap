@@ -4,12 +4,11 @@ CLASS ltc_capi_executors DEFINITION FOR TESTING
   RISK LEVEL HARMLESS.
 
   PRIVATE SECTION.
-    DATA:
-      mo_cut TYPE REF TO zcl_capi_executors.  "class under test
+    DATA mo_cut TYPE REF TO zcl_capi_executors.  "class under test
 
-    METHODS: setup.
-    METHODS: teardown.
-    METHODS: new_fixed_thread_pool FOR TESTING.
+    METHODS setup.
+    METHODS teardown.
+    METHODS new_fixed_thread_pool FOR TESTING.
 ENDCLASS.       "ltc_Capi_Executors
 
 

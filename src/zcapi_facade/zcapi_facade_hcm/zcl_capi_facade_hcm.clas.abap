@@ -36,7 +36,7 @@ CLASS zcl_capi_facade_hcm DEFINITION
         !et_result  TYPE ANY TABLE .
     METHODS long_class_name
       RETURNING
-        VALUE(rv_long_class_name) TYPE string .
+        VALUE(rv_result) TYPE string .
 ENDCLASS.
 
 
@@ -45,31 +45,32 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
 
 
   METHOD constructor.
+
     mo_context = io_context.
     mt_pernrs = it_pernrs.
     mv_task_class_name = iv_task_class_name.
     mv_package_size = iv_package_size.
+
   ENDMETHOD.
 
 
   METHOD error_process.
-    DATA: lt_message_list        TYPE zif_capi_message_handler=>ty_message_list_tab,
-          ls_error_detail_header LIKE LINE OF lt_message_list.
 
-    FIELD-SYMBOLS: <ls_message_list> LIKE LINE OF lt_message_list.
+    DATA lt_message_list        TYPE zif_capi_message_handler=>ty_message_list_tab.
+    DATA ls_error_detail_header LIKE LINE OF lt_message_list.
 
-    FORMAT HOTSPOT ON.
+    FIELD-SYMBOLS <ls_message_list> LIKE LINE OF lt_message_list.
+
     FORMAT COLOR 6.
 
-    WRITE: / 'Errors occurred when tasks were executed in parallel. The data is inconsistent.'(001).
-    WRITE: / 'Please restart the report.'(002).
-    WRITE: / 'If the error persists after restarting, contact support.'(003).
+    WRITE / 'Errors occurred when tasks were executed in parallel. The data is inconsistent.'(001).
+    WRITE / 'Please restart the report.'(002).
+    WRITE / 'If the error persists after restarting, contact support.'(003).
 
-    FORMAT HOTSPOT OFF.
     FORMAT RESET INTENSIFIED ON.
     SKIP.
 
-    WRITE: / 'Details of errors:'(004).
+    WRITE / 'Details of errors:'(004).
     ls_error_detail_header-task_name = 'Task name'(005).
     ls_error_detail_header-rfcmsg = 'Error description'(006).
     WRITE: / ls_error_detail_header-task_name, ls_error_detail_header-rfcmsg.
@@ -78,26 +79,28 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
     LOOP AT lt_message_list ASSIGNING <ls_message_list>.
       WRITE: / <ls_message_list>-task_name, <ls_message_list>-rfcmsg.
     ENDLOOP.
+
   ENDMETHOD.
 
 
   METHOD execute.
-    DATA: lv_pos_till         TYPE i,
-          lv_number_of_pernrs TYPE i,
-          lt_pernrs           LIKE mt_pernrs,
-          lt_pernrs_part      LIKE mt_pernrs,
-          lv_long_class_name  TYPE string.
 
-    DATA: lo_tasks           TYPE REF TO zcl_capi_collection,
-          lo_task            TYPE REF TO zcl_capi_facade_hcm_abstr_task,
-          lo_executor        TYPE REF TO zif_capi_executor_service,
-          lo_message_handler TYPE REF TO zcl_capi_message_handler,
-          lo_results         TYPE REF TO zif_capi_collection.
+    DATA lv_pos_till         TYPE i.
+    DATA lv_number_of_pernrs TYPE i.
+    DATA lt_pernrs           LIKE mt_pernrs.
+    DATA lt_pernrs_part      LIKE mt_pernrs.
+    DATA lv_long_class_name  TYPE string.
+
+    DATA lo_tasks           TYPE REF TO zcl_capi_collection.
+    DATA lo_task            TYPE REF TO zcl_capi_facade_hcm_abstr_task.
+    DATA lo_executor        TYPE REF TO zif_capi_executor_service.
+    DATA lo_message_handler TYPE REF TO zcl_capi_message_handler.
+    DATA lo_results         TYPE REF TO zif_capi_collection.
 
     DATA: lv_max_no_of_tasks TYPE i.
 
-*   The execute( ) method is an implementation of the Facade structural pattern.
-*   It is designed to simplify the parallelization process and use the Abap Concurrency API.
+    " The execute( ) method is an implementation of the Facade structural pattern.
+    " It is designed to simplify the parallelization process and use the Abap Concurrency API.
 
     CLEAR et_result.
 
@@ -108,9 +111,9 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
 
     lv_number_of_pernrs = lines( lt_pernrs ).
 
-*   Divide personnel numbers into parts for each task
+    " Divide personnel numbers into parts for each task
     DO.
-*     Out of personnel numbers?
+      " Out of personnel numbers?
       IF lv_number_of_pernrs IS INITIAL.
         EXIT. " Yes
       ENDIF.
@@ -138,7 +141,7 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
       ENDTRY.
 
       lv_number_of_pernrs = lines( lt_pernrs ).
-      CLEAR: lt_pernrs_part.
+      CLEAR lt_pernrs_part.
     ENDDO.
 
     CREATE OBJECT lo_message_handler.
@@ -148,7 +151,7 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
                                                              iv_n_threads                = lv_max_no_of_tasks
                                                              iv_no_resubmission_on_error = abap_false
                                                              io_capi_message_handler     = lo_message_handler ).
-*   Let's start the tasks for execution.
+    " Let's start the tasks for execution.
     lo_results = lo_executor->invoke_all( lo_tasks ).
 
     IF lo_message_handler->zif_capi_message_handler~has_messages( ) = abap_true.
@@ -161,30 +164,33 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
 
 
   METHOD long_class_name.
-    DATA: lo_class      TYPE REF TO cl_oo_class,
-          lv_class_name TYPE seoclsname.
 
-*   This is a global class?
+    DATA lo_class      TYPE REF TO cl_oo_class.
+    DATA lv_class_name TYPE seoclsname.
+
+    " This is a global class?
     TRY.
         lv_class_name = mv_task_class_name.
         lo_class ?= cl_oo_class=>get_instance( lv_class_name ).
 
-*     Yes
-        rv_long_class_name = mv_task_class_name.
+        " Yes
+        rv_result = mv_task_class_name.
 
       CATCH cx_root.
-*     Nope
-        CONCATENATE '\' 'PROGRAM=' sy-cprog '\CLASS=' mv_task_class_name INTO rv_long_class_name.
+        " Nope
+        CONCATENATE '\' 'PROGRAM=' sy-cprog '\CLASS=' mv_task_class_name INTO rv_result.
     ENDTRY.
+
   ENDMETHOD.
 
 
   METHOD results_to_table.
-    DATA: lo_data             TYPE REF TO data,
-          lo_results_iterator TYPE REF TO zif_capi_iterator,
-          lo_result           TYPE REF TO zif_capi_facade_hcm_result.
 
-    FIELD-SYMBOLS: <lt_any> TYPE ANY TABLE.
+    DATA lo_data             TYPE REF TO data.
+    DATA lo_results_iterator TYPE REF TO zif_capi_iterator.
+    DATA lo_result           TYPE REF TO zif_capi_facade_hcm_result.
+
+    FIELD-SYMBOLS <lt_any> TYPE ANY TABLE.
 
     CLEAR et_result.
 
@@ -195,11 +201,14 @@ CLASS ZCL_CAPI_FACADE_HCM IMPLEMENTATION.
 
     IF <lt_any> IS ASSIGNED.
       WHILE lo_results_iterator->has_next( ) = abap_true.
+
         lo_result ?= lo_results_iterator->next( ).
         CLEAR <lt_any>.
         lo_result->get( IMPORTING et_result = <lt_any> ).
         INSERT LINES OF <lt_any> INTO TABLE et_result.
+
       ENDWHILE.
     ENDIF.
+
   ENDMETHOD.
 ENDCLASS.

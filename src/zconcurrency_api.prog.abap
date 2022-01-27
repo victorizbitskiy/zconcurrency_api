@@ -5,7 +5,7 @@
 *&---------------------------------------------------------------------*
 REPORT zconcurrency_api.
 
-TYPE-POOLS: spta.
+TYPE-POOLS spta.
 
 *&---------------------------------------------------------------------*
 *&      Form  before_rfc
@@ -17,9 +17,9 @@ FORM before_rfc USING is_before_rfc_imp TYPE spta_t_before_rfc_imp
                       ct_objects_in_process TYPE spta_t_objects_in_process
                       co_capi_spta_gateway TYPE REF TO zcl_capi_spta_gateway.
 
-  DATA: lo_task               TYPE REF TO zif_capi_task,
-        lv_task               TYPE xstring,
-        ls_objects_in_process LIKE LINE OF ct_objects_in_process.
+  DATA lo_task               TYPE REF TO zif_capi_task.
+  DATA lv_task               TYPE xstring.
+  DATA ls_objects_in_process LIKE LINE OF ct_objects_in_process.
 
   IF ct_failed_objects[] IS NOT INITIAL.
     PERFORM process_failed_objects CHANGING cs_before_rfc_exp
@@ -58,10 +58,10 @@ FORM in_rfc USING is_in_rfc_imp TYPE spta_t_in_rfc_imp
          CHANGING cs_in_rfc_exp TYPE spta_t_in_rfc_exp
                   ct_rfcdata TYPE spta_t_indxtab.
 
-  DATA: lv_task   TYPE xstring,
-        lo_task   TYPE REF TO zif_capi_task,
-        lo_result TYPE REF TO if_serializable_object,
-        lv_result TYPE xstring.
+  DATA lv_task   TYPE xstring.
+  DATA lo_task   TYPE REF TO zif_capi_task.
+  DATA lo_result TYPE REF TO if_serializable_object.
+  DATA lv_result TYPE xstring.
 
   SET UPDATE TASK LOCAL.
 
@@ -96,17 +96,17 @@ FORM after_rfc USING it_rfcdata TYPE spta_t_indxtab
             CHANGING cs_after_rfc_exp TYPE spta_t_after_rfc_exp
                      co_capi_spta_gateway TYPE REF TO zcl_capi_spta_gateway.
 
-  CONSTANTS: lc_max_task_crash TYPE i VALUE 1.
+  CONSTANTS lc_max_task_crash TYPE i VALUE 1.
 
-  DATA: lv_result             TYPE xstring,
-        lo_result             TYPE REF TO object,
-        ls_objects_in_process LIKE LINE OF it_objects_in_process,
-        lv_task_id            TYPE guid_32,
-        lv_tc_size            TYPE i,
-        lv_rc_size            TYPE i.
+  DATA lv_result             TYPE xstring.
+  DATA lo_result             TYPE REF TO object.
+  DATA ls_objects_in_process LIKE LINE OF it_objects_in_process.
+  DATA lv_task_id            TYPE guid_32.
+  DATA lv_tc_size            TYPE i.
+  DATA lv_rc_size            TYPE i.
 
   IF iv_rfcsubrc IS INITIAL.
-*   Task completed successfully
+    " Task completed successfully
 
     CALL FUNCTION 'SPTA_INDX_PACKAGE_DECODE'
       EXPORTING
@@ -124,7 +124,6 @@ FORM after_rfc USING it_rfcdata TYPE spta_t_indxtab
                                               i_processed = lv_rc_size
                                               i_total = lv_tc_size
                                               i_output_immediately = abap_true ).
-
   ELSE.
 
     READ TABLE it_objects_in_process INTO ls_objects_in_process INDEX 1.
@@ -136,8 +135,8 @@ FORM after_rfc USING it_rfcdata TYPE spta_t_indxtab
                                                                   iv_rfcmsg = iv_rfcmsg ).
 
       IF ls_objects_in_process-fail_count = lc_max_task_crash.
-*       If the task has already crashed, and now it has crashed a second time,
-*       we will not restart it
+        " If the task has already crashed, and now it has crashed a second time,
+        " we will not restart it
         cs_after_rfc_exp-no_resubmission_on_error = abap_true.
       ELSE.
         cs_after_rfc_exp-no_resubmission_on_error = co_capi_spta_gateway->mv_no_resubmission_on_error.
@@ -158,12 +157,12 @@ FORM process_failed_objects CHANGING cs_before_rfc_exp TYPE spta_t_before_rfc_ex
                                      ct_objects_in_process TYPE spta_t_objects_in_process
                                      co_capi_spta_gateway TYPE REF TO zcl_capi_spta_gateway.
 
-  DATA: lo_tasks_iterator     TYPE REF TO zif_capi_iterator,
-        lo_task               TYPE REF TO zif_capi_task,
-        lv_task               TYPE xstring,
-        ls_objects_in_process LIKE LINE OF ct_objects_in_process.
+  DATA lo_tasks_iterator     TYPE REF TO zif_capi_iterator.
+  DATA lo_task               TYPE REF TO zif_capi_task.
+  DATA lv_task               TYPE xstring.
+  DATA ls_objects_in_process LIKE LINE OF ct_objects_in_process.
 
-  FIELD-SYMBOLS: <ls_failed_objects> LIKE LINE OF ct_failed_objects.
+  FIELD-SYMBOLS <ls_failed_objects> LIKE LINE OF ct_failed_objects.
 
   READ TABLE ct_failed_objects ASSIGNING <ls_failed_objects> INDEX 1.
   IF <ls_failed_objects> IS ASSIGNED.

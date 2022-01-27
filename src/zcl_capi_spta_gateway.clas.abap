@@ -17,9 +17,9 @@ CLASS zcl_capi_spta_gateway DEFINITION
         VALUE(rv_result) TYPE xstring .
     CLASS-METHODS serialize_task
       IMPORTING
-        !io_task       TYPE REF TO zif_capi_task
+        !io_task         TYPE REF TO zif_capi_task
       RETURNING
-        VALUE(rv_task) TYPE xstring .
+        VALUE(rv_result) TYPE xstring .
     CLASS-METHODS deserialize_result
       IMPORTING
         !iv_result       TYPE xstring
@@ -27,9 +27,9 @@ CLASS zcl_capi_spta_gateway DEFINITION
         VALUE(ro_result) TYPE REF TO if_serializable_object .
     CLASS-METHODS deserialize_task
       IMPORTING
-        !iv_task       TYPE xstring
+        !iv_task         TYPE xstring
       RETURNING
-        VALUE(ro_task) TYPE REF TO zif_capi_task .
+        VALUE(ro_result) TYPE REF TO zif_capi_task .
     METHODS constructor
       IMPORTING
         !io_tasks                    TYPE REF TO zif_capi_collection
@@ -41,7 +41,7 @@ ENDCLASS.
 
 
 
-CLASS zcl_capi_spta_gateway IMPLEMENTATION.
+CLASS ZCL_CAPI_SPTA_GATEWAY IMPLEMENTATION.
 
 
   METHOD constructor.
@@ -69,7 +69,7 @@ CLASS zcl_capi_spta_gateway IMPLEMENTATION.
 
     CALL TRANSFORMATION id_indent
       SOURCE XML iv_task
-      RESULT obj = ro_task.
+      RESULT obj = ro_result.
 
   ENDMETHOD.
 
@@ -87,7 +87,7 @@ CLASS zcl_capi_spta_gateway IMPLEMENTATION.
 
     CALL TRANSFORMATION id_indent
       SOURCE obj = io_task
-      RESULT XML rv_task.
+      RESULT XML rv_result.
 
   ENDMETHOD.
 ENDCLASS.

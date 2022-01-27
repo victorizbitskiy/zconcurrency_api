@@ -3,9 +3,10 @@
 *&---------------------------------------------------------------------*
 CLASS lcl_app IMPLEMENTATION.
   METHOD start_of_selection.
-    DATA: ls_pernrs LIKE LINE OF gt_pernrs.
 
-*   Modeling the selection of personnel numbers
+    DATA ls_pernrs LIKE LINE OF gt_pernrs.
+
+    " Modeling the selection of personnel numbers
     DO 10 TIMES.
       ls_pernrs-sign = 'I'.
       ls_pernrs-option = 'EQ'.
@@ -16,18 +17,19 @@ CLASS lcl_app IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD end_of_selection.
-    DATA: lv_package_size          TYPE i,
-          ls_params                TYPE lcl_context=>ty_params,
-          lo_context               TYPE REF TO lcl_context,
-          lo_capi_facade_hcm       TYPE REF TO zcl_capi_facade_hcm,
-          lt_employees             TYPE lcl_result=>ty_t_employees,
-          lo_capi_tasks_invocation TYPE REF TO zcx_capi_tasks_invocation,
-          lv_message_text          TYPE string.
 
-    FIELD-SYMBOLS: <ls_employees> LIKE LINE OF lt_employees.
+    DATA lv_package_size          TYPE i.
+    DATA ls_params                TYPE lcl_context=>ty_params.
+    DATA lo_context               TYPE REF TO lcl_context.
+    DATA lo_capi_facade_hcm       TYPE REF TO zcl_capi_facade_hcm.
+    DATA lt_employees             TYPE lcl_result=>ty_t_employees.
+    DATA lo_capi_tasks_invocation TYPE REF TO zcx_capi_tasks_invocation.
+    DATA lv_message_text          TYPE string.
 
-*   2 Pernr number per task. For example only.
-*   Use the default '1000'.
+    FIELD-SYMBOLS <ls_employees> LIKE LINE OF lt_employees.
+
+    " 2 Pernr number per task. For example only.
+    " Use the default '1000'.
     lv_package_size = 2.
 
     ls_params-begda = sy-datum.
@@ -66,8 +68,10 @@ ENDCLASS.
 *----------------------------------------------------------------------*
 CLASS lcl_context IMPLEMENTATION.
   METHOD constructor.
+
     super->constructor( ).
     ms_params = is_params.
+
   ENDMETHOD.
 
   METHOD get_params.
@@ -82,26 +86,28 @@ ENDCLASS.
 *----------------------------------------------------------------------*
 CLASS lcl_task IMPLEMENTATION.
   METHOD constructor.
-    DATA: lo_context TYPE REF TO lcl_context.
 
-*   Set Pernrs numbers to mt_pernrs of Task
+    DATA lo_context TYPE REF TO lcl_context.
+
+    " Set Pernrs numbers to mt_pernrs of Task
     super->constructor( io_context ).
 
-*   Set Context parameters
+    " Set Context parameters
     lo_context ?= io_context.
     ms_params = lo_context->get_params( ).
 
   ENDMETHOD.
 
   METHOD zif_capi_callable~call.
-    DATA: lt_employees TYPE lcl_result=>ty_t_employees,
-          ls_employees LIKE LINE OF lt_employees.
 
-    FIELD-SYMBOLS: <ls_pernr> LIKE LINE OF mt_pernrs.
+    DATA lt_employees TYPE lcl_result=>ty_t_employees.
+    DATA ls_employees LIKE LINE OF lt_employees.
 
-*   Simulation of reading the full name of employees by their personnel numbers.
-*   The ms_params attribute is available here.
-*   We won't be using it in this example, but you can.
+    FIELD-SYMBOLS <ls_pernr> LIKE LINE OF mt_pernrs.
+
+    " Simulation of reading the full name of employees by their personnel numbers.
+    " The ms_params attribute is available here.
+    " We won't be using it in this example, but you can.
 
     LOOP AT mt_pernrs ASSIGNING <ls_pernr>.
       ls_employees-pernr = <ls_pernr>-low.
@@ -154,5 +160,5 @@ CLASS lcl_result IMPLEMENTATION.
 
   METHOD zif_capi_facade_hcm_result~get.
     et_result = mt_employees.
-  ENDMETHOD.                    "get
+  ENDMETHOD.
 ENDCLASS.

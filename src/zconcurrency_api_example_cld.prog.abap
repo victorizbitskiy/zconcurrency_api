@@ -3,8 +3,8 @@
 *&---------------------------------------------------------------------*
 CLASS lcl_app DEFINITION FINAL.
   PUBLIC SECTION.
-    CLASS-METHODS:
-      main.
+
+    CLASS-METHODS main.
 
 ENDCLASS.
 *----------------------------------------------------------------------*
@@ -14,8 +14,8 @@ ENDCLASS.
 *----------------------------------------------------------------------*
 CLASS lcl_context DEFINITION FINAL.
   PUBLIC SECTION.
-    INTERFACES:
-      if_serializable_object.
+
+    INTERFACES if_serializable_object.
 
     TYPES:
       BEGIN OF ty_params,
@@ -27,7 +27,8 @@ CLASS lcl_context DEFINITION FINAL.
       get RETURNING VALUE(rs_params) TYPE ty_params.
 
   PRIVATE SECTION.
-    DATA: ms_params TYPE ty_params.
+
+    DATA ms_params TYPE ty_params.
 
 ENDCLASS.
 *----------------------------------------------------------------------*
@@ -43,8 +44,9 @@ CLASS lcl_task DEFINITION INHERITING FROM zcl_capi_abstract_task FINAL.
       zif_capi_callable~call REDEFINITION.
 
   PRIVATE SECTION.
-    DATA: mo_context TYPE REF TO lcl_context.
-    DATA: mv_res TYPE i.
+
+    DATA mo_context TYPE REF TO lcl_context.
+    DATA mv_res TYPE i.
 
 ENDCLASS.
 *----------------------------------------------------------------------*
@@ -54,8 +56,8 @@ ENDCLASS.
 *----------------------------------------------------------------------*
 CLASS lcl_result DEFINITION FINAL.
   PUBLIC SECTION.
-    INTERFACES:
-      if_serializable_object.
+
+    INTERFACES if_serializable_object.
 
     METHODS:
       constructor IMPORTING iv_param  TYPE i
@@ -63,7 +65,7 @@ CLASS lcl_result DEFINITION FINAL.
       get RETURNING VALUE(rv_result) TYPE string.
 
   PRIVATE SECTION.
-    DATA: mv_param TYPE i.
-    DATA: mv_result TYPE i.
+    DATA mv_param TYPE i.
+    DATA mv_result TYPE i.
 
 ENDCLASS.
