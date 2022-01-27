@@ -1,17 +1,17 @@
-class ZCL_CAPI_ABSTRACT_TASK definition
-  public
-  abstract
-  create public .
+CLASS zcl_capi_abstract_task DEFINITION
+  PUBLIC
+  ABSTRACT
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces ZIF_CAPI_CALLABLE .
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces ZIF_CAPI_TASK .
+    INTERFACES zif_capi_callable .
+    INTERFACES if_serializable_object .
+    INTERFACES zif_capi_task .
 
-  methods CONSTRUCTOR
-    importing
-      !IV_NAME type STRING optional .
+    METHODS constructor
+      IMPORTING
+        !iv_name TYPE string OPTIONAL .
   PROTECTED SECTION.
 
     CLASS-DATA gv_tasks_quantity TYPE i .
