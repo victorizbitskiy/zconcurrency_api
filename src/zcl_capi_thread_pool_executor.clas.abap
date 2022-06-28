@@ -65,8 +65,8 @@ CLASS ZCL_CAPI_THREAD_POOL_EXECUTOR IMPLEMENTATION.
         OTHERS                         = 7.
     IF sy-subrc = 0.
       " We take not all processes.
-      " We take only  of all processes.
-      " 40% is chosen empirically.
+      " We take only 40% of all processes.
+      " The percentage was chosen experimentally.
       rv_result = lv_free_pbt_wps * 40 / 100.
     ELSE.
       rv_result = 5.
