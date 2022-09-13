@@ -15,6 +15,12 @@ API for parallel processing based on the SPTA Framework.
 
 Hereinafter, the concepts of `concurrency` and `parallelism` are considered synonyms, meaning parallel execution of computations.
 
+---
+
+<p align="center">Don't forget to click ⭐ if you like the project!<p>
+
+---
+
 # Table of contents
 1. [What it is?](#what-it-is)
 2. [What is this for?](#what-is-this-for)
