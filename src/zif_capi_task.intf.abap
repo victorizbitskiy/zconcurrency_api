@@ -13,5 +13,5 @@ INTERFACE zif_capi_task
       VALUE(rv_result) TYPE guid_32 .
   METHODS get_obj_id
     RETURNING
-      VALUE(rv_result) TYPE char50 .
+      VALUE(rv_result) TYPE string .
 ENDINTERFACE.
