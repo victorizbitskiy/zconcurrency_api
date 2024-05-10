@@ -1,17 +1,17 @@
-interface ZIF_CAPI_TASK
-  public .
+INTERFACE zif_capi_task
+  PUBLIC .
 
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces ZIF_CAPI_CALLABLE .
+  INTERFACES if_serializable_object .
+  INTERFACES zif_capi_callable .
 
-  methods GET_NAME
-    returning
-      value(RV_RESULT) type STRING .
-  methods GET_ID
-    returning
-      value(RV_RESULT) type GUID_32 .
-  methods GET_OBJ_ID
-    returning
-      value(RV_RESULT) type CHAR50 .
-endinterface.
+  METHODS get_name
+    RETURNING
+      VALUE(rv_result) TYPE string .
+  METHODS get_id
+    RETURNING
+      VALUE(rv_result) TYPE guid_32 .
+  METHODS get_obj_id
+    RETURNING
+      VALUE(rv_result) TYPE char50 .
+ENDINTERFACE.
