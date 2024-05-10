@@ -11,6 +11,7 @@ CLASS zcl_capi_abstract_task DEFINITION
 
     METHODS constructor
       IMPORTING
+        !iv_id   TYPE guid_32 OPTIONAL
         !iv_name TYPE string OPTIONAL .
   PROTECTED SECTION.
 
@@ -30,7 +31,11 @@ CLASS ZCL_CAPI_ABSTRACT_TASK IMPLEMENTATION.
 
   METHOD constructor.
 
-    create_task_id( ).
+    IF iv_id IS INITIAL.
+      create_task_id( ).
+    ELSE.
+      mv_id = iv_id.
+    ENDIF.
 
     IF iv_name IS INITIAL.
       create_task_name( ).
@@ -72,5 +77,10 @@ CLASS ZCL_CAPI_ABSTRACT_TASK IMPLEMENTATION.
 
   METHOD zif_capi_task~get_name.
     rv_result = mv_name.
+  ENDMETHOD.
+
+
+  METHOD zif_capi_task~get_obj_id.
+    CONCATENATE mv_id ` ` mv_name INTO rv_result.
   ENDMETHOD.
 ENDCLASS.

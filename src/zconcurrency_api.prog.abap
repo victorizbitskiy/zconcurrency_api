@@ -20,6 +20,8 @@ FORM before_rfc USING is_before_rfc_imp TYPE spta_t_before_rfc_imp
   DATA lo_task               TYPE REF TO zif_capi_task.
   DATA lv_task               TYPE xstring.
   DATA ls_objects_in_process LIKE LINE OF ct_objects_in_process.
+  DATA lv_task_id TYPE guid_32.
+  DATA lv_task_name TYPE c LENGTH 18.
 
   IF ct_failed_objects[] IS NOT INITIAL.
     PERFORM process_failed_objects CHANGING cs_before_rfc_exp
@@ -41,7 +43,7 @@ FORM before_rfc USING is_before_rfc_imp TYPE spta_t_before_rfc_imp
       IMPORTING
         indxtab = ct_rfcdata.
 
-    ls_objects_in_process-obj_id = lo_task->get_id( ).
+    ls_objects_in_process-obj_id = lo_task->get_obj_id( ).
     APPEND ls_objects_in_process TO ct_objects_in_process[].
 
     cs_before_rfc_exp-start_rfc = abap_true.
@@ -102,6 +104,7 @@ FORM after_rfc USING it_rfcdata TYPE spta_t_indxtab
   DATA lo_result             TYPE REF TO object.
   DATA ls_objects_in_process LIKE LINE OF it_objects_in_process.
   DATA lv_task_id            TYPE guid_32.
+  DATA lv_task_name          TYPE string.
   DATA lv_tc_size            TYPE i.
   DATA lv_rc_size            TYPE i.
 
@@ -128,9 +131,10 @@ FORM after_rfc USING it_rfcdata TYPE spta_t_indxtab
 
     READ TABLE it_objects_in_process INTO ls_objects_in_process INDEX 1.
     IF sy-subrc = 0.
-      lv_task_id = ls_objects_in_process-obj_id.
+      lv_task_id = ls_objects_in_process-obj_id(32).
+      lv_task_name = ls_objects_in_process-obj_id+32(18).
       co_capi_spta_gateway->mo_capi_message_handler->add_message( iv_task_id = lv_task_id
-                                                                  iv_task_name = ''
+                                                                  iv_task_name = lv_task_name
                                                                   iv_rfcsubrc = iv_rfcsubrc
                                                                   iv_rfcmsg = iv_rfcmsg ).
 
@@ -161,6 +165,8 @@ FORM process_failed_objects CHANGING cs_before_rfc_exp TYPE spta_t_before_rfc_ex
   DATA lo_task               TYPE REF TO zif_capi_task.
   DATA lv_task               TYPE xstring.
   DATA ls_objects_in_process LIKE LINE OF ct_objects_in_process.
+  DATA lv_task_id            TYPE guid_32.
+  DATA lv_task_name          TYPE string.
 
   FIELD-SYMBOLS <ls_failed_objects> LIKE LINE OF ct_failed_objects.
 
@@ -172,7 +178,7 @@ FORM process_failed_objects CHANGING cs_before_rfc_exp TYPE spta_t_before_rfc_ex
     WHILE lo_tasks_iterator->has_next( ) = abap_true.
       lo_task ?= lo_tasks_iterator->next( ).
 
-      IF lo_task->get_id( ) = <ls_failed_objects>-obj_id.
+      IF lo_task->get_obj_id( ) = <ls_failed_objects>-obj_id.
 
         lv_task = zcl_capi_spta_gateway=>serialize_task( lo_task ).
 

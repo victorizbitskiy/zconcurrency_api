@@ -6,12 +6,12 @@ CLASS zcl_capi_executors DEFINITION
 
     CLASS-METHODS new_fixed_thread_pool
       IMPORTING
-        !iv_server_group                    TYPE rfcgr
-        !iv_n_threads                       TYPE i DEFAULT 10
-        !iv_no_resubmission_on_error        TYPE boole_d DEFAULT abap_true
-        !io_capi_message_handler            TYPE REF TO zif_capi_message_handler OPTIONAL
+        !iv_server_group             TYPE rfcgr
+        !iv_n_threads                TYPE i DEFAULT 10
+        !iv_no_resubmission_on_error TYPE boole_d DEFAULT abap_true
+        !io_capi_message_handler     TYPE REF TO zif_capi_message_handler OPTIONAL
       RETURNING
-        VALUE(ro_result) TYPE REF TO zcl_capi_thread_pool_executor .
+        VALUE(ro_result)             TYPE REF TO zcl_capi_thread_pool_executor .
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

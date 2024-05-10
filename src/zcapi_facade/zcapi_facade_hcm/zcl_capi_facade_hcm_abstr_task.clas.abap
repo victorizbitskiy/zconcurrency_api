@@ -8,6 +8,7 @@ CLASS zcl_capi_facade_hcm_abstr_task DEFINITION
 
     METHODS constructor
       IMPORTING
+        !iv_id      TYPE guid_32 OPTIONAL
         !iv_name    TYPE string OPTIONAL
         !io_context TYPE REF TO zcl_capi_facade_hcm_abstr_cntx .
   PROTECTED SECTION.
@@ -23,7 +24,8 @@ CLASS ZCL_CAPI_FACADE_HCM_ABSTR_TASK IMPLEMENTATION.
 
   METHOD constructor.
 
-    super->constructor( iv_name ).
+    super->constructor( iv_id = iv_id
+                        iv_name = iv_name ).
     mt_pernrs = io_context->zif_capi_facade_hcm_context~get_pernrs( ).
 
   ENDMETHOD.

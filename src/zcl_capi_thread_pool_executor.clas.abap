@@ -14,7 +14,7 @@ CLASS zcl_capi_thread_pool_executor DEFINITION
         !io_capi_message_handler     TYPE REF TO zif_capi_message_handler OPTIONAL .
     CLASS-METHODS max_no_of_tasks
       IMPORTING
-        !iv_server_group          TYPE rfcgr
+        !iv_server_group TYPE rfcgr
       RETURNING
         VALUE(rv_result) TYPE i .
   PROTECTED SECTION.
