@@ -11,7 +11,9 @@ Translations:
 
 API for parallel processing based on the SPTA Framework.  
 
-Hereinafter, the concepts of `concurrency` and `parallelism` are considered synonyms, meaning parallel execution of computations.
+`Note`:  The initial idea was to make this API similar to the [Java Concurrency API](https://docs.oracle.com/javase/8/docs/api/index.html?java/util/concurrent/package-summary.html). 
+Therefore, the name `ABAP Concurrency API` was chosen. However, in our case, calculations are performed not `concurrently` but `in parallel`.  
+For more details please see [this](https://wiki.haskell.org/Parallelism_vs._Concurrency) explanation.
 
 ---
 
@@ -34,7 +36,7 @@ Hereinafter, the concepts of `concurrency` and `parallelism` are considered syno
 
 ## What it is?
 
-Utility classes useful in concurrent programming.
+Utility classes useful in parallel programming.
 
 ## What is this for?
 
