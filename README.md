@@ -245,7 +245,7 @@ Now, let's have a look at example:
 | Parameter name              | Optional | Description                                                   |
 | :-------------------------- | :------: | :-------------------------------------------------------------|
 | iv_server_group             |          | server group (tcode: RZ12)                                    |
-| iv_max_no_of_tasks          |          | maximum number of concurrent tasks                            |
+| iv_max_no_of_tasks          |          | maximum number of parallel tasks                            |
 | iv_no_resubmission_on_error |          | flag "**true**" - don't restart the task in case of an error  |
 | io_capi_message_handler     |    X     | an object that will contain error messages (if they occurred) |
 
@@ -477,7 +477,7 @@ Now, let's have a look at example:
 
 3. Call the *execute()* method on the **lo_capi_facade_hcm** object, which starts tasks for parallel execution and returns the result.
 
-The maximum number of concurrently running tasks is calculated as 40% of the number of free dialog processes (DIA, sm50).
+The maximum number of running in parallel tasks is calculated as 40% of the number of free dialog processes (DIA, sm50).
 That's all you need to do.
 
 **Result of execution:**
