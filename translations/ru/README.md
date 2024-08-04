@@ -10,7 +10,9 @@
 ## `ABAP Concurrency API`
 API для параллельных вычислений, основанный на SPTA Framework.  
 
-Здесь и далее понятия `concurrency` и `parallelism`, несмотря на существующую разницу, будем считать синонимами и наделять одним смыслом - параллельное выполнение вычислений. 
+`Примечание`: Изначальная идея заключалась в том, чтобы сделать этот API похожим на [Java Concurrency API](https://docs.oracle.com/javase/8/docs/api/index.html?java/util/concurrent/package-summary.html). 
+Поэтому было выбрано название `ABAP Concurrency API`. Однако в нашем случае вычисления выполняются не `согласованно`, а `параллельно`. 
+Для получения более подробной информации, пожалуйста, посмотрите [это](https://wiki.haskell.org/Parallelism_vs._Concurrency) объяснение.
 
 ---
 
