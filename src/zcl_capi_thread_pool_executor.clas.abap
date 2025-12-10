@@ -64,9 +64,9 @@ CLASS ZCL_CAPI_THREAD_POOL_EXECUTOR IMPLEMENTATION.
         cant_init_different_pbt_groups = 6
         OTHERS                         = 7.
     IF sy-subrc = 0.
-      " We take not all processes.
-      " We take only 40% of all processes.
-      " The percentage was chosen experimentally.
+      " We do not use all available dialog processes.
+      " Only 40% are reserved for parallel tasks to avoid overloading the system.
+      " This percentage was determined empirically to balance performance and system stability.
       rv_result = lv_free_pbt_wps * 40 / 100.
     ELSE.
       rv_result = 5.
