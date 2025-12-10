@@ -45,11 +45,11 @@ Parallel processing in ABAP traditionally follows a tedious pattern:
 3. Call it asynchronously in a loop
 4. Wait for completion and **retrieve the results**
 
-In practice, only steps **`2`** and **`4`** matter — the rest is repetitive plumbing that’s error-prone and hard to maintain.
+In practice, only steps **`2`** and **`4`** matter - the rest is repetitive plumbing that’s error-prone and hard to maintain.
 
-While SAP’s SPTA Framework eliminates the need for custom RFC modules, its low-level API still forces developers to manage serialization, task lifecycle, and error handling manually — often leading to global variables and fragile code.
+While SAP’s SPTA Framework eliminates the need for custom RFC modules, its low-level API still forces developers to manage serialization, task lifecycle, and error handling manually - often leading to global variables and fragile code.
 
-The ABAP Concurrency API abstracts all that away. You define what to run (your logic) and what to return (your result), and the framework handles how it runs in parallel — cleanly and safely.
+The ABAP Concurrency API abstracts all that away. You define what to run (your logic) and what to return (your result), and the framework handles how it runs in parallel - cleanly and safely.
 
 ## Installation
 
@@ -61,14 +61,14 @@ To illustrate the core concepts, consider a minimal example:
 **Compute the squares of the integers from 1 to 10 in parallel**.
 
 Each number is processed independently in its own parallel task.  
-While this example is intentionally simple, it demonstrates the essential workflow of the API—defining a task, executing it in parallel, and collecting results—without domain-specific complexity.
+While this example is intentionally simple, it demonstrates the essential workflow of the API-defining a task, executing it in parallel, and collecting results-without domain-specific complexity.
 
 First, define three classes: **Context**, **Task**, and **Result**.
 These can be implemented as either local or global classes, depending on whether you need to reuse them across programs.
 
 1. **lcl_context** – encapsulates the input parameters for a task.
 Using a dedicated context class is optional; you could pass parameters directly to the task constructor.
-However, we strongly recommend using a separate context class to improve code clarity, maintainability, and type safety—especially when dealing with multiple parameters. 
+However, we strongly recommend using a separate context class to improve code clarity, maintainability, and type safety-especially when dealing with multiple parameters. 
 <details>
 <base target="_blank">
 <summary>Show code...</summary>
@@ -143,7 +143,7 @@ ENDCLASS.
    
 3. **lcl_result** – represents the output of a completed task.
 This class _must_ implement the **if_serializable_object** interface, because result objects are transferred between work processes via serialization.
-Beyond that requirement, you are free to design the structure of the result as needed for your use case—e.g., by exposing getters, defining internal tables, or formatting output strings.
+Beyond that requirement, you are free to design the structure of the result as needed for your use case-e.g., by exposing getters, defining internal tables, or formatting output strings.
 <details>
 <base target="_blank">
 <summary>Show code...</summary>
@@ -179,7 +179,7 @@ ENDCLASS.
 ⚠️ **Important**: Avoid static attributes
 All **Context**, **Task**, and **Result** objects are serialized and transferred between dialog work processes.
 
-_Static attributes are not serialized_ — they belong to the class metadata, not to the instance. Any data stored in them will not be transferred to the target process and may lead to inconsistent or incorrect behavior.
+_Static attributes are not serialized_ - they belong to the class metadata, not to the instance. Any data stored in them will not be transferred to the target process and may lead to inconsistent or incorrect behavior.
 
 Always use instance attributes to hold task-specific state.
 
@@ -233,7 +233,7 @@ With the three core classes defined, let’s walk through a complete usage examp
 1. Create a task collection **lo_tasks**.
 2. Instantiate a task **lo_task** and add it to the collection.
 3. (Optional) Create a message handler **lo_message_handler** to collect errors from parallel executions.
-4. Set up the executor — the core component that runs tasks in parallel.  
+4. Set up the executor - the core component that runs tasks in parallel.  
 
 In the example, we use the static method zcl_capi_executors=>new_fixed_thread_pool, which returns an executor configured to use a fixed number of parallel tasks. This method takes four parameters:
 
@@ -258,12 +258,12 @@ A complete working example is available in the report **ZCONCURRENCY_API_EXAMPLE
 
 ## Using the API in the HCM Module
 To simplify parallel processing in the HCM module, the **`ZCAPI_FACADE_HCM`** package provides a Facade implementation (based on the <a href="https://en.wikipedia.org/wiki/Facade_pattern#  :~:text=The%20facade%20pattern%20(also%20spelled,complex%20underlying%20or%20structural%20code.">Facade</a> design pattern).
-This facade abstracts away common boilerplate tasks—such as splitting personnel numbers (pernr) into batches, creating task instances, and collecting results—so you can focus on your core business logic.
+This facade abstracts away common boilerplate tasks-such as splitting personnel numbers (pernr) into batches, creating task instances, and collecting results-so you can focus on your core business logic.
 
 Let’s consider a simple use case:
 **Retrieve the full names of employees by their personnel numbers.**
 
-As with the general API, you’ll need to define three classes: **Context**, **Task**, and **Result**—but now tailored to the HCM facade’s expectations.
+As with the general API, you’ll need to define three classes: **Context**, **Task**, and **Result**-but now tailored to the HCM facade’s expectations.
 
 1. **lcl_context** – an instance of this class encapsulates the task parameters.
 It must inherit from the abstract class **zcl_capi_facade_hcm_abstr_cntx** and override its constructor method to accept and initialize the required parameters.
@@ -421,7 +421,7 @@ ENDCLASS.
 </details>
 
 ⚠️ **Important**:
-Instances of **lcl_task** and **lcl_result** are serialized and deserialized at runtime. Therefore, avoid using static attributes—they are not preserved during serialization and can lead to unexpected behavior.
+Instances of **lcl_task** and **lcl_result** are serialized and deserialized at runtime. Therefore, avoid using static attributes-they are not preserved during serialization and can lead to unexpected behavior.
 
 With the **Context**, **Task**, and **Result** classes now defined, let’s walk through a complete example.
 <details>
@@ -474,7 +474,7 @@ This triggers parallel execution of tasks and returns the aggregated result.
 
 https://github.com/victorizbitskiy/zconcurrency_api/blob/a0507da3ef44c6a6a3da64e216a71e13655594ba/src/zcl_capi_thread_pool_executor.clas.abap#L70
 
-That’s it—no manual task orchestration required.
+That’s it-no manual task orchestration required.
 
 **Result of execution:**
 
