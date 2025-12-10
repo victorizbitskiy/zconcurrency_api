@@ -36,7 +36,7 @@ Translations:
 
 A set of high-level ABAP utility classes that simplify parallel task execution using SAP’s **SPTA Framework**, without requiring manual RFC module creation.
 
-## What does it exist?
+## Why does it exist?
 
 Parallel processing in ABAP traditionally follows a tedious pattern:
 
