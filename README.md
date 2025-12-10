@@ -21,7 +21,7 @@ Translations:
 
 # Table of contents
 1. [What is it?](#what-is-it)
-2. [What does it exist?](#what-does-it-exist)
+2. [Why does it exist?](#why-does-it-exist)
 3. [Installation](#installation)
 4. [Usage](#usage)
 5. [Usage. HCM module](#using-in-the-HCM-module)
