@@ -235,7 +235,7 @@ With the three core classes defined, let’s walk through a complete usage examp
 3. (Optional) Create a message handler **lo_message_handler** to collect errors from parallel executions.
 4. Set up the executor - the core component that runs tasks in parallel.  
 
-In the example, we use the static method zcl_capi_executors=>new_fixed_thread_pool, which returns an executor configured to use a fixed number of parallel tasks. This method takes four parameters:
+In the example, we use the static method **zcl_capi_executors=>new_fixed_thread_pool**, which returns an executor configured to use a fixed number of parallel tasks. This method takes four parameters:
 
 | Parameter name              | Optional | Description                                                   |
 | :-------------------------- | :------: | :-------------------------------------------------------------|
