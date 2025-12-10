@@ -9,7 +9,7 @@ Translations:
 
 ## `ABAP Concurrency API`
 
-ABAP Concurrency API – a Java-inspired library for parallel task execution in ABAP using the SPTA Framework.  
+ABAP Concurrency API is's a Java-inspired library for parallel task execution in ABAP using the SPTA Framework.  
 
 💡 Note: The name references [Java’s concurrency model](https://docs.oracle.com/javase/8/docs/api/index.html?java/util/concurrent/package-summary.html), but under the hood, tasks run in parallel (not just concurrently) via RFC.
 
