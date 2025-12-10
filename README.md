@@ -470,7 +470,7 @@ With the **Context**, **Task**, and **Result** classes now defined, let’s walk
 3. Call the **execute()** method on the facade object.
 This triggers parallel execution of tasks and returns the aggregated result.
 
-💡 The maximum number of concurrently running tasks is automatically capped at 40% of available dialog work processes (visible in transaction SM50) to ensure system stability.
+💡 The maximum number of concurrently running tasks is automatically capped at **40%** of available dialog work processes (visible in transaction SM50) to ensure system stability.
 
 https://github.com/victorizbitskiy/zconcurrency_api/blob/a0507da3ef44c6a6a3da64e216a71e13655594ba/src/zcl_capi_thread_pool_executor.clas.abap#L70
 
