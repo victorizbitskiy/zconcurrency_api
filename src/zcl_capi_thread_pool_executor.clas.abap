@@ -24,6 +24,8 @@ CLASS zcl_capi_thread_pool_executor DEFINITION
     DATA mv_n_threads TYPE i .
     DATA mv_no_resubmission_on_error TYPE boole_d .
     DATA mo_capi_message_handler TYPE REF TO zif_capi_message_handler .
+
+    METHODS rfc_connection_close .
 ENDCLASS.
 
 
@@ -75,6 +77,42 @@ CLASS ZCL_CAPI_THREAD_POOL_EXECUTOR IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD rfc_connection_close.
+
+    DATA lt_serverlist TYPE STANDARD TABLE OF msxxlist.
+    DATA lt_irfcdes    TYPE STANDARD TABLE OF rfcdest.
+    DATA lv_irfcdest   TYPE string.
+
+    FIELD-SYMBOLS <lv_irfcdest> TYPE rfcdest.
+
+    CALL FUNCTION 'TH_SERVER_LIST'
+      TABLES
+        list           = lt_serverlist
+      EXCEPTIONS
+        no_server_list = 1
+        OTHERS         = 2.
+    IF sy-subrc <> 0.
+      RETURN.
+    ENDIF.
+
+    CONCATENATE '%\_' sy-sysid '\_%' INTO lv_irfcdest.
+
+    SELECT rfcdest FROM rfcdes INTO TABLE lt_irfcdes
+      WHERE rfctype = 'I'
+      AND rfcdest LIKE lv_irfcdest
+      ESCAPE '\'.
+
+    LOOP AT lt_irfcdes ASSIGNING <lv_irfcdest>.
+      CALL FUNCTION 'RFC_CONNECTION_CLOSE'
+        EXPORTING
+          destination = <lv_irfcdest>
+        EXCEPTIONS
+          OTHERS      = 0.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
   METHOD zif_capi_executor_service~invoke_all.
 
     DATA lo_capi_spta_gateway TYPE REF TO zcl_capi_spta_gateway.
@@ -104,6 +142,12 @@ CLASS ZCL_CAPI_THREAD_POOL_EXECUTOR IMPLEMENTATION.
         OTHERS                   = 3.
     IF sy-subrc = 0.
       ro_result ?= lo_capi_spta_gateway->mo_results.
+
+      " We explicitly close the RFC connections opened by the TH_WPINFO function module.
+      " Without this, they are only closed when exiting the report/transaction.
+      " https://github.com/victorizbitskiy/zconcurrency_api/issues/12
+      rfc_connection_close( ).
+
     ELSE.
       RAISE EXCEPTION TYPE zcx_capi_tasks_invocation
         EXPORTING

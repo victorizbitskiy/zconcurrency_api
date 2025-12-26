@@ -23,13 +23,13 @@ CLASS lcl_app IMPLEMENTATION.
 
     FIELD-SYMBOLS <ls_message_list> LIKE LINE OF lt_message_list.
 
-*   Create collection of tasks
+    " Create collection of tasks
     CREATE OBJECT lo_tasks.
 
     DO 10 TIMES.
       ls_params-param = sy-index.
 
-*     Optional object. It contains task parameters
+      " Optional object containing task parameters.
       CREATE OBJECT lo_context
         EXPORTING
           is_params = ls_params.

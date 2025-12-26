@@ -29,7 +29,6 @@ CLASS lcl_app IMPLEMENTATION.
     FIELD-SYMBOLS <ls_employees> LIKE LINE OF lt_employees.
 
     " 2 Pernr number per task. For example only.
-    " Use the default '1000'.
     lv_package_size = 2.
 
     ls_params-begda = sy-datum.
